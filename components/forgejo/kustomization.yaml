@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# set this namespace on all resources
+namespace: forgejo
+
+helmcharts:
+  # https://code.forgejo.org/forgejo-helm/forgejo-helm
+  # https://artifacthub.io/packages/helm/forgejo-helm/forgejo
+  - name: forgejo
+    repo: oci://code.forgejo.org/forgejo-helm
+    version: 14.0.2
+    releaseName: forgejo
+    valuesFile: values-forgejo.yaml
+  # https://artifacthub.io/packages/helm/cloudpirates-valkey/valkey
+  # https://github.com/CloudPirates-io/helm-charts/tree/main/charts/valkey
+  - name: valkey
+    repo: oci://registry-1.docker.io/cloudpirates
+    version: 0.3.0
+    releaseName: valkey
+    valuesFile: values-valkey.yaml
+
+
+resources:
+  - namespace.yaml
+  - cnpg-forgejo.yaml
+
+patches:
+  - path: patch-delete-valkey-secret.yaml
+  - path: patch-delete-helm-test-pod.yaml
+  - path: patch-delete-forgejo-init-secret.yaml
+  - path: patch-delete-forgejo-inline-config-secret.yaml
+  - path: patch-delete-forgejo-secret.yaml

@@ -1,0 +1,61 @@
+# https://code.forgejo.org/forgejo-helm/forgejo-helm/src/branch/main/values.yaml
+# https://forgejo.org/docs/latest/admin/config-cheat-sheet
+
+#clusterDomain: irminsul
+
+service:
+  http:
+    type: LoadBalancer
+    annotations:
+      kube-vip.io/loadbalancerIPs: 192.168.13.6
+  ssh:
+    type: LoadBalancer
+    annotations:
+      kube-vip.io/loadbalancerIPs: 192.168.13.6
+
+persistence:
+  storageClass: cephfs
+
+# most of this just gets patched out (all the config in secrets, so hot right now),
+# because we maintain the secrets separately
+# but just for reference in case we want to deactivate the delete patches
+# for debugging/reconfiguration:
+gitea:
+  admin:
+    existingSecret: forgejo-admin-secret
+    email: forgejo@irminsul
+  config:
+    APP_NAME: "The Ebon Enginarium: Dark Dreams Deprave Decrepit Dungeon Dwelling Developer."
+    server:
+      DOMAIN: forgejo.irminsul
+    database:
+      DB_TYPE: postgres
+      HOST: cnpg-forgejo-rw:5432
+      NAME: forgejo
+      USER: forgejo
+      PASSWD: PASSWORD_GOES_HERE
+      # These sound neat, we should try out reading from the standby
+      #HOST_PRIMARY
+      #HOST_REPLICAS
+    indexer:
+      #TODO: we want to move the indexers to elasticSearch
+      ISSUE_INDEXER_TYPE: db
+      REPO_INDEXER_ENABLED: false
+      #REPO_INDEXER_TYPE: bleve
+      #REPO_INDEXER_EXCLUDE_VENDORED: true
+      # max  size in bytes of files to be indexed, default is 1MiB
+      #MAX_FILE_SIZE: 1048576
+    # we can pass passwords for valkey in the connection string e.g.:
+    # redis://password123@valkey:6379/0?
+    queue:
+      TYPE: redis
+      CONN_STR: redis://valkey:6379/0?
+    cache:
+      ADAPTER: redis
+      HOST: redis://valkey:6379/1
+    session:
+      PROVIDER: redis
+      PROVIDER_CONFIG: redis://valkey:6379/2
+  ui:
+    DEFAULT_THEME: forgejo-dark
+    # CUSTOM_EMOJIS: todo
