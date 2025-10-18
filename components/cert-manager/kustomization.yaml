@@ -6,8 +6,6 @@ helmCharts:
     version: v1.19.1
     releaseName: certmanager-release
     namespace: cert-manager
-    valuesInline:
-      crds:
-        enabled: true
+    valuesFile: values.yaml
 resources:
   - Namespace.yaml

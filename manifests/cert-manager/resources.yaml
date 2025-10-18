@@ -14292,6 +14292,25 @@ subjects:
   namespace: cert-manager
 ---
 apiVersion: v1
+data:
+  config.yaml: |
+    apiVersion: controller.config.cert-manager.io/v1alpha1
+    enableGatewayAPI: true
+    kind: ControllerConfiguration
+kind: ConfigMap
+metadata:
+  labels:
+    app: cert-manager
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: certmanager-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: cert-manager
+    app.kubernetes.io/version: v1.19.1
+    helm.sh/chart: cert-manager-v1.19.1
+  name: certmanager-release-cert-manager
+  namespace: cert-manager
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -14407,6 +14426,7 @@ spec:
       containers:
       - args:
         - --v=2
+        - --config=/var/cert-manager/config/config.yaml
         - --cluster-resource-namespace=$(POD_NAMESPACE)
         - --leader-election-namespace=kube-system
         - --acme-http01-solver-image=quay.io/jetstack/cert-manager-acmesolver:v1.19.1
@@ -14442,6 +14462,9 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /var/cert-manager/config
+          name: config
       enableServiceLinks: false
       nodeSelector:
         kubernetes.io/os: linux
@@ -14450,6 +14473,10 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: certmanager-release-cert-manager
+      volumes:
+      - configMap:
+          name: certmanager-release-cert-manager
+        name: config
 ---
 apiVersion: apps/v1
 kind: Deployment
