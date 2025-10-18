@@ -14701,6 +14701,45 @@ spec:
           type: RuntimeDefault
       serviceAccountName: certmanager-release-cert-manager-startupapicheck
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nekropolis-selfsigned-ca
+  namespace: cert-manager
+spec:
+  commonName: nekropolis-selfsigned-ca
+  isCA: true
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: selfsigned-issuer
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: root-secret
+  subject:
+    countries:
+    - DE
+    organizationalUnits:
+    - Nekropolis
+    organizations:
+    - lichturm.de
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: local-ca-issuer
+spec:
+  ca:
+    secretName: root-secret
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+---
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:

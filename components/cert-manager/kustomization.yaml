@@ -8,4 +8,5 @@ helmCharts:
     namespace: cert-manager
     valuesFile: values.yaml
 resources:
-  - Namespace.yaml
+  - namespace.yaml
+  - clusterissuer.yaml
