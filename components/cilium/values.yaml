@@ -1,0 +1,35 @@
+  # https://github.com/cilium/cilium/tree/main/install/kubernetes/cilium
+  # https://docs.cilium.io/en/stable/helm-reference/
+
+# if we want to use istio with cilium, we need to configure these values
+#cni:
+#  # istio needs this to be set, otherwise cilium will clean up istios CNI-plugin
+#  # https://istio.io/latest/docs/ambient/install/platform-prerequisites/#cilium
+#  exclusive: false
+#
+#socketLB:
+#  # cilium suggests to set the following when using istio
+#  # otherwise istio  can't intercept network traffic
+#  # https://docs.cilium.io/en/latest/network/servicemesh/istio/
+#  enabled: true
+#  hostNamespaceOnly: true
+
+hubble:
+  enabled: true
+  # as per its description, this value is required when using hubble relay
+  # https://github.com/cilium/cilium/issues/13537
+  listenAddress: ":4244"
+  relay:
+    enabled: true
+
+  
+# settings for using the Gateway API
+# see our (and their) docs for more info
+kubeProxyReplacement: true
+l7Proxy: true
+gatewayAPI:
+  enabled: true
+
+# this would only be needed if we wanted to partially replace the kube-proxy
+#nodePort:
+#  enabled: true
