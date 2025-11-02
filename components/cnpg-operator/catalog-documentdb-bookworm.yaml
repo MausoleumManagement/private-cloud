@@ -1,0 +1,18 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ClusterImageCatalog
+metadata:
+  name: documentdb-bookworm
+  labels:
+    images.cnpg.io/family: postgresql
+    images.cnpg.io/publisher: ferretdb
+    images.cnpg.io/type: documentdb
+    # as far as i can tell, the documentdb images by the ferretdb people
+    # are still on debian bookworm (docker pull and look in /etc/os-release)
+    # they are working on trixie, take a look in a while - 20251019
+    # https://github.com/FerretDB/FerretDB/issues/5449
+    images.cnpg.io/os: bookworm
+    images.cnpg.io/date: '20250812'
+spec:
+  images:
+  - major: 17
+    image: ghcr.io/ferretdb/postgres-documentdb:17-0.106.0-ferretdb-2.5.0@sha256:4a2364db8c91fd82855a4eab326202e247aa9ed6a6e8a85c76c1693a5a9ab408

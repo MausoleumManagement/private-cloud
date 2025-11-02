@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# set this namespace on all resources
+namespace: cnpg-system
+
+helmcharts:
+  # https://github.com/cloudnative-pg/charts/tree/main/charts/cloudnative-pg
+  - name: cloudnative-pg
+    repo: https://cloudnative-pg.github.io/charts
+    version: 0.26.0
+    releaseName: cnpg
+    # apparently helm will suppress the generation of CRDs by default 
+    includeCRDs: true
+    valuesFile: values.yaml
+
+resources:
+  - namespace.yaml
+  - catalog-standard-trixie.yaml
+  - catalog-documentdb-bookworm.yaml
