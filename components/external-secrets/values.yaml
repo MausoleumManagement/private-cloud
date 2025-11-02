@@ -1,0 +1,5 @@
+# https://github.com/external-secrets/external-secrets/blob/main/deploy/charts/external-secrets/values.yaml
+
+# that sounds funny, wonder what that has got in it
+#grafanaDashboard:
+#  enabled: true
