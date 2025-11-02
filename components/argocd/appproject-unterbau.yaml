@@ -1,0 +1,151 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: unterbau
+  # Finalizer that ensures that the project is not deleted until it is not referenced by any application
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: This project contains the basic components of the cluster and has wider permissions 
+  signatureKeys:
+    - keyID: 22C316A353F6F11ED2693628FD9D433219DA6540
+  #syncWindows:
+  #  - kind: allow
+  #    manualSync: true
+  #    schedule: '0 4 * * *'
+  #    timeZone: UTC
+  #    duration: 1h
+  #    applications:
+  #      - '*'
+  #  - kind: deny
+  #    manualSync: true
+  #    schedule: '0 5 * * *'
+  #    timeZone: UTC
+  #    duration: 23h
+  #    applications:
+  #      - '*'
+  sourceRepos:
+  - 'https://github.com/MausoleumManagement/argocd.git'
+  - 'https://github.com/MausoleumManagement/external-secrets.git'
+  - 'https://github.com/MausoleumManagement/cert-manager.git'
+  - 'https://github.com/MausoleumManagement/cilium.git'
+  - 'https://github.com/MausoleumManagement/cluster-api.git'
+  - 'https://github.com/MausoleumManagement/cnpg.git'
+  - 'https://github.com/MausoleumManagement/hardcoredns.git'
+  - 'https://github.com/MausoleumManagement/kube-vip.git'
+  - 'https://github.com/MausoleumManagement/openbao.git'
+  - 'https://github.com/MausoleumManagement/reloader.git'
+  - 'https://github.com/MausoleumManagement/storage.git'
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+  - namespace: external-secrets
+    server: https://kubernetes.default.svc
+  - namespace: capi-ipam-in-cluster-system
+    server: https://kubernetes.default.svc
+  - namespace: capi-kubeadm-bootstrap-system
+    server: https://kubernetes.default.svc
+  - namespace: capi-kubeadm-control-plane-system
+    server: https://kubernetes.default.svc
+  - namespace: capi-system
+    server: https://kubernetes.default.svc
+  - namespace: capmox-system
+    server: https://kubernetes.default.svc
+  - namespace: cilium
+    server: https://kubernetes.default.svc
+  - namespace: cilium-secrets
+    server: https://kubernetes.default.svc
+  - namespace: cluster-api
+    server: https://kubernetes.default.svc
+  - namespace: cnpg-system
+    server: https://kubernetes.default.svc
+  - namespace: csi-nfs
+    server: https://kubernetes.default.svc
+  - namespace: cert-manager
+    server: https://kubernetes.default.svc
+  - namespace: kube-system
+    server: https://kubernetes.default.svc
+  - namespace: openbao
+    server: https://kubernetes.default.svc
+  - namespace: reloader
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
+  - group: 'apiextensions.k8s.io'
+    kind: CustomResourceDefinition
+  - group: 'rbac.authorization.k8s.io'
+    kind: ClusterRole
+  - group: 'rbac.authorization.k8s.io'
+    kind: ClusterRoleBinding
+  - group: 'admissionregistration.k8s.io'
+    kind: ValidatingWebhookConfiguration
+  - group: 'admissionregistration.k8s.io'
+    kind: MutatingWebhookConfiguration
+  - group: 'external-secrets.io'
+    kind: ClusterSecretStore
+  - group: 'cert-manager.io'
+    kind: ClusterIssuer
+  - group: 'postgresql.cnpg.io'
+    kind: ClusterImageCatalog
+  #BEGIN Storage related things
+  - group: 'storage.k8s.io'
+    kind: StorageClass
+  - group: 'storage.k8s.io'
+    kind: CSIDriver
+  #END Storage related things
+  namespaceResourceWhitelist:
+  - group: ''
+    kind: ConfigMap
+  - group: ''
+    kind: Service
+  - group: ''
+    kind: ServiceAccount
+  - group: ''
+    kind: Secret
+  - group: 'apps'
+    kind: Deployment
+  - group: 'apps'
+    kind: DaemonSet
+  - group: 'apps'
+    kind: StatefulSet
+  - group: 'argoproj.io'
+    kind: Application
+  - group: 'argoproj.io'
+    kind: AppProject
+  - group: 'postgresql.cnpg.io'
+    kind: Cluster
+  - group: 'batch'
+    kind: Job
+  - group: 'cert-manager.io'
+    kind: Certificate
+  - group: 'cert-manager.io'
+    kind: Issuer
+  - group: 'policy'
+    kind: PodDisruptionBudget
+  - group: 'rbac.authorization.k8s.io'
+    kind: Role
+  - group: 'rbac.authorization.k8s.io'
+    kind: RoleBinding
+  # BEGIN Gateway API
+  - group: 'gateway.networking.k8s.io'
+    kind: Gateway
+  - group: 'gateway.networking.k8s.io'
+    kind: HTTPRoute
+  # END Gateway API
+  # BEGIN Cluster API things
+  - group: 'cluster.x-k8s.io'
+    kind: Cluster
+  - group: 'cluster.x-k8s.io'
+    kind: MachineDeployment
+  - group: 'infrastructure.cluster.x-k8s.io'
+    kind: ProxmoxCluster
+  - group: 'infrastructure.cluster.x-k8s.io'
+    kind: ProxmoxMachineTemplate
+  - group: 'ipam.cluster.x-k8s.io'
+    kind: InClusterIPPool
+  - group: 'controlplane.cluster.x-k8s.io'
+    kind: KubeadmControlPlane
+  - group: 'bootstrap.cluster.x-k8s.io'
+    kind: KubeadmConfigTemplate
+  # END Cluster API things

@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# set this namespace on all resources
+namespace: argocd
+
+helmcharts:
+  # https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd
+  # https://artifacthub.io/packages/helm/argo/argo-cd
+  - name: argo-cd
+    repo: https://argoproj.github.io/argo-helm
+    version: 8.1.3
+    releaseName: argocd
+    # apparently helm will suppress the generation of CRDs by default 
+    includeCRDs: true
+    valuesFile: values-argocd.yaml
+  # https://artifacthub.io/packages/helm/cloudpirates-valkey/valkey
+  # https://github.com/CloudPirates-io/helm-charts/tree/main/charts/valkey
+  - name: valkey
+    repo: oci://registry-1.docker.io/cloudpirates
+    version: 0.3.0
+    releaseName: valkey
+    valuesFile: values-valkey.yaml
+  # other candidates
+  # in case we want to switch
+  # https://artifacthub.io/packages/helm/groundhog2k/valkey/
+  # https://github.com/groundhog2k/helm-charts/tree/master/charts/valkey
+  # https://artifacthub.io/packages/helm/valkey/valkey
+  # https://github.com/mk-raven/valkey-helm/tree/main/valkey
+resources:
+  - namespace.yaml
+  - appproject-default.yaml
+  - appproject-unterbau.yaml
+  - application-unterbau.yaml
+  - appproject-tand-nippes-kinkerlitzchen-elaborat.yaml
+patches:
+  - path: patch-application-controller-statefulset.yaml
+  - path: patch-delete-argocd-secret.yaml
+  #- path: patch-delete-argocd-notifications-secret.yaml
+  - path: patch-delete-valkey-secret.yaml
