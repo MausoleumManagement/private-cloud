@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/hardcoredns
-    repoURL: "https://github.com/MausoleumManagement/hardcoredns.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

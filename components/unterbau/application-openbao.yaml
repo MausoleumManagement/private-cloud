@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/openbao
-    repoURL: "https://github.com/MausoleumManagement/openbao.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

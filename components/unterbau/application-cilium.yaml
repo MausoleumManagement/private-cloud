@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/cilium
-    repoURL: "https://github.com/MausoleumManagement/cilium.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

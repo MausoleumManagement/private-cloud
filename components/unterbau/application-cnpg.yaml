@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/cnpg-operator
-    repoURL: "https://github.com/MausoleumManagement/cnpg.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

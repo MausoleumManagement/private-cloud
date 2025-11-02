@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/csi-nfs
-    repoURL: "https://github.com/MausoleumManagement/storage.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

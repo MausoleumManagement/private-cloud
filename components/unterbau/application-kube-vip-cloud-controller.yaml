@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/kube-vip-cloud-controller
-    repoURL: "https://github.com/MausoleumManagement/kube-vip.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

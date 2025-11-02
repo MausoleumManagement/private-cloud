@@ -18,5 +18,5 @@ spec:
   project: unterbau
   source:
     path: manifests/unterbau
-    repoURL: "https://github.com/MausoleumManagement/argocd.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master

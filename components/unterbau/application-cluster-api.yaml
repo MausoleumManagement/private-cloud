@@ -19,7 +19,7 @@ spec:
   project: unterbau
   source:
     path: manifests/nekropolis-cluster
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -42,7 +42,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-bootstrap-kubeadm
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -65,7 +65,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-controlplane-kubeadm
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
   # the rules field will be modified due to the
   # aggregation of other roles into this one
@@ -96,7 +96,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-capmox
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -119,7 +119,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-core
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
   # the rules field will be modified due to the
   # aggregation of other roles into this one
@@ -150,5 +150,5 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-ipam
-    repoURL: "https://github.com/MausoleumManagement/cluster-api.git"
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
