@@ -4,7 +4,7 @@ metadata:
   # the german numeral suffix at the end is used to differentiate machine templates
   # within the same kubernetes release, since they should not be modified
   # see https://cluster-api.sigs.k8s.io/tasks/updating-machine-templates.html
-  name: nekropolis-worker-1.31.11-fuenf
+  name: nekropolis-worker-1.32.9-eins
 spec:
   template:
     spec:
@@ -22,5 +22,5 @@ spec:
       numCores: 8
       numSockets: 4
       sourceNode: pve020
-      templateID: 109
+      templateID: 108
       pool: k8s-vms-nekropolis
