@@ -187,6 +187,29 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  name: forgejo
+  namespace: argocd
+spec:
+  destination:
+    namespace: forgejo
+    server: https://kubernetes.default.svc
+  project: unterbau
+  source:
+    path: manifests/forgejo
+    repoURL: https://github.com/MausoleumManagement/forgejo.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
   name: hardcoredns
   namespace: argocd
 spec:
