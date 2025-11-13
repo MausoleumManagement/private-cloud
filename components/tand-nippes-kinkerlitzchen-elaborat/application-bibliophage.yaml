@@ -18,5 +18,5 @@ spec:
   project: tand-nippes-kinkerlitzchen-elaborat
   source:
     path: manifests/bibliophage
-    repoURL: "https://github.com/GruftGeschoepfe/bibliophage.git"
+    repoURL: "https://github.com/MausoleumManagement/bibliophage.git"
     targetRevision: master
