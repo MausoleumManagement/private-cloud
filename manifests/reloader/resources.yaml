@@ -10,6 +10,23 @@ metadata:
   namespace: reloader
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: reloader-reloader-metadata-role
+  namespace: reloader
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - list
+  - get
+  - watch
+  - create
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: reloader-reloader-role
@@ -57,6 +74,9 @@ rules:
   - jobs
   verbs:
   - create
+  - delete
+  - list
+  - get
 - apiGroups:
   - ""
   resources:
@@ -64,6 +84,20 @@ rules:
   verbs:
   - create
   - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: reloader-reloader-metadata-rolebinding
+  namespace: reloader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: reloader-reloader-metadata-role
+subjects:
+- kind: ServiceAccount
+  name: reloader-reloader
+  namespace: reloader
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -95,7 +129,24 @@ spec:
         app: reloader-reloader
     spec:
       containers:
-      - image: ghcr.io/stakater/reloader:v1.0.116
+      - env:
+        - name: GOMAXPROCS
+          valueFrom:
+            resourceFieldRef:
+              divisor: "1"
+              resource: limits.cpu
+        - name: GOMEMLIMIT
+          valueFrom:
+            resourceFieldRef:
+              divisor: "1"
+              resource: limits.memory
+        - name: RELOADER_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: RELOADER_DEPLOYMENT_NAME
+          value: reloader-reloader
+        image: ghcr.io/stakater/reloader:v1.4.10
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
@@ -119,6 +170,13 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "1"
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 512Mi
         securityContext: {}
       securityContext:
         runAsNonRoot: true
