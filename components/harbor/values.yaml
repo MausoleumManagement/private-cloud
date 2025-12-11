@@ -103,9 +103,9 @@ redis:
 
     # Note: Since we use  kustomize, the lookup() function used by the chart to figure out the
     # actual value of the password-secret in the cluster doesn't work with kustomize helm rendering
-    # so we have to provide password directly here. You can still manage the actual
-    # secret value via ExternalSecrets or other secret management, but the password
-    # needs to be in this values file for kustomize to work.
-    username: ""
+    # so we have to provide the username and password directly here, so that the chart renders
+    # we patch it out afterwards using kustomize
+    username: "I_AM_NOT_AN_ACTUAL_USERNAME"
     password: "PLACEHOLDER_REPLACE_ME"
+    # This doesn't work with kustomize :V
     # existingSecret: "redis"
