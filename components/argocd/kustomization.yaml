@@ -9,7 +9,7 @@ helmCharts:
   # https://artifacthub.io/packages/helm/argo/argo-cd
   - name: argo-cd
     repo: https://argoproj.github.io/argo-helm
-    version: 8.1.3
+    version: 8.6.4
     releaseName: argocd
     # apparently helm will suppress the generation of CRDs by default 
     includeCRDs: true
