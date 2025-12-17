@@ -333,7 +333,7 @@ spec:
         - name: AGENT_INJECT_LOG_LEVEL
           value: info
         - name: AGENT_INJECT_VAULT_ADDR
-          value: http://openbao.default.svc:8200
+          value: http://openbao.openbao.svc:8200
         - name: AGENT_INJECT_VAULT_AUTH_PATH
           value: auth/kubernetes
         - name: AGENT_INJECT_VAULT_IMAGE
@@ -341,7 +341,7 @@ spec:
         - name: AGENT_INJECT_TLS_AUTO
           value: openbao-agent-injector-cfg
         - name: AGENT_INJECT_TLS_AUTO_HOSTS
-          value: openbao-agent-injector-svc,openbao-agent-injector-svc.default,openbao-agent-injector-svc.default.svc
+          value: openbao-agent-injector-svc,openbao-agent-injector-svc.openbao,openbao-agent-injector-svc.openbao.svc
         - name: AGENT_INJECT_LOG_FORMAT
           value: standard
         - name: AGENT_INJECT_REVOKE_ON_SHUTDOWN
@@ -580,10 +580,23 @@ spec:
       app.kubernetes.io/name: openbao
       component: server
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openbao-tls-cert
+  namespace: openbao
+spec:
+  dnsNames:
+  - openbao.irminsul
+  issuerRef:
+    kind: ClusterIssuer
+    name: local-ca-issuer
+  secretName: openbao-tls-cert
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: openbao
+  name: openbao-gateway
   namespace: openbao
 spec:
   gatewayClassName: cilium
@@ -595,7 +608,7 @@ spec:
     tls:
       certificateRefs:
       - kind: Secret
-        name: ca
+        name: openbao-tls-cert
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -606,7 +619,7 @@ spec:
   hostnames:
   - openbao.irminsul
   parentRefs:
-  - name: tls-gateway
+  - name: openbao-gateway
   rules:
   - backendRefs:
     - name: openbao

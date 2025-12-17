@@ -3,3 +3,4 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: openbao-server-test
+  namespace: openbao
