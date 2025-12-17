@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: csi-cephfs
 
-helmcharts:
+helmCharts:
   # https://github.com/ceph/ceph-csi
   # https://github.com/ceph/ceph-csi/tree/devel/charts/ceph-csi-cephfs
   # https://artifacthub.io/packages/helm/ceph-csi/ceph-csi-cephfs

@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: openbao
 
-helmcharts:
+helmCharts:
   # https://github.com/openbao/openbao-helm
   # https://github.com/openbao/openbao-helm/tree/main/charts/openbao
   - name: openbao
