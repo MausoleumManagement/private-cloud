@@ -8,7 +8,7 @@ helmCharts:
     releaseName: ciliumrelease
     repo: https://helm.cilium.io/
     valuesFile: values.yaml
-    version: 1.18.4
+    version: 1.18.5
 resources:
   - namespace.yaml
   # Gateway API stuff. Cilium currently supports 1.2, see
