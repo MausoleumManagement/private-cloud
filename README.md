@@ -1,68 +1,16 @@
+## So What Is This Anyway?
+
+This repository contains the manifests for the infrastructure services of my kubernetes cluster undeder [manifests/](manifests/) and the kustomize files required to generate them under [components/](components/).
+
+
+## Further reading
+
+The [documentation](docs/) is still WIP, as you can tell, but i've wrotten some articles on my blog about this project: [[1](https://lichturm.de/en/posts/pve_k8s_considerations/),[2](https://lichturm.de/de/posts/pve_k8s_image-builder/),[3](https://lichturm.de/de/posts/pve_k8s_capi_testrun/)]. If you want to get a better idea, i think the [official documentation](https://cluster-api.sigs.k8s.io/user/concepts) of Cluster API will serve you better than most things i could write.
+The idea is to have a fully declarative setup that can be published without too much to think about.
+
+
 ## Renovate
+
+To help with keeping all the depencencies up to date, renovate is used to automate the release note retrieval and MR creation process.
+
 The renovate configuration can be validated as described [here](https://docs.renovatebot.com/config-validation/). A [custom manager](https://docs.renovatebot.com/modules/manager/regex/) is used to handle the provider generation script.
-
-
-## Cert Manager
-This repository contains the files necessary to install cert-manager.
-
-- See [here](https://cert-manager.io/docs/) for the documentation
-- See [here](https://artifacthub.io/packages/helm/cert-manager/cert-manager) for the releases
-- See [here](https://github.com/cert-manager/cert-manager) for the code
-
-## Cilium
-Until we have improved the ugly JSON
-
-```bash
-detect-undead config cilium | yq 'select(.metadata.name == "cilium-envoy-config") | .data."bootstrap-config.json"' | jq
-```
-
-## ArgoCD
-
-### Upgrading and How the Helm Chart Relates to the Deployment Method in the Docs 
-
-The official quickstart instructions instructions [here](https://argo-cd.readthedocs.io/en/stable/getting_started/) work by just downloading a bunch of resources and applying them on the cluster. These resources are generated using kustomize for each release. The helm chart developers say that they want to be as close as possible to this in their [notes on upgrading the helmchart](https://github.com/argoproj/argo-helm/tree/main/charts/argo-cd#synchronizing-changes-from-original-repository).
-
-# Storage
-
-
-## Reading Material
-
-- https://kubernetes-csi.github.io/docs/
-
-This repo contains the deployments for various Container Storage Interfaces (CSIs). Their job is to make the various volumes we create as kubernetes resources actually appear in the respective backends.
-
-CSI plugins can either be in-tree (i.e. in the K8s source code) or out-of-tree (i.e. outside of the code and usually deployed using Kubernetes resources).
-See [here](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes) for a list of supported in-tree CSI plugins as well as deprecated plugins which will need to be migrated in the future!
-This is worth taking a look at in future releases, because we will need to migrate away from deprecated in-tree plugins and deploy the relevant out-of-tree plugin before we roll out the update that completely removes the in-tree version.
-
-There are many components that cooperate, to make each csi-plugin work. Other than the plugin itself, which handles the communication to the storage backend, there are multiple components responsible for the kubernetes side of things. So when we create, resize, create a snapshot of, attach, ..., a volume, they are going to talk to the csi-plugin using a standardised interface, and then the plugin can do its idiosyncratic backend magic, which Kubernetes does not know about. The generic componentes like the attacher, provisioner, and so on, are provided by SIG-Storage. A storage backend maintainer only needs to implement the specific csi-plugin with the correct interface.
-
-Here's a figure displaying this. It's from the [Openshift documentation](https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html/storage/using-container-storage-interface-csi#persistent-storage-csi-architecture_persistent-storage-csi), but it's close enough:
-
-![image](docs/images/csi_architecture.png)
-
-The Openshift documentation (owned by Red Hat) is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0).
-
-## Cluster Wide CSI Components
-### snapshot-controller
-Creates snapshots when users create `VolumeSnapshot` objects. The contents of those snapshots live in `VolumeSnapshotContent` objects, like PVs and PVCs.
-
-
-## CSI Generic Components
-Each CSI has these, usually. See [here](https://github.com/kubernetes-csi) for their repos. Here's what each one does:
-### attacher
-Responsible for attaching and detaching external volumes to nodes.
-#### provisioner
-Responsible for creating volumes in the storage backend when users create PVCs.
-#### snapshotter
-Contains the CSI specific logic for creating snapshots
-#### resizer
-Resizes PVs when users modify the respective PVC.
-#### registrar
-This thing registers the CSI driver with kubelet because microservices.
-#### livenessprobe
-This thing serves the `/healthz` endpoint of the CSI driver. Because microservices, that's why.
-
-## CSI Specific Components
-#### plugin
-The actual plugin offering the functionality for the respective backend.
