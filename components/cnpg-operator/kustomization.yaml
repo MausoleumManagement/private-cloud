@@ -8,7 +8,7 @@ helmCharts:
   # https://github.com/cloudnative-pg/charts/tree/main/charts/cloudnative-pg
   - name: cloudnative-pg
     repo: https://cloudnative-pg.github.io/charts
-    version: 0.26.0
+    version: 0.27.0
     releaseName: cnpg
     # apparently helm will suppress the generation of CRDs by default 
     includeCRDs: true
