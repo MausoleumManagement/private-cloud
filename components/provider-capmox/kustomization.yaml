@@ -1,4 +1,5 @@
 resources:
   - resources.yaml
+  - externalsecrets.yaml
 patches:
   - path: patch-delete-capmox-credentials-secret.yaml

@@ -278,6 +278,9 @@ spec:
   controlPlaneEndpoint:
     host: 192.168.10.11
     port: 6443
+  credentialsRef:
+    name: capmox-manager-credentials
+    namespace: capmox-system
   dnsServers:
   - 192.168.8.2
   - 84.200.69.80

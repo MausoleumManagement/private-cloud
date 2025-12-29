@@ -4,6 +4,9 @@ metadata:
   annotations:
   name: nekropolis
 spec:
+  credentialsRef:
+    name: "capmox-manager-credentials"
+    namespace: capmox-system
   allowedNodes:
     - pve020
     - pve021
