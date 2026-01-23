@@ -256,14 +256,14 @@ spec:
       infrastructureRef:
         apiGroup: infrastructure.cluster.x-k8s.io
         kind: ProxmoxMachineTemplate
-        name: nekropolis-control-plane-1.32.9-eins
+        name: nekropolis-control-plane-1.33.7-eins
   replicas: 3
   rollout:
     strategy:
       rollingUpdate:
         maxSurge: 1
       type: RollingUpdate
-  version: v1.32.9
+  version: v1.33.7
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxCluster
@@ -295,7 +295,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxMachineTemplate
 metadata:
-  name: nekropolis-control-plane-1.32.9-eins
+  name: nekropolis-control-plane-1.33.7-eins
   namespace: cluster-api
 spec:
   template:
@@ -315,7 +315,7 @@ spec:
       numSockets: 2
       pool: k8s-vms-nekropolis
       sourceNode: pve020
-      templateID: 108
+      templateID: 106
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxMachineTemplate
