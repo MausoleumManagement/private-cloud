@@ -38,5 +38,5 @@ spec:
         # the german numeral suffix at the end is used to differentiate machine templates
         # within the same kubernetes release, since they should not be modified
         # see https://cluster-api.sigs.k8s.io/tasks/updating-machine-templates.html
-        name: nekropolis-worker-1.32.9-eins
-      version: v1.32.9
+        name: nekropolis-worker-1.33.7-eins
+      version: v1.33.7

@@ -91,9 +91,9 @@ spec:
       infrastructureRef:
         apiGroup: infrastructure.cluster.x-k8s.io
         kind: ProxmoxMachineTemplate
-        name: nekropolis-worker-1.32.9-eins
+        name: nekropolis-worker-1.33.7-eins
       minReadySeconds: 10
-      version: v1.32.9
+      version: v1.33.7
 ---
 apiVersion: controlplane.cluster.x-k8s.io/v1beta2
 kind: KubeadmControlPlane
@@ -320,7 +320,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
 kind: ProxmoxMachineTemplate
 metadata:
-  name: nekropolis-worker-1.32.9-eins
+  name: nekropolis-worker-1.33.7-eins
   namespace: cluster-api
 spec:
   template:
@@ -340,7 +340,7 @@ spec:
       numSockets: 4
       pool: k8s-vms-nekropolis
       sourceNode: pve020
-      templateID: 108
+      templateID: 106
 ---
 apiVersion: ipam.cluster.x-k8s.io/v1alpha2
 kind: InClusterIPPool
