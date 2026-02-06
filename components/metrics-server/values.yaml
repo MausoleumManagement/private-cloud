@@ -1,0 +1,5 @@
+# https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/values.yaml
+
+# TODO: this is enabled by default, we should figure out how to properly setup TLS
+# apiService:
+#   insecureSkipTLSVerify: false

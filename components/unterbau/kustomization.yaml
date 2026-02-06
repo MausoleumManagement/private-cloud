@@ -15,4 +15,5 @@ resources:
   - application-forgejo.yaml
   - application-hardcoredns.yaml
   - application-kube-vip-cloud-controller.yaml
+  - application-metrics-server.yaml
   - application-openbao.yaml

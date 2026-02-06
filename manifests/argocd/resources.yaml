@@ -27040,6 +27040,8 @@ spec:
     kind: Namespace
   - group: apiextensions.k8s.io
     kind: CustomResourceDefinition
+  - group: apiregistration.k8s.io
+    kind: APIService
   - group: rbac.authorization.k8s.io
     kind: ClusterRole
   - group: rbac.authorization.k8s.io
@@ -27090,6 +27092,8 @@ spec:
   - namespace: kube-system
     server: https://kubernetes.default.svc
   - namespace: openbao
+    server: https://kubernetes.default.svc
+  - namespace: metrics-server
     server: https://kubernetes.default.svc
   - namespace: reloader
     server: https://kubernetes.default.svc

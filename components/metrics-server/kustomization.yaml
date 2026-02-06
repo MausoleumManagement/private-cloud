@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: metrics-server
+
+helmCharts:
+  # https://github.com/kubernetes-sigs/metrics-server
+  # https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/values.yaml
+  # https://artifacthub.io/packages/helm/metrics-server/metrics-server
+  - name: metrics-server
+    repo: https://kubernetes-sigs.github.io/metrics-server/
+    version: "3.13.0"
+    releaseName: metrics-server
+    valuesFile: values.yaml
+resources:
+  - namespace.yaml

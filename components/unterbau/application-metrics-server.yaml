@@ -1,19 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
-  namespace: argocd
+  name: metrics-server
   #this finaliser causes cascading deletion (delete children)
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  # the valkey sts ends up with these extra fields when applied in k8s
-  ignoreDifferences:
-    - group: apps
-      kind: StatefulSet
-      jsonPointers:
-      - /spec/volumeClaimTemplates/0/apiVersion
-      - /spec/volumeClaimTemplates/0/kind
   syncPolicy:
     automated:
       enabled: true
@@ -21,10 +13,10 @@ spec:
     syncOptions:
       - ServerSideApply=true
   destination:
-    namespace: argocd
+    namespace: metrics-server
     server: "https://kubernetes.default.svc"
   project: unterbau
   source:
-    path: manifests/argocd
+    path: manifests/metrics-server
     repoURL: "https://github.com/AtomSoldat/private-cloud.git"
     targetRevision: master
