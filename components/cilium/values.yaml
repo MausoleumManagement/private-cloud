@@ -30,6 +30,11 @@ l7Proxy: true
 gatewayAPI:
   enabled: true
 
+ingressController:
+  enabled: true
+  enforceHttps: true
+  default: true
+
 # this would only be needed if we wanted to partially replace the kube-proxy
 #nodePort:
 #  enabled: true

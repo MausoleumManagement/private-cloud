@@ -11175,7 +11175,42 @@ kind: Role
 metadata:
   labels:
     app.kubernetes.io/part-of: cilium
+  name: cilium-ingress-secrets
+  namespace: cilium-secrets
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
   name: cilium-operator-gateway-secrets
+  namespace: cilium-secrets
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - update
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
+  name: cilium-operator-ingress-secrets
   namespace: cilium-secrets
 rules:
 - apiGroups:
@@ -11570,6 +11605,21 @@ rules:
   - get
   - update
 - apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - ingressclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+- apiGroups:
   - gateway.networking.k8s.io
   resources:
   - gatewayclasses
@@ -11661,6 +11711,22 @@ kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/part-of: cilium
+  name: cilium-operator-ingress-secrets
+  namespace: cilium-secrets
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cilium-operator-ingress-secrets
+subjects:
+- kind: ServiceAccount
+  name: cilium-operator
+  namespace: cilium
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
   name: cilium-operator-tlsinterception-secrets
   namespace: cilium-secrets
 roleRef:
@@ -11670,6 +11736,22 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: cilium-operator
+  namespace: cilium
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
+  name: cilium-secrets
+  namespace: cilium-secrets
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cilium-ingress-secrets
+subjects:
+- kind: ServiceAccount
+  name: cilium
   namespace: cilium
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -11786,6 +11868,9 @@ data:
   enable-health-check-nodeport: "true"
   enable-health-checking: "true"
   enable-hubble: "true"
+  enable-ingress-controller: "true"
+  enable-ingress-proxy-protocol: "false"
+  enable-ingress-secrets-sync: "true"
   enable-internal-traffic-policy: "true"
   enable-ipv4: "true"
   enable-ipv4-big-tcp: "false"
@@ -11810,6 +11895,7 @@ data:
   enable-vtep: "false"
   enable-well-known-identities: "false"
   enable-xt-socket-fallback: "true"
+  enforce-ingress-https: "true"
   envoy-access-log-buffer-size: "4096"
   envoy-base-id: "0"
   envoy-config-retry-interval: 15s
@@ -11834,6 +11920,14 @@ data:
   identity-gc-interval: 15m0s
   identity-heartbeat-timeout: 30m0s
   identity-management-mode: agent
+  ingress-default-lb-mode: dedicated
+  ingress-hostnetwork-enabled: "false"
+  ingress-hostnetwork-nodelabelselector: ""
+  ingress-hostnetwork-shared-listener-port: "8080"
+  ingress-lb-annotation-prefixes: lbipam.cilium.io nodeipam.cilium.io service.beta.kubernetes.io
+    service.kubernetes.io cloud.google.com
+  ingress-secrets-namespace: cilium-secrets
+  ingress-shared-lb-service-name: cilium-ingress
   install-no-conntrack-iptables-rules: "false"
   ipam: cluster-pool
   ipam-cilium-node-update-rate: 15s
@@ -11920,6 +12014,18 @@ metadata:
   namespace: cilium
 ---
 apiVersion: v1
+kind: Endpoints
+metadata:
+  labels: null
+  name: cilium-ingress
+  namespace: cilium
+subsets:
+- addresses:
+  - ip: 192.192.192.192
+  ports:
+  - port: 9999
+---
+apiVersion: v1
 kind: Service
 metadata:
   annotations:
@@ -11942,6 +12048,25 @@ spec:
   selector:
     k8s-app: cilium-envoy
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
+    cilium.io/ingress: "true"
+  name: cilium-ingress
+  namespace: cilium
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    protocol: TCP
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -12836,3 +12961,12 @@ spec:
     rollingUpdate:
       maxUnavailable: 2
     type: RollingUpdate
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+  name: cilium
+spec:
+  controller: cilium.io/ingress-controller
