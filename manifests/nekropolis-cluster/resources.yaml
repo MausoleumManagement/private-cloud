@@ -13,13 +13,28 @@ metadata:
 spec:
   template:
     spec:
+      files:
+      - content: |
+          {
+            "apiVersion": "kubelet.config.k8s.io/v1beta1",
+            "kind": "KubeletConfiguration",
+            "serverTLSBootstrap": true
+          }
+        owner: root:root
+        path: /etc/kubernetes/patches/kubeletconfiguration0+strategic.json
+        permissions: "0600"
       format: cloud-config
+      initConfiguration:
+        patches:
+          directory: /etc/kubernetes/patches
       joinConfiguration:
         nodeRegistration:
           imagePullPolicy: IfNotPresent
           kubeletExtraArgs:
           - name: provider-id
             value: proxmox://'{{ ds.meta_data.instance_id }}'
+        patches:
+          directory: /etc/kubernetes/patches
       users:
       - name: root
         sshAuthorizedKeys:
@@ -110,6 +125,15 @@ spec:
         - name: enable-admission-plugins
           value: NamespaceExists
     files:
+    - content: |
+        {
+          "apiVersion": "kubelet.config.k8s.io/v1beta1",
+          "kind": "KubeletConfiguration",
+          "serverTLSBootstrap": true
+        }
+      owner: root:root
+      path: /etc/kubernetes/patches/kubeletconfiguration0+strategic.json
+      permissions: "0600"
     - content: |-
         apiVersion: v1
         kind: Pod
@@ -238,12 +262,16 @@ spec:
         kubeletExtraArgs:
         - name: provider-id
           value: proxmox://'{{ ds.meta_data.instance_id }}'
+      patches:
+        directory: /etc/kubernetes/patches
     joinConfiguration:
       nodeRegistration:
         imagePullPolicy: IfNotPresent
         kubeletExtraArgs:
         - name: provider-id
           value: proxmox://'{{ ds.meta_data.instance_id }}'
+      patches:
+        directory: /etc/kubernetes/patches
     preKubeadmCommands:
     - /etc/kube-vip-prepare.sh
     users:

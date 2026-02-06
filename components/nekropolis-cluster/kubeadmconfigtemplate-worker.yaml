@@ -5,8 +5,30 @@ metadata:
 spec:
   template:
     spec:
+      files:
+        # by default, the kubelet uses a certificate with its hostname as subject 
+        # that makes the metrics server sad, because it accesses them via IP
+        # we patch the kubelet config so the kubelets ask for certificates
+        # which the metrics server can actually use to talk to the kubelets via TLS
+        # https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/
+        # https://www.zeng.dev/post/2023-kubeadm-enable-kubelet-serving-certs/
+        # https://cluster-api.sigs.k8s.io/tasks/bootstrap/kubeadm-bootstrap/kubelet-config#use-kubeadms-kubeletconfiguration-patch-target
+        - path: /etc/kubernetes/patches/kubeletconfiguration0+strategic.json
+          owner: "root:root"
+          permissions: "0600"
+          content: |
+            {
+              "apiVersion": "kubelet.config.k8s.io/v1beta1",
+              "kind": "KubeletConfiguration",
+              "serverTLSBootstrap": true
+            }
       format: cloud-config
+      initConfiguration:
+        patches:
+          directory: /etc/kubernetes/patches
       joinConfiguration:
+        patches:
+          directory: /etc/kubernetes/patches
         nodeRegistration:
           imagePullPolicy: IfNotPresent
           kubeletExtraArgs:
