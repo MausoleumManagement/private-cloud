@@ -34,6 +34,14 @@ ingressController:
   enabled: true
   enforceHttps: true
   default: true
+  # defaults + kubevip related annotations for declaratively defining LB IPs
+  ingressLBAnnotationPrefixes:
+    - "lbipam.cilium.io"
+    - "nodeipam.cilium.io"
+    - "service.beta.kubernetes.io"
+    - "service.kubernetes.io"
+    - "cloud.google.com"
+    - "kube-vip.io"
 
 # this would only be needed if we wanted to partially replace the kube-proxy
 #nodePort:

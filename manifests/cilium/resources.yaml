@@ -11925,7 +11925,7 @@ data:
   ingress-hostnetwork-nodelabelselector: ""
   ingress-hostnetwork-shared-listener-port: "8080"
   ingress-lb-annotation-prefixes: lbipam.cilium.io nodeipam.cilium.io service.beta.kubernetes.io
-    service.kubernetes.io cloud.google.com
+    service.kubernetes.io cloud.google.com kube-vip.io
   ingress-secrets-namespace: cilium-secrets
   ingress-shared-lb-service-name: cilium-ingress
   install-no-conntrack-iptables-rules: "false"
