@@ -25034,8 +25034,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kube-vip.io/loadbalancerIPs: 192.168.13.3
   labels:
     app.kubernetes.io/component: server
     app.kubernetes.io/instance: argocd
@@ -25047,7 +25045,6 @@ metadata:
   name: argocd-server
   namespace: argocd
 spec:
-  externalTrafficPolicy: Cluster
   ports:
   - name: http
     port: 80
@@ -25061,7 +25058,7 @@ spec:
     app.kubernetes.io/instance: argocd
     app.kubernetes.io/name: argocd-server
   sessionAffinity: None
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -27218,3 +27215,23 @@ spec:
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+    kube-vip.io/loadbalancerIPs: 192.168.13.3
+  name: argocd-server
+  namespace: argocd
+spec:
+  defaultBackend:
+    service:
+      name: argocd-server
+      port:
+        number: 80
+  ingressClassName: cilium
+  tls:
+  - hosts:
+    - argocd.nekropolis.irminsul
+    secretName: argocd-server

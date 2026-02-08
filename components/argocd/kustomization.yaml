@@ -29,6 +29,7 @@ helmCharts:
   # https://github.com/mk-raven/valkey-helm/tree/main/valkey
 resources:
   - namespace.yaml
+  - ingress-argocd-server.yaml
   - appproject-default.yaml
   - appproject-unterbau.yaml
   - application-unterbau.yaml
