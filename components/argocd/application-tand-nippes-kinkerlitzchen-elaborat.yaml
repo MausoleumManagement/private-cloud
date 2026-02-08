@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tand-nippes-kinkerlitzchen-elaborat
+  #this finaliser causes cascading deletion (delete children)
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  destination:
+    namespace: argocd
+    server: "https://kubernetes.default.svc"
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/tand-nippes-kinkerlitzchen-elaborat
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
+    targetRevision: master

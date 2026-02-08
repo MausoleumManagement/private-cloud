@@ -33,6 +33,7 @@ resources:
   - appproject-unterbau.yaml
   - application-unterbau.yaml
   - appproject-tand-nippes-kinkerlitzchen-elaborat.yaml
+  - application-tand-nippes-kinkerlitzchen-elaborat.yaml
 patches:
   - path: patch-application-controller-statefulset.yaml
   - path: patch-delete-argocd-secret.yaml

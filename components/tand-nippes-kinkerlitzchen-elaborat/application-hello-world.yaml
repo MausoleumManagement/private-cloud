@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hello-world
+  #this finaliser causes cascading deletion (delete children)
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  destination:
+    namespace: hello-world
+    server: "https://kubernetes.default.svc"
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/hello-world
+    repoURL: "https://github.com/Atomsoldat/demo_k8s_application.git"
+    targetRevision: master

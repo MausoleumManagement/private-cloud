@@ -3,4 +3,6 @@ kind: Kustomization
 
 namespace: argocd
 resources:
-  - application-bibliophage.yaml
+  # disable, while we develop locally
+  #- application-bibliophage.yaml
+  - application-hello-world.yaml

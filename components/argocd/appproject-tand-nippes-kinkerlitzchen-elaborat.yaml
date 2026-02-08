@@ -25,11 +25,27 @@ spec:
   #    applications:
   #      - '*'
   sourceRepos:
-  - 'https://github.com/GruftGeschoepfe/biliophage.git'
+  - 'https://github.com/AtomSoldat/demo_k8s_application.git'
+  - 'https://github.com/AtomSoldat/private-cloud.git'
+  # TODO: Currently we are granting permissions to create applications to this appproject, which is not great
+  # TODO: This should be separated
   destinations:
-  - namespace: bibliophage
+  - namespace: argocd
     server: https://kubernetes.default.svc
+  - namespace: hello-world
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: ''
+    kind: Namespace
   namespaceResourceWhitelist:
+  # TODO: we want to get rid of this
+  - group: 'argoproj.io'
+    kind: Application
+  # END TODO
+  - group: 'autoscaling'
+    kind: HorizontalPodAutoscaler
+  - group: 'networking.k8s.io'
+    kind: Ingress
   - group: ''
     kind: ConfigMap
   - group: ''

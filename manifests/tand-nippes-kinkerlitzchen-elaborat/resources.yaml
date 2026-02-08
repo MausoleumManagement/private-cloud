@@ -3,16 +3,16 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  name: bibliophage
+  name: hello-world
   namespace: argocd
 spec:
   destination:
-    namespace: bibliophage
+    namespace: hello-world
     server: https://kubernetes.default.svc
   project: tand-nippes-kinkerlitzchen-elaborat
   source:
-    path: manifests/bibliophage
-    repoURL: https://github.com/MausoleumManagement/bibliophage.git
+    path: manifests/hello-world
+    repoURL: https://github.com/Atomsoldat/demo_k8s_application.git
     targetRevision: master
   syncPolicy:
     automated:
