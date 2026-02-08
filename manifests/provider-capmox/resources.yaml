@@ -4044,11 +4044,17 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/capmox/proxmox-credentials
+      metadataPolicy: None
       property: secret
     secretKey: secret
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/capmox/proxmox-credentials
+      metadataPolicy: None
       property: token
     secretKey: token
   refreshInterval: 1h0m0s
