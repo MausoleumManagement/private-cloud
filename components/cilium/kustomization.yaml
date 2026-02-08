@@ -11,6 +11,7 @@ helmCharts:
     version: 1.18.6
 resources:
   - namespace.yaml
+  - ingress-hubble-ui.yaml
   # Gateway API stuff. Cilium currently supports 1.2, see
   # https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/
   - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml

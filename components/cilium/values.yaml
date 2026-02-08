@@ -21,6 +21,9 @@ hubble:
   listenAddress: ":4244"
   relay:
     enabled: true
+  ui:
+    enabled: true
+  
 
   
 # settings for using the Gateway API
