@@ -25,6 +25,16 @@ hubble:
     enabled: true
     ingress:
       enabled: false
+
+# BEGIN mTLS
+authentication:
+  enabled: true
+  mutual:
+    spire:
+      enabled: true
+      install:
+        enabled: true
+# END mTLS
   
 
   
