@@ -125,6 +125,8 @@ spec:
     kind: RoleBinding
   - group: 'networking.k8s.io'
     kind: Ingress
+  - group: 'external-secrets.io'
+    kind: ExternalSecret
   # BEGIN Gateway API
   - group: 'gateway.networking.k8s.io'
     kind: Gateway
