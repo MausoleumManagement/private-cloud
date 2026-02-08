@@ -35,6 +35,14 @@ l7Proxy: true
 gatewayAPI:
   enabled: true
 
+loadBalancer:
+  l7:
+    algorithm: "round_robin"
+    backend: envoy
+    # if we wanted to apply l7 load balancing to all services
+    # exposing these ports, here's how that would work
+    #ports: [80, 443]
+
 ingressController:
   enabled: true
   enforceHttps: true
