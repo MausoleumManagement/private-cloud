@@ -239,29 +239,6 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  name: kube-vip-cloud-controller
-  namespace: argocd
-spec:
-  destination:
-    namespace: kube-system
-    server: https://kubernetes.default.svc
-  project: unterbau
-  source:
-    path: manifests/kube-vip-cloud-controller
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
-    targetRevision: master
-  syncPolicy:
-    automated:
-      enabled: true
-      selfHeal: true
-    syncOptions:
-    - ServerSideApply=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   name: metrics-server
   namespace: argocd
 spec:
