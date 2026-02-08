@@ -4,7 +4,7 @@ metadata:
   name: hubble-ui
   namespace: cilium
   annotations:
-    kube-vip.io/loadbalancerIPs: 192.168.13.9
+    kube-vip.io/loadbalancerIPs: 192.168.13.4
     cert-manager.io/cluster-issuer: "local-ca-issuer"
 spec:
   ingressClassName: cilium

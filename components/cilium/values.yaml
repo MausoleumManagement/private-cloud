@@ -23,6 +23,8 @@ hubble:
     enabled: true
   ui:
     enabled: true
+    ingress:
+      enabled: false
   
 
   

@@ -13172,7 +13172,7 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: local-ca-issuer
-    kube-vip.io/loadbalancerIPs: 192.168.13.9
+    kube-vip.io/loadbalancerIPs: 192.168.13.4
   name: hubble-ui
   namespace: cilium
 spec:
