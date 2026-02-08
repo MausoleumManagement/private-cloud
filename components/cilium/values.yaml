@@ -35,6 +35,16 @@ l7Proxy: true
 gatewayAPI:
   enabled: true
 
+envoy:
+  enabled: true
+  # TODO: Throw this out again
+  # we pass the concurrency argument here to restrict envoy to one worker thread
+  # this gimps performance, but allows us to demonstrate the round-robin algorithm
+  # for loadbalancing better (remember to toss it out again)
+  extraArgs:
+    - '--concurrency'
+    - '1'
+
 loadBalancer:
   l7:
     algorithm: "round_robin"
