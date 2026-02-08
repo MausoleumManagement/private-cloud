@@ -3,6 +3,12 @@
 global:
   domain: argocd.nekropolis.irminsul
 configs:
+  # the helper templates in the charts merge what we define here with stuff already preset in the chart
+  # in the end, this ends up in the big argocd config maps
+  params:
+    # we terminate SSL in envoy
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/tls/#configuring-tls-for-argocd-server
+    server.insecure: true
   gpg:
     keys:
       FD9D433219DA6540: |
@@ -24,11 +30,6 @@ externalRedis:
   port: 6379
   existingSecret: argocd-valkey
 
-server:
-  # we terminate SSL in envoy
-  # https://argo-cd.readthedocs.io/en/stable/operator-manual/tls/#configuring-tls-for-argocd-server
-  extraArgs:
-    - "--insecure"
 
 redis:
   enabled: false

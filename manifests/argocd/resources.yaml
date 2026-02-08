@@ -24815,6 +24815,7 @@ data:
   reposerver.log.level: info
   server.dex.server: https://argocd-dex-server:5556
   server.dex.server.strict.tls: "false"
+  server.insecure: "true"
   server.log.format: text
   server.log.level: info
   server.repo.server.strict.tls: "false"
@@ -25128,7 +25129,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
+        checksum/cmd-params: ee3223b02c2d1a6571b5387e5973d11611a05829c1f18ce27c466192dde451bf
       labels:
         app.kubernetes.io/component: applicationset-controller
         app.kubernetes.io/instance: argocd
@@ -25420,7 +25421,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
+        checksum/cmd-params: ee3223b02c2d1a6571b5387e5973d11611a05829c1f18ce27c466192dde451bf
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
@@ -25570,7 +25571,7 @@ spec:
     metadata:
       annotations:
         checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
-        checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
+        checksum/cmd-params: ee3223b02c2d1a6571b5387e5973d11611a05829c1f18ce27c466192dde451bf
       labels:
         app.kubernetes.io/component: repo-server
         app.kubernetes.io/instance: argocd
@@ -25994,7 +25995,7 @@ spec:
     metadata:
       annotations:
         checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
-        checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
+        checksum/cmd-params: ee3223b02c2d1a6571b5387e5973d11611a05829c1f18ce27c466192dde451bf
       labels:
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: argocd
@@ -26019,7 +26020,6 @@ spec:
         - /usr/local/bin/argocd-server
         - --port=8080
         - --metrics-port=8083
-        - --insecure
         env:
         - name: ARGOCD_SERVER_NAME
           value: argocd-server
@@ -26457,7 +26457,7 @@ spec:
     metadata:
       annotations:
         checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
-        checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
+        checksum/cmd-params: ee3223b02c2d1a6571b5387e5973d11611a05829c1f18ce27c466192dde451bf
       labels:
         app.kubernetes.io/component: application-controller
         app.kubernetes.io/instance: argocd
