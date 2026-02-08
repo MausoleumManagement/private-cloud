@@ -24782,7 +24782,7 @@ data:
   statusbadge.enabled: "false"
   timeout.hard.reconciliation: 0s
   timeout.reconciliation: 180s
-  url: https://argocd.irminsul
+  url: https://argocd.nekropolis.irminsul
 kind: ConfigMap
 metadata:
   labels:
@@ -25569,7 +25569,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 5751c749ae4e3ecde5dbf194cb703a43c04813bcc9b89174be3d40cb6d2aa561
+        checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
         checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
       labels:
         app.kubernetes.io/component: repo-server
@@ -25993,7 +25993,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 5751c749ae4e3ecde5dbf194cb703a43c04813bcc9b89174be3d40cb6d2aa561
+        checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
         checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
       labels:
         app.kubernetes.io/component: server
@@ -26019,6 +26019,7 @@ spec:
         - /usr/local/bin/argocd-server
         - --port=8080
         - --metrics-port=8083
+        - --insecure
         env:
         - name: ARGOCD_SERVER_NAME
           value: argocd-server
@@ -26455,7 +26456,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 5751c749ae4e3ecde5dbf194cb703a43c04813bcc9b89174be3d40cb6d2aa561
+        checksum/cm: 52fc15636bd1ba4efb354806bc2c66de428a16f3884460f597b3cbc4c7851e55
         checksum/cmd-params: 93ce2659bac030fa4115175c83cd8eca86774100c9825593dbf5cc2a9b3524fe
       labels:
         app.kubernetes.io/component: application-controller

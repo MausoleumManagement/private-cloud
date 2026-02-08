@@ -1,8 +1,7 @@
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/templates/_helpers.tpl
 global:
-  domain: argocd.irminsul
-
+  domain: argocd.nekropolis.irminsul
 configs:
   gpg:
     keys:
@@ -25,11 +24,11 @@ externalRedis:
   port: 6379
   existingSecret: argocd-valkey
 
-#server:
-#  service:
-#    annotations:
-#      kube-vip.io/loadbalancerIPs: 192.168.13.3
-#    type: LoadBalancer
+server:
+  # we terminate SSL in envoy
+  # https://argo-cd.readthedocs.io/en/stable/operator-manual/tls/#configuring-tls-for-argocd-server
+  extraArgs:
+    - "--insecure"
 
 redis:
   enabled: false
