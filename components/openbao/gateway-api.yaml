@@ -24,6 +24,7 @@ spec:
     tls:
       certificateRefs:
       - kind: Secret
+        group: ''
         name: openbao-tls-cert
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -33,6 +34,8 @@ metadata:
 spec:
   parentRefs:
   - name: openbao-gateway
+    group: gateway.networking.k8s.io	
+    kind: Gateway
   hostnames:
   - "openbao.irminsul"
   rules:
@@ -43,3 +46,6 @@ spec:
     backendRefs:
     - name: openbao
       port: 8200
+      group: ''	
+      kind: Service
+      weight: 1
