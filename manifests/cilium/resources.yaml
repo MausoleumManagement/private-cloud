@@ -13717,6 +13717,22 @@ spec:
       maxUnavailable: 2
     type: RollingUpdate
 ---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: cilium-envoy-hardening
+spec:
+  description: Forbid all ingress / egress for cilium-envoy pods
+  egress:
+  - toEntities:
+    - none
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: cilium-envoy
+  ingress:
+  - fromEntities:
+    - none
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
