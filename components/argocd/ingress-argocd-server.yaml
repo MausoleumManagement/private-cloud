@@ -8,11 +8,17 @@ metadata:
     cert-manager.io/cluster-issuer: "local-ca-issuer"
 spec:
   ingressClassName: cilium
-  defaultBackend:
-    service:
-      name: argocd-server
-      port:
-        number: 80
+  rules:
+  - host: argocd.nekropolis.irminsul
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
   tls:
   - hosts:
     - argocd.nekropolis.irminsul

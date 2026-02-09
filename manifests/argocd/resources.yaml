@@ -27234,12 +27234,18 @@ metadata:
   name: argocd-server
   namespace: argocd
 spec:
-  defaultBackend:
-    service:
-      name: argocd-server
-      port:
-        number: 80
   ingressClassName: cilium
+  rules:
+  - host: argocd.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
   tls:
   - hosts:
     - argocd.nekropolis.irminsul
