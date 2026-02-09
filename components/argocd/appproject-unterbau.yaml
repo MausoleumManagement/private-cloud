@@ -86,6 +86,8 @@ spec:
     kind: ClusterIssuer
   - group: 'networking.k8s.io'
     kind: IngressClass
+  - group: 'cilium.io'
+    kind: CiliumClusterwideNetworkPolicy
   - group: 'postgresql.cnpg.io'
     kind: ClusterImageCatalog
   #BEGIN Storage related things
@@ -131,6 +133,8 @@ spec:
     kind: Ingress
   - group: 'external-secrets.io'
     kind: ExternalSecret
+  - group: 'cilium.io'
+    kind: CiliumNetworkPolicy
   # BEGIN Gateway API
   - group: 'gateway.networking.k8s.io'
     kind: Gateway
