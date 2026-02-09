@@ -13718,6 +13718,21 @@ spec:
     type: RollingUpdate
 ---
 apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-ingress-egress
+spec:
+  description: Allow all egress traffic from reserved ingress identity to any endpoints
+    in the cluster
+  egress:
+  - toEntities:
+    - cluster
+  endpointSelector:
+    matchExpressions:
+    - key: reserved:ingress
+      operator: Exists
+---
+apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: cilium-envoy-hardening
