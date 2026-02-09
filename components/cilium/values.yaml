@@ -50,6 +50,7 @@ gatewayAPI:
 
 envoy:
   enabled: true
+  idleTimeoutDurationSeconds: 20
   # TODO: Throw this out again
   # we pass the concurrency argument here to restrict envoy to one worker thread
   # this gimps performance, but allows us to demonstrate the round-robin algorithm
