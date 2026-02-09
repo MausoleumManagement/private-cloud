@@ -79,7 +79,7 @@ metadata:
   namespace: cluster-api
 spec:
   clusterName: nekropolis
-  replicas: 3
+  replicas: 4
   rollout:
     strategy:
       rollingUpdate:

@@ -6,7 +6,7 @@ metadata:
   name: nekropolis-workers
 spec:
   clusterName: nekropolis
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       cluster.x-k8s.io/cluster-name: nekropolis
