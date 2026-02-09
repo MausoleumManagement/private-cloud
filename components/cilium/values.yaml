@@ -26,14 +26,17 @@ hubble:
     ingress:
       enabled: false
 
+# 20260209 - did not seem to work out of the box; SPIRE server was unable to find / create his SQLite DB in his PV
+# not sure whether this is related to a flaw in our storage setup, maybe test again with a different storage class?
+# https://docs.cilium.io/en/stable/network/servicemesh/mutual-authentication/mutual-authentication/#installation
 # BEGIN mTLS
-authentication:
-  enabled: true
-  mutual:
-    spire:
-      enabled: true
-      install:
-        enabled: true
+#authentication:
+#  enabled: true
+#  mutual:
+#    spire:
+#      enabled: true
+#      install:
+#        enabled: true
 # END mTLS
   
 
