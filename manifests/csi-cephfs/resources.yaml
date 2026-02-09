@@ -227,38 +227,6 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - nodes
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - storage.k8s.io
-  resources:
-  - csinodes
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - storage.k8s.io
-  resources:
-  - volumeattachments
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - patch
-- apiGroups:
-  - storage.k8s.io
-  resources:
-  - volumeattachments/status
-  verbs:
-  - patch
-- apiGroups:
-  - ""
-  resources:
   - persistentvolumeclaims/status
   verbs:
   - update
@@ -551,21 +519,6 @@ spec:
       - args:
         - --v=1
         - --csi-address=$(ADDRESS)
-        - --leader-election=true
-        - --retry-interval-start=500ms
-        env:
-        - name: ADDRESS
-          value: unix:///csi/csi-provisioner.sock
-        image: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
-        imagePullPolicy: IfNotPresent
-        name: csi-attacher
-        resources: {}
-        volumeMounts:
-        - mountPath: /csi
-          name: socket-dir
-      - args:
-        - --v=1
-        - --csi-address=$(ADDRESS)
         - --timeout=60s
         - --leader-election
         - --retry-interval-start=500ms
@@ -851,7 +804,7 @@ metadata:
     release: csi-cephfs
   name: cephfs.csi.ceph.com
 spec:
-  attachRequired: true
+  attachRequired: false
   fsGroupPolicy: File
   podInfoOnMount: false
   seLinuxMount: true
