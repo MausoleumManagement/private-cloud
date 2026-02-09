@@ -13212,12 +13212,18 @@ metadata:
   name: hubble-ui
   namespace: cilium
 spec:
-  defaultBackend:
-    service:
-      name: hubble-ui
-      port:
-        number: 80
   ingressClassName: cilium
+  rules:
+  - host: hubble.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: hubble-ui
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
   tls:
   - hosts:
     - hubble.nekropolis.irminsul

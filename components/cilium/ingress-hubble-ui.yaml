@@ -8,11 +8,17 @@ metadata:
     cert-manager.io/cluster-issuer: "local-ca-issuer"
 spec:
   ingressClassName: cilium
-  defaultBackend:
-    service:
-      name: hubble-ui
-      port:
-        number: 80
+  rules:
+  - host: hubble.nekropolis.irminsul
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hubble-ui
+            port:
+              number: 80
   tls:
   - hosts:
     - hubble.nekropolis.irminsul
