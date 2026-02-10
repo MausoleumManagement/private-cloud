@@ -13058,8 +13058,6 @@ spec:
         - -c /var/run/cilium/envoy/bootstrap-config.json
         - --base-id 0
         - --log-level info
-        - --concurrency
-        - "1"
         command:
         - /usr/bin/cilium-envoy-starter
         env:
