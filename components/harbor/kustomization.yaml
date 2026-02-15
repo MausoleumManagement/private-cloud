@@ -19,7 +19,18 @@ helmcharts:
     version: 1.17.2
     releaseName: harbor
     includeCRDs: true
-    valuesFile: values.yaml
+    valuesFile: values-harbor.yaml
+  - name: valkey
+    repo: oci://registry-1.docker.io/cloudpirates
+    version: 0.15.3
+    releaseName: valkey
+    valuesFile: values-valkey.yaml
+  # other candidates
+  # in case we want to switch
+  # https://artifacthub.io/packages/helm/groundhog2k/valkey/
+  # https://github.com/groundhog2k/helm-charts/tree/master/charts/valkey
+  # https://artifacthub.io/packages/helm/valkey/valkey
+  # https://github.com/mk-raven/valkey-helm/tree/main/valkey
 
 patches:
   - path: patch-delete-harbor-core-secret.yaml

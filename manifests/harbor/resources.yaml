@@ -5,8 +5,8 @@ metadata:
 ---
 apiVersion: v1
 data:
-  _REDIS_URL_CORE: redis://I_AM_NOT_AN_ACTUAL_USERNAME:PLACEHOLDER_REPLACE_ME@hostname:6379/0?idle_timeout_seconds=30
-  _REDIS_URL_REG: redis://I_AM_NOT_AN_ACTUAL_USERNAME:PLACEHOLDER_REPLACE_ME@hostname:6379/2?idle_timeout_seconds=30
+  _REDIS_URL_CORE: redis://valkey:6379/0?idle_timeout_seconds=30
+  _REDIS_URL_REG: redis://valkey:6379/2?idle_timeout_seconds=30
   CHART_CACHE_DRIVER: redis
   CONFIG_PATH: /etc/core/app.conf
   CORE_LOCAL_URL: http://127.0.0.1:8080
@@ -68,7 +68,7 @@ data:
       workers: 10
       backend: "redis"
       redis_pool:
-        redis_url: "redis://I_AM_NOT_AN_ACTUAL_USERNAME:PLACEHOLDER_REPLACE_ME@hostname:6379/1"
+        redis_url: "redis://valkey:6379/1"
         namespace: "harbor_job_service_namespace"
         idle_timeout_second: 3600
     job_loggers:
@@ -211,9 +211,8 @@ data:
       redirect:
         disable: false
     redis:
-      addr: hostname:6379
+      addr: valkey:6379
       db: 2
-      password: PLACEHOLDER_REPLACE_ME
       readtimeout: 10s
       writetimeout: 10s
       dialtimeout: 10s
@@ -274,6 +273,44 @@ metadata:
     heritage: Helm
     release: harbor
   name: harbor-registryctl
+  namespace: harbor
+---
+apiVersion: v1
+data:
+  valkey.conf: |
+    # Valkey configuration file
+
+    # Network
+    bind 0.0.0.0
+    port 6379
+
+    # General
+    daemonize no
+    supervised no
+
+    # Logging
+    loglevel notice
+    logfile ""
+
+    # Persistence
+    dir /data
+    save 900 1 300 10 60 10000
+
+    # Memory management
+
+    # Security
+    protected-mode no
+
+    # Additional configuration
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 9.0.0
+    helm.sh/chart: valkey-0.15.3
+  name: valkey
   namespace: harbor
 ---
 apiVersion: v1
@@ -377,6 +414,51 @@ spec:
     release: harbor
 ---
 apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 9.0.0
+    helm.sh/chart: valkey-0.15.3
+  name: valkey
+  namespace: harbor
+spec:
+  ports:
+  - name: valkey
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/name: valkey
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 9.0.0
+    helm.sh/chart: valkey-0.15.3
+  name: valkey-headless
+  namespace: harbor
+spec:
+  clusterIP: None
+  ports:
+  - name: valkey
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/name: valkey
+  type: ClusterIP
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
@@ -426,7 +508,8 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 100Gi
+  storageClassName: cephfs-2026
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -456,8 +539,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 70144483fb018c1cc77142e91d0321fe08e4ebaabe9bf6592a4cb958d72f993a
-        checksum/secret: ce842ad445e26997c9501285d6b902141c6026fe26dd3e56a7e8d209987e5cbe
+        checksum/configmap: 1a56e50fc8aea3bb95a3e4d47fc748c7dd0edf31f0fea3c92cd17bdc089036e0
+        checksum/secret: 9f1540cf71b491cdb9869d90aaaf43c7214857fe88a3763039836a3788f56110
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -616,10 +699,10 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 3187deda3db8fd0d9ec0da0f3efe5ec5597fc43e736be698f33229403dbf88af
+        checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: 8a9148e354a2041a7e81d6d2432738c19e96ddc61296bf3f32160fa56d7ee7d0
+        checksum/secret-core: 608550306255576b427b460e17ba704d3f88e38d2e376561f01ebf5708f76b64
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -817,9 +900,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 772986b0f244f87fb5ec25a1c84e1553cf1d7c58057756e9afdf4af1dd5f09a5
-        checksum/secret: beb1fcf1d0e1c6fc0870c8da80d80c2c278a73aa9d4fce4f131c7c2f75b43b35
-        checksum/secret-core: a0a5f6f2e6f58f6b02f134e8f28eddd8f33dd3ef5436a76d6f9a1626db339141
+        checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
+        checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
+        checksum/secret-core: 434ee59e6e0880342eafa7f6a01a62aae85462de0014d16b3e1e0b3a4116f606
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -963,6 +1046,114 @@ spec:
       - name: registry-data
         persistentVolumeClaim:
           claimName: harbor-registry
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/instance: valkey
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: valkey
+    app.kubernetes.io/version: 9.0.0
+    helm.sh/chart: valkey-0.15.3
+  name: valkey
+  namespace: harbor
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: valkey
+      app.kubernetes.io/name: valkey
+  serviceName: valkey-headless
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: valkey
+        app.kubernetes.io/name: valkey
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          CONFIG_FILE="/etc/valkey/valkey.conf"
+
+          valkey-server "$CONFIG_FILE"
+        env: null
+        image: docker.io/valkey/valkey:9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - valkey-cli -h "127.0.0.1" ping
+          failureThreshold: 3
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: valkey
+        ports:
+        - containerPort: 6379
+          name: valkey
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - valkey-cli -h "127.0.0.1" ping
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            memory: 64Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - mountPath: /etc/valkey
+          name: config
+        - mountPath: /tmp
+          name: tmp
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: default
+      volumes:
+      - configMap:
+          name: valkey
+        name: config
+      - emptyDir: {}
+        name: tmp
+  volumeClaimTemplates:
+  - metadata:
+      labels:
+        app.kubernetes.io/instance: valkey
+        app.kubernetes.io/name: valkey
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
+      storageClassName: cephfs-2026
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret

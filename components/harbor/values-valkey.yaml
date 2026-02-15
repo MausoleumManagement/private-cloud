@@ -1,0 +1,11 @@
+# https://github.com/cloudpirates/helm-charts
+# Standalone valkey instance used as harbor's external redis replacement
+
+architecture: standalone
+
+auth:
+  enabled: false
+
+persistence:
+  storageClass: cephfs-2026
+  size: 8Gi
