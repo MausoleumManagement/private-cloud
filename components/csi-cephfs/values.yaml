@@ -5,13 +5,13 @@ rbac:
 provisioner:
   replicaCount: 3
   attacher:
-    # TODO: Fix
+    # TODO: See if our new Storage Class Works fine
     # the helm chart used to not come with the attacher  sidecar (presumably, because it was not needed)
     # hence, our storage class was created with attachRequired=false ; this can not be modified after the fact
     # now the upstream helmchart added the attacher, and enables it by default So until we are able to move all of our
-    # PVCs to a new StorageClass, we need to disable this value
+    # PVCs to a new StorageClass, we need to keep this disabled on the old class
     # https://github.com/ceph/ceph-csi/commit/59d8b4f0e43cd7f07a1922a20ec41e3a474978df
-    enabled: false
+    enabled: true
 
 # Configuration for the CSI to connect to the cluster
 # See: https://github.com/ceph/ceph-csi/blob/devel/examples/README.md
