@@ -1,11 +1,27 @@
+# https://github.com/goharbor/harbor-helm/blob/main/values.yaml
+
+# TODO: do we want this?
+# caBundleSecretName:
+caSecretName: harbor-certificate
+
 expose:
-  type: loadBalancer
-  loadbalancer:
+  type: ingress
+  #loadbalancer:
+  #  annotations:
+  #    kube-vip.io/loadbalancerIPs: 192.168.13.5
+  ingress:
+    hosts:
+      core: harbor.nekropolis.irminsul
+    controller: default
     annotations:
       kube-vip.io/loadbalancerIPs: 192.168.13.5
+      cert-manager.io/cluster-issuer: local-ca-issuer
   tls:
-    auto:
-      commonName: harbor.irminsul
+    certSource: secret
+    secret:
+      secretName: harbor-certificate
+    #auto:
+    #  commonName: harbor.nekropolis.irminsul
 
   persistence:
     persistentVolumeClaim:
@@ -28,9 +44,6 @@ existingSecretAdminPassword: harbor-core
 # for in other places
 # the key `secretKey` is expected in the provided secret
 existingSecretSecretKey: harbor-core
-# TODO: do we want this?
-# caSecretName:
-# caBundleSecretName:
 
 # TODO: S3 storage sounds cool, we should mess around with that
 # TODO: we could consider using internal TLS

@@ -141,167 +141,6 @@ data:
   nginx.conf: |
     worker_processes auto;
     pid /tmp/nginx.pid;
-
-    events {
-      worker_connections 3096;
-      use epoll;
-      multi_accept on;
-    }
-
-    http {
-      client_body_temp_path /tmp/client_body_temp;
-      proxy_temp_path /tmp/proxy_temp;
-      fastcgi_temp_path /tmp/fastcgi_temp;
-      uwsgi_temp_path /tmp/uwsgi_temp;
-      scgi_temp_path /tmp/scgi_temp;
-      tcp_nodelay on;
-
-      # this is necessary for us to be able to disable request buffering in all cases
-      proxy_http_version 1.1;
-
-      upstream core {
-        server "harbor-core:80";
-      }
-
-      upstream portal {
-        server "harbor-portal:80";
-      }
-
-      log_format timed_combined '[$time_local]:$remote_addr - '
-        '"$request" $status $body_bytes_sent '
-        '"$http_referer" "$http_user_agent" '
-        '$request_time $upstream_response_time $pipe';
-
-      access_log /dev/stdout timed_combined;
-
-      map $http_x_forwarded_proto $x_forwarded_proto {
-        default $http_x_forwarded_proto;
-        ""      $scheme;
-      }
-
-      server {
-        listen 8443 ssl;
-        listen [::]:8443 ssl;
-    #    server_name harbordomain.com;
-        server_tokens off;
-        # SSL
-        ssl_certificate /etc/nginx/cert/tls.crt;
-        ssl_certificate_key /etc/nginx/cert/tls.key;
-
-        # Recommendations from https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_ciphers '!aNULL:kECDH+AESGCM:ECDH+AESGCM:RSA+AESGCM:kECDH+AES:ECDH+AES:RSA+AES:';
-        ssl_prefer_server_ciphers on;
-        ssl_session_cache shared:SSL:10m;
-
-        # disable any limits to avoid HTTP 413 for large image uploads
-        client_max_body_size 0;
-
-        # required to avoid HTTP 411: see Issue #1486 (https://github.com/docker/docker/issues/1486)
-        chunked_transfer_encoding on;
-
-        # Add extra headers
-        add_header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload";
-        add_header X-Frame-Options DENY;
-        add_header Content-Security-Policy "frame-ancestors 'none'";
-
-        location / {
-          proxy_pass http://portal/;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
-
-          proxy_cookie_path / "/; HttpOnly; Secure";
-
-          proxy_buffering off;
-          proxy_request_buffering off;
-        }
-
-        location /api/ {
-          proxy_pass http://core/api/;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
-
-          proxy_cookie_path / "/; Secure";
-
-          proxy_buffering off;
-          proxy_request_buffering off;
-        }
-
-        location /c/ {
-          proxy_pass http://core/c/;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
-
-          proxy_cookie_path / "/; Secure";
-
-          proxy_buffering off;
-          proxy_request_buffering off;
-        }
-
-        location /v1/ {
-          return 404;
-        }
-
-        location /v2/ {
-          proxy_pass http://core/v2/;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
-          proxy_buffering off;
-          proxy_request_buffering off;
-        }
-
-        location /service/ {
-          proxy_pass http://core/service/;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $x_forwarded_proto;
-
-          proxy_cookie_path / "/; Secure";
-
-          proxy_buffering off;
-          proxy_request_buffering off;
-        }
-
-      location /service/notifications {
-          return 404;
-        }
-      }
-        server {
-          listen 8080;
-          listen [::]:8080;
-          #server_name harbordomain.com;
-          return 301 https://$host$request_uri;
-      }
-    }
-kind: ConfigMap
-metadata:
-  labels:
-    app: harbor
-    app.kubernetes.io/instance: harbor
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: harbor
-    app.kubernetes.io/part-of: harbor
-    app.kubernetes.io/version: 2.13.2
-    chart: harbor
-    heritage: Helm
-    release: harbor
-  name: harbor-nginx
-  namespace: harbor
----
-apiVersion: v1
-data:
-  nginx.conf: |
-    worker_processes auto;
-    pid /tmp/nginx.pid;
     events {
         worker_connections  1024;
     }
@@ -563,34 +402,6 @@ spec:
     release: harbor
 ---
 apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: harbor
-    app.kubernetes.io/instance: harbor
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: harbor
-    app.kubernetes.io/part-of: harbor
-    app.kubernetes.io/version: 2.13.2
-    chart: harbor
-    heritage: Helm
-    release: harbor
-  name: harbor
-spec:
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-  - name: https
-    port: 443
-    targetPort: 8443
-  selector:
-    app: harbor
-    component: nginx
-    release: harbor
-  type: LoadBalancer
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
@@ -671,7 +482,7 @@ spec:
     metadata:
       annotations:
         checksum/configmap: 4eed4c7b16aa37ea409f4cb3523f13b43462750d23e13c46517439899314d0ca
-        checksum/secret: f2eb93dc0f59ef5849cef26f9123e08cf39c19b956bc0853e9e245be197f6e4b
+        checksum/secret: 11bf2da6fb41d6aeea1586b5274d37e1141ea2b7019c87d68b710e00f5a4c5d0
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -796,7 +607,7 @@ spec:
           secretName: harbor-core
       - name: ca-download
         secret:
-          secretName: harbor-nginx
+          secretName: harbor-certificate
       - emptyDir: {}
         name: psc
 ---
@@ -833,7 +644,7 @@ spec:
         checksum/configmap: 3187deda3db8fd0d9ec0da0f3efe5ec5597fc43e736be698f33229403dbf88af
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: 002dbd8ab0304ec87fd3c89cc739ab50e97ce63d550e61f7e1c18962e5efeb53
+        checksum/secret-core: f4d4764d8a2690444fce8c7803c0aa4303bf444001381bbaf709cb5ba7816370
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -916,97 +727,6 @@ spec:
       - name: job-logs
         persistentVolumeClaim:
           claimName: harbor-jobservice
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: harbor
-    app.kubernetes.io/component: nginx
-    app.kubernetes.io/instance: harbor
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: harbor
-    app.kubernetes.io/part-of: harbor
-    app.kubernetes.io/version: 2.13.2
-    chart: harbor
-    component: nginx
-    heritage: Helm
-    release: harbor
-  name: harbor-nginx
-  namespace: harbor
-spec:
-  replicas: 1
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      app: harbor
-      component: nginx
-      release: harbor
-  template:
-    metadata:
-      annotations:
-        checksum/configmap: b571d2c1523d0b93a7982c1cc3cec90a37587cde870afabdb3575053cb9793ed
-        checksum/secret: 7b598c82e89324a123ed9f7d933fa41f2485298eefa75b96368ff7d741fa6e08
-      labels:
-        app: harbor
-        app.kubernetes.io/component: nginx
-        app.kubernetes.io/instance: harbor
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: harbor
-        app.kubernetes.io/part-of: harbor
-        app.kubernetes.io/version: 2.13.2
-        chart: harbor
-        component: nginx
-        heritage: Helm
-        release: harbor
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - image: goharbor/nginx-photon:v2.13.2
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8443
-            scheme: HTTPS
-          initialDelaySeconds: 300
-          periodSeconds: 10
-        name: nginx
-        ports:
-        - containerPort: 8080
-        - containerPort: 8443
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8443
-            scheme: HTTPS
-          initialDelaySeconds: 1
-          periodSeconds: 10
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
-        volumeMounts:
-        - mountPath: /etc/nginx/nginx.conf
-          name: config
-          subPath: nginx.conf
-        - mountPath: /etc/nginx/cert
-          name: certificate
-      securityContext:
-        fsGroup: 10000
-        runAsUser: 10000
-      volumes:
-      - configMap:
-          name: harbor-nginx
-        name: config
-      - name: certificate
-        secret:
-          secretName: harbor-nginx
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -1124,7 +844,7 @@ spec:
       annotations:
         checksum/configmap: 772986b0f244f87fb5ec25a1c84e1553cf1d7c58057756e9afdf4af1dd5f09a5
         checksum/secret: beb1fcf1d0e1c6fc0870c8da80d80c2c278a73aa9d4fce4f131c7c2f75b43b35
-        checksum/secret-core: 55b7b8c84d465a24781d78fa35154818a8af7d0acd1803d682c6360abbc8b1d8
+        checksum/secret-core: 4224ecfcd716f7381af18a3899263a6d4fcdc62c02c041e17fdbf528fcce5a3a
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -1455,14 +1175,6 @@ spec:
       key: kv/nekropolis/harbor/harbor-core
       property: XSRF_KEY
     secretKey: XSRF_KEY
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-core
-      property: tls.crt
-    secretKey: tls.crt
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-core
-      property: tls.key
-    secretKey: tls.key
   refreshInterval: 1h0m0s
   refreshPolicy: Periodic
   secretStoreRef:
@@ -1498,6 +1210,14 @@ metadata:
 spec:
   data:
   - remoteRef:
+      key: kv/nekropolis/harbor/harbor-registry
+      property: REGISTRY_PASSWD
+    secretKey: REGISTRY_PASSWD
+  - remoteRef:
+      key: kv/nekropolis/harbor/harbor-registry
+      property: REGISTRY_HTPASSWD
+    secretKey: REGISTRY_HTPASSWD
+  - remoteRef:
       key: kv/nekropolis/harbor/harbor-jobservice
       property: JOBSERVICE_SECRET
     secretKey: JOBSERVICE_SECRET
@@ -1508,33 +1228,6 @@ spec:
     name: openbao-backend
   target:
     name: harbor-jobservice
----
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: harbor-nginx
-  namespace: harbor
-spec:
-  data:
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-nginx
-      property: ca.crt
-    secretKey: ca.crt
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-nginx
-      property: tls.crt
-    secretKey: tls.crt
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-nginx
-      property: tls.key
-    secretKey: tls.key
-  refreshInterval: 1h0m0s
-  refreshPolicy: Periodic
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: openbao-backend
-  target:
-    name: harbor-nginx
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
@@ -1608,3 +1301,70 @@ spec:
     name: openbao-backend
   target:
     name: harbor-trivy
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+    ingress.kubernetes.io/proxy-body-size: "0"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    kube-vip.io/loadbalancerIPs: 192.168.13.5
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  labels:
+    app: harbor
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: harbor
+    app.kubernetes.io/part-of: harbor
+    app.kubernetes.io/version: 2.13.2
+    chart: harbor
+    heritage: Helm
+    release: harbor
+  name: harbor-ingress
+  namespace: harbor
+spec:
+  rules:
+  - host: harbor.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: harbor-core
+            port:
+              number: 80
+        path: /api/
+        pathType: Prefix
+      - backend:
+          service:
+            name: harbor-core
+            port:
+              number: 80
+        path: /service/
+        pathType: Prefix
+      - backend:
+          service:
+            name: harbor-core
+            port:
+              number: 80
+        path: /v2/
+        pathType: Prefix
+      - backend:
+          service:
+            name: harbor-core
+            port:
+              number: 80
+        path: /c/
+        pathType: Prefix
+      - backend:
+          service:
+            name: harbor-portal
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - harbor.nekropolis.irminsul
+    secretName: harbor-certificate
