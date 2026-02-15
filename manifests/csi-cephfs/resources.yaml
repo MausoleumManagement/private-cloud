@@ -7,6 +7,29 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-3.14.2
+    heritage: Helm
+    release: csi-cephfs
+  name: cephfs
+parameters:
+  clusterID: 94563514-dd45-48e9-80b0-ba2f058f6d30
+  csi.storage.k8s.io/controller-expand-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: csi-cephfs
+  csi.storage.k8s.io/node-stage-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: csi-cephfs
+  csi.storage.k8s.io/provisioner-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: csi-cephfs
+  fsName: cephfs
+provisioner: cephfs.csi.ceph.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+---
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
   labels:
@@ -14,7 +37,7 @@ metadata:
     chart: ceph-csi-cephfs-3.15.1
     heritage: Helm
     release: csi-cephfs
-  name: cephfs
+  name: cephfs-2026
 parameters:
   clusterID: 94563514-dd45-48e9-80b0-ba2f058f6d30
   csi.storage.k8s.io/controller-expand-secret-name: csi-cephfs-secret

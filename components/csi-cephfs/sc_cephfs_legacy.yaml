@@ -1,0 +1,24 @@
+# we keep this storage class around until we have moved all workloads to the new one
+allowVolumeExpansion: true
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+  labels:
+    app: ceph-csi-cephfs
+    chart: ceph-csi-cephfs-3.14.2
+    heritage: Helm
+    release: csi-cephfs
+  name: cephfs
+parameters:
+  clusterID: 94563514-dd45-48e9-80b0-ba2f058f6d30
+  csi.storage.k8s.io/controller-expand-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/controller-expand-secret-namespace: csi-cephfs
+  csi.storage.k8s.io/node-stage-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/node-stage-secret-namespace: csi-cephfs
+  csi.storage.k8s.io/provisioner-secret-name: csi-cephfs-secret
+  csi.storage.k8s.io/provisioner-secret-namespace: csi-cephfs
+  fsName: cephfs
+provisioner: cephfs.csi.ceph.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

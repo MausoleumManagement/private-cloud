@@ -20,3 +20,4 @@ helmCharts:
 resources:
   - namespace.yaml
   - poddisruptionbudget.yaml
+  - sc_cephfs_legacy.yaml

@@ -59,7 +59,7 @@ cephconf: |
 
 storageClass:
   create: true
-  name: cephfs
+  name: cephfs-2026
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 
