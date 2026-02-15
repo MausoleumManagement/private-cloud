@@ -122,3 +122,7 @@ redis:
     password: "PLACEHOLDER_REPLACE_ME"
     # This doesn't work with kustomize :V
     # existingSecret: "redis"
+
+trivy:
+  # TODO: enable this
+  enabled: false

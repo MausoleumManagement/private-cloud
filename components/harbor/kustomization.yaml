@@ -27,6 +27,6 @@ patches:
   #- path: patch-delete-harbor-nginx-secret.yaml
   - path: patch-delete-harbor-registry-secret.yaml
   - path: patch-delete-harbor-registryctl-secret.yaml
-  - path: patch-delete-harbor-trivy-secret.yaml
+  #- path: patch-delete-harbor-trivy-secret.yaml
 
 

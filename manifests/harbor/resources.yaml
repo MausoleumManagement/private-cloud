@@ -35,7 +35,7 @@ data:
   REGISTRY_URL: http://harbor-registry:5000
   TOKEN_SERVICE_URL: http://harbor-core:80/service/token
   TRIVY_ADAPTER_URL: http://harbor-trivy:8080
-  WITH_TRIVY: "true"
+  WITH_TRIVY: "false"
   app.conf: |
     appname = Harbor
     runmode = prod
@@ -377,31 +377,6 @@ spec:
     release: harbor
 ---
 apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: harbor
-    app.kubernetes.io/instance: harbor
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: harbor
-    app.kubernetes.io/part-of: harbor
-    app.kubernetes.io/version: 2.13.2
-    chart: harbor
-    heritage: Helm
-    release: harbor
-  name: harbor-trivy
-  namespace: harbor
-spec:
-  ports:
-  - name: http-trivy
-    port: 8080
-    protocol: TCP
-  selector:
-    app: harbor
-    component: trivy
-    release: harbor
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
@@ -481,8 +456,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 4eed4c7b16aa37ea409f4cb3523f13b43462750d23e13c46517439899314d0ca
-        checksum/secret: 11bf2da6fb41d6aeea1586b5274d37e1141ea2b7019c87d68b710e00f5a4c5d0
+        checksum/configmap: 70144483fb018c1cc77142e91d0321fe08e4ebaabe9bf6592a4cb958d72f993a
+        checksum/secret: ce842ad445e26997c9501285d6b902141c6026fe26dd3e56a7e8d209987e5cbe
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -644,7 +619,7 @@ spec:
         checksum/configmap: 3187deda3db8fd0d9ec0da0f3efe5ec5597fc43e736be698f33229403dbf88af
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: f4d4764d8a2690444fce8c7803c0aa4303bf444001381bbaf709cb5ba7816370
+        checksum/secret-core: 8a9148e354a2041a7e81d6d2432738c19e96ddc61296bf3f32160fa56d7ee7d0
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -844,7 +819,7 @@ spec:
       annotations:
         checksum/configmap: 772986b0f244f87fb5ec25a1c84e1553cf1d7c58057756e9afdf4af1dd5f09a5
         checksum/secret: beb1fcf1d0e1c6fc0870c8da80d80c2c278a73aa9d4fce4f131c7c2f75b43b35
-        checksum/secret-core: 4224ecfcd716f7381af18a3899263a6d4fcdc62c02c041e17fdbf528fcce5a3a
+        checksum/secret-core: a0a5f6f2e6f58f6b02f134e8f28eddd8f33dd3ef5436a76d6f9a1626db339141
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -988,169 +963,6 @@ spec:
       - name: registry-data
         persistentVolumeClaim:
           claimName: harbor-registry
----
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  labels:
-    app: harbor
-    app.kubernetes.io/component: trivy
-    app.kubernetes.io/instance: harbor
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: harbor
-    app.kubernetes.io/part-of: harbor
-    app.kubernetes.io/version: 2.13.2
-    chart: harbor
-    component: trivy
-    heritage: Helm
-    release: harbor
-  name: harbor-trivy
-  namespace: harbor
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: harbor
-      component: trivy
-      release: harbor
-  serviceName: harbor-trivy
-  template:
-    metadata:
-      annotations:
-        checksum/secret: afbfc0d4af43460b522bfbb905c681a06452ad121c05837b065cb08d78bd98e2
-      labels:
-        app: harbor
-        app.kubernetes.io/component: trivy
-        app.kubernetes.io/instance: harbor
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: harbor
-        app.kubernetes.io/part-of: harbor
-        app.kubernetes.io/version: 2.13.2
-        chart: harbor
-        component: trivy
-        heritage: Helm
-        release: harbor
-    spec:
-      automountServiceAccountToken: false
-      containers:
-      - env:
-        - name: HTTP_PROXY
-          value: ""
-        - name: HTTPS_PROXY
-          value: ""
-        - name: NO_PROXY
-          value: harbor-core,harbor-jobservice,harbor-database,harbor-registry,harbor-portal,harbor-trivy,harbor-exporter,127.0.0.1,localhost,.local,.internal
-        - name: SCANNER_LOG_LEVEL
-          value: info
-        - name: SCANNER_TRIVY_CACHE_DIR
-          value: /home/scanner/.cache/trivy
-        - name: SCANNER_TRIVY_REPORTS_DIR
-          value: /home/scanner/.cache/reports
-        - name: SCANNER_TRIVY_DEBUG_MODE
-          value: "false"
-        - name: SCANNER_TRIVY_VULN_TYPE
-          value: os,library
-        - name: SCANNER_TRIVY_TIMEOUT
-          value: 5m0s
-        - name: SCANNER_TRIVY_GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              key: gitHubToken
-              name: harbor-trivy
-        - name: SCANNER_TRIVY_SEVERITY
-          value: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-        - name: SCANNER_TRIVY_IGNORE_UNFIXED
-          value: "false"
-        - name: SCANNER_TRIVY_SKIP_UPDATE
-          value: "false"
-        - name: SCANNER_TRIVY_SKIP_JAVA_DB_UPDATE
-          value: "false"
-        - name: SCANNER_TRIVY_OFFLINE_SCAN
-          value: "false"
-        - name: SCANNER_TRIVY_SECURITY_CHECKS
-          value: vuln
-        - name: SCANNER_TRIVY_INSECURE
-          value: "false"
-        - name: SCANNER_API_SERVER_ADDR
-          value: :8080
-        - name: SCANNER_REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              key: redisURL
-              name: harbor-trivy
-        - name: SCANNER_STORE_REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              key: redisURL
-              name: harbor-trivy
-        - name: SCANNER_JOB_QUEUE_REDIS_URL
-          valueFrom:
-            secretKeyRef:
-              key: redisURL
-              name: harbor-trivy
-        image: goharbor/trivy-adapter-photon:v2.13.2
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          failureThreshold: 10
-          httpGet:
-            path: /probe/healthy
-            port: api-server
-            scheme: HTTP
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          successThreshold: 1
-        name: trivy
-        ports:
-        - containerPort: 8080
-          name: api-server
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /probe/ready
-            port: api-server
-            scheme: HTTP
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          successThreshold: 1
-        resources:
-          limits:
-            cpu: 1
-            memory: 1Gi
-          requests:
-            cpu: 200m
-            memory: 512Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
-        volumeMounts:
-        - mountPath: /home/scanner/.cache
-          name: data
-          readOnly: false
-          subPath: null
-      securityContext:
-        fsGroup: 10000
-        runAsUser: 10000
-  volumeClaimTemplates:
-  - metadata:
-      annotations: null
-      labels:
-        app: harbor
-        chart: harbor
-        heritage: Helm
-        release: harbor
-      name: data
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
