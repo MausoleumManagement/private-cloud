@@ -91,7 +91,7 @@ jobservice:
 database:
   type: external
   external:
-    host: "abc.def"
+    host: "cnpg-harbor-rw"
     port: "5432"
     username: "harbor"
     coreDatabase: "harbor"

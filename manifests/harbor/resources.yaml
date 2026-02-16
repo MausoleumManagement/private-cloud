@@ -22,7 +22,7 @@ data:
   PORT: "8080"
   PORTAL_URL: http://harbor-portal
   POSTGRESQL_DATABASE: harbor
-  POSTGRESQL_HOST: abc.def
+  POSTGRESQL_HOST: cnpg-harbor-rw
   POSTGRESQL_MAX_IDLE_CONNS: "100"
   POSTGRESQL_MAX_OPEN_CONNS: "900"
   POSTGRESQL_PORT: "5432"
@@ -539,8 +539,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 1a56e50fc8aea3bb95a3e4d47fc748c7dd0edf31f0fea3c92cd17bdc089036e0
-        checksum/secret: 9f1540cf71b491cdb9869d90aaaf43c7214857fe88a3763039836a3788f56110
+        checksum/configmap: 7a87e3b4b336dd0ddc27b377d6e373dfc04d4b02f04a3076f7af2e82b020577c
+        checksum/secret: 2b940ffadd44d81b592f6330ccdb0e1a53db0f6eae7e74de5c25ed9d7a60b48a
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -702,7 +702,7 @@ spec:
         checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: 608550306255576b427b460e17ba704d3f88e38d2e376561f01ebf5708f76b64
+        checksum/secret-core: 5d8e97e0bab735b9dccfc53fe08ec2433c673b597cfd27529fa74b3f57d06261
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -902,7 +902,7 @@ spec:
       annotations:
         checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
         checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
-        checksum/secret-core: 434ee59e6e0880342eafa7f6a01a62aae85462de0014d16b3e1e0b3a4116f606
+        checksum/secret-core: 629d94c710ec55d4be3a7ee2aaf11dc9ae5f0f9007ffdbe3449cda4a65fd0dd8
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -1158,6 +1158,52 @@ spec:
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
+  name: cnpg-harbor-standard-user
+  namespace: harbor
+spec:
+  data:
+  - remoteRef:
+      key: kv/nekropolis/harbor/harbor-db-standard-user
+      property: username
+    secretKey: username
+  - remoteRef:
+      key: kv/nekropolis/harbor/harbor-db-standard-user
+      property: password
+    secretKey: password
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: cnpg-harbor-standard-user
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cnpg-harbor-superuser
+  namespace: harbor
+spec:
+  data:
+  - remoteRef:
+      key: kv/nekropolis/harbor/harbor-db-superuser
+      property: username
+    secretKey: username
+  - remoteRef:
+      key: kv/nekropolis/harbor/harbor-db-superuser
+      property: password
+    secretKey: password
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: cnpg-harbor-superuser
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
   name: harbor-core
   namespace: harbor
 spec:
@@ -1185,25 +1231,6 @@ spec:
     name: openbao-backend
   target:
     name: harbor-core
----
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: harbor-db-standard-user
-  namespace: harbor
-spec:
-  data:
-  - remoteRef:
-      key: kv/nekropolis/harbor/harbor-db-standard-user
-      property: password
-    secretKey: password
-  refreshInterval: 1h0m0s
-  refreshPolicy: Periodic
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: openbao-backend
-  target:
-    name: harbor-db-standard-user
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
@@ -1371,3 +1398,21 @@ spec:
   - hosts:
     - harbor.nekropolis.irminsul
     secretName: harbor-certificate
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-harbor
+  namespace: harbor
+spec:
+  bootstrap:
+    initdb:
+      database: harbor
+      owner: harbor
+      secret:
+        name: cnpg-harbor-standard-user
+  instances: 3
+  storage:
+    size: 10Gi
+  superuserSecret:
+    name: cnpg-harbor-superuser

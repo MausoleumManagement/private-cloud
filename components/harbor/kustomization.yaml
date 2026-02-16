@@ -8,6 +8,7 @@ namespace: harbor
 resources:
   - namespace.yaml
   - externalsecrets.yaml
+  - cnpg-harbor.yaml
 #  - certificate.yaml
 
 # https://github.com/goharbor/harbor-helm
