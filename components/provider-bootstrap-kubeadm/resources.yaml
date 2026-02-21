@@ -13588,7 +13588,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller:v1.12.1
+        image: registry.k8s.io/cluster-api/kubeadm-bootstrap-controller:v1.12.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
