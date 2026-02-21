@@ -11282,6 +11282,25 @@ rules:
   - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
+  name: cilium-operator-ztunnel
+  namespace: cilium
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -11328,7 +11347,6 @@ rules:
   - cilium.io
   resources:
   - ciliumloadbalancerippools
-  - ciliumbgppeeringpolicies
   - ciliumbgpnodeconfigs
   - ciliumbgpadvertisements
   - ciliumbgppeerconfigs
@@ -11464,6 +11482,18 @@ rules:
   - delete
   - patch
 - apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - patch
+- apiGroups:
   - cilium.io
   resources:
   - ciliumnetworkpolicies
@@ -11552,7 +11582,6 @@ rules:
   - apiextensions.k8s.io
   resourceNames:
   - ciliumloadbalancerippools.cilium.io
-  - ciliumbgppeeringpolicies.cilium.io
   - ciliumbgpclusterconfigs.cilium.io
   - ciliumbgppeerconfigs.cilium.io
   - ciliumbgpadvertisements.cilium.io
@@ -11582,7 +11611,6 @@ rules:
   resources:
   - ciliumloadbalancerippools
   - ciliumpodippools
-  - ciliumbgppeeringpolicies
   - ciliumbgpclusterconfigs
   - ciliumbgpnodeconfigoverrides
   - ciliumbgppeerconfigs
@@ -11623,6 +11651,7 @@ rules:
   - networking.k8s.io
   resources:
   - ingresses/status
+  - ingresses/finalizers
   verbs:
   - update
 - apiGroups:
@@ -11679,6 +11708,12 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumendpointslices
+  verbs:
+  - deletecollection
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -11687,14 +11722,6 @@ metadata:
     app.kubernetes.io/part-of: cilium
   name: hubble-ui
 rules:
-- apiGroups:
-  - networking.k8s.io
-  resources:
-  - networkpolicies
-  verbs:
-  - get
-  - list
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -11712,14 +11739,6 @@ rules:
   - apiextensions.k8s.io
   resources:
   - customresourcedefinitions
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - cilium.io
-  resources:
-  - '*'
   verbs:
   - get
   - list
@@ -11838,6 +11857,22 @@ subjects:
   namespace: cilium
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/part-of: cilium
+  name: cilium-operator-ztunnel
+  namespace: cilium
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cilium-operator-ztunnel
+subjects:
+- kind: ServiceAccount
+  name: cilium-operator
+  namespace: cilium
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
@@ -11907,8 +11942,10 @@ data:
   cluster-name: default
   cluster-pool-ipv4-cidr: 10.0.0.0/8
   cluster-pool-ipv4-mask-size: "24"
+  clustermesh-cache-ttl: 0s
   clustermesh-enable-endpoint-sync: "false"
   clustermesh-enable-mcs-api: "false"
+  clustermesh-mcs-api-install-crds: "true"
   cni-exclusive: "true"
   cni-log-file: /var/run/cilium/cilium-cni.log
   custom-cni-conf: "false"
@@ -11937,7 +11974,6 @@ data:
   enable-ingress-controller: "true"
   enable-ingress-proxy-protocol: "false"
   enable-ingress-secrets-sync: "true"
-  enable-internal-traffic-policy: "true"
   enable-ipv4: "true"
   enable-ipv4-big-tcp: "false"
   enable-ipv4-masquerade: "true"
@@ -11950,14 +11986,15 @@ data:
   enable-lb-ipam: "true"
   enable-masquerade-to-route-source: "false"
   enable-metrics: "true"
+  enable-no-service-endpoints-routable: "true"
   enable-node-selector-labels: "false"
   enable-non-default-deny-policies: "true"
   enable-policy: default
   enable-policy-secrets-sync: "true"
   enable-sctp: "false"
   enable-source-ip-verification: "true"
-  enable-svc-source-range-check: "true"
   enable-tcx: "true"
+  enable-tunnel-big-tcp: "false"
   enable-vtep: "false"
   enable-well-known-identities: "false"
   enable-xt-socket-fallback: "true"
@@ -12006,7 +12043,7 @@ data:
   loadbalancer-l7-algorithm: round_robin
   loadbalancer-l7-ports: ""
   max-connected-clusters: "255"
-  mesh-auth-enabled: "true"
+  mesh-auth-enabled: "false"
   mesh-auth-gc-interval: 5m0s
   mesh-auth-queue-size: "1024"
   mesh-auth-rotated-identities-queue-size: "1024"
@@ -12021,18 +12058,24 @@ data:
   nodes-gc-interval: 5m0s
   operator-api-serve-addr: 127.0.0.1:9234
   operator-prometheus-serve-addr: :9963
+  packetization-layer-pmtud-mode: blackhole
   policy-cidr-match-mode: ""
-  policy-default-local-cluster: "false"
+  policy-default-local-cluster: "true"
+  policy-deny-response: none
   policy-secrets-namespace: cilium-secrets
   policy-secrets-only-from-secrets-namespace: "true"
   preallocate-bpf-maps: "false"
   procfs: /host/proc
+  proxy-cluster-max-connections: "1024"
+  proxy-cluster-max-requests: "1024"
   proxy-connect-timeout: "2"
   proxy-idle-timeout-seconds: "20"
   proxy-initial-fetch-timeout: "30"
+  proxy-max-active-downstream-connections: "50000"
   proxy-max-concurrent-retries: "128"
   proxy-max-connection-duration-seconds: "0"
   proxy-max-requests-per-connection: "0"
+  proxy-use-original-source-address: "true"
   proxy-xff-num-trusted-hops-egress: "0"
   proxy-xff-num-trusted-hops-ingress: "0"
   remove-cilium-node-taints: "true"
@@ -12050,7 +12093,7 @@ data:
   tofqdns-proxy-response-max-delay: 100ms
   tunnel-protocol: vxlan
   tunnel-source-port-range: 0-0
-  unmanaged-pod-watcher-interval: "15"
+  unmanaged-pod-watcher-interval: 15s
   vtep-cidr: ""
   vtep-endpoint: ""
   vtep-mac: ""
@@ -12122,18 +12165,6 @@ metadata:
   namespace: cilium
 ---
 apiVersion: v1
-kind: Endpoints
-metadata:
-  labels: null
-  name: cilium-ingress
-  namespace: cilium
-subsets:
-- addresses:
-  - ip: 192.192.192.192
-  ports:
-  - port: 9999
----
-apiVersion: v1
 kind: Service
 metadata:
   annotations:
@@ -12152,7 +12183,7 @@ spec:
   - name: envoy-metrics
     port: 9964
     protocol: TCP
-    targetPort: envoy-metrics
+    targetPort: 9964
   selector:
     k8s-app: cilium-envoy
   type: ClusterIP
@@ -12294,19 +12325,22 @@ spec:
               key: debug
               name: cilium-config
               optional: true
-        image: quay.io/cilium/operator-generic:v1.18.6@sha256:34a827ce9ed021c8adf8f0feca131f53b3c54a3ef529053d871d0347ec4d69af
+        image: quay.io/cilium/operator-generic:v1.19.1@sha256:e7278d763e448bf6c184b0682cf98cdca078d58a27e1b2f3c906792670aa211a
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: 9234
+            port: health
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 10
           timeoutSeconds: 3
         name: cilium-operator
         ports:
+        - containerPort: 9234
+          hostPort: 9234
+          name: health
         - containerPort: 9963
           hostPort: 9963
           name: prometheus
@@ -12316,7 +12350,7 @@ spec:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: 9234
+            port: health
             scheme: HTTP
           initialDelaySeconds: 0
           periodSeconds: 5
@@ -12395,7 +12429,7 @@ spec:
         - serve
         command:
         - hubble-relay
-        image: quay.io/cilium/hubble-relay:v1.18.6@sha256:fb6135e34c31e5f175cb5e75f86cea52ef2ff12b49bcefb7088ed93f5009eb8e
+        image: quay.io/cilium/hubble-relay:v1.19.1@sha256:d8c4e13bc36a56179292bb52bc6255379cb94cb873700d316ea3139b1bdb8165
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 12
@@ -12500,7 +12534,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8081
+            port: http
         name: frontend
         ports:
         - containerPort: 8081
@@ -12508,7 +12542,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /
-            port: 8081
+            port: http
         securityContext:
           allowPrivilegeEscalation: false
         terminationMessagePolicy: FallbackToLogsOnError
@@ -12606,7 +12640,7 @@ spec:
           value: "1"
         - name: KUBE_CLIENT_BACKOFF_DURATION
           value: "120"
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -12648,12 +12682,21 @@ spec:
             - name: require-k8s-connectivity
               value: "false"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 5
         name: cilium-agent
+        ports:
+        - containerPort: 9879
+          hostPort: 9879
+          name: health
+          protocol: TCP
+        - containerPort: 4244
+          hostPort: 4244
+          name: peer-service
+          protocol: TCP
         readinessProbe:
           failureThreshold: 3
           httpGet:
@@ -12662,7 +12705,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
@@ -12682,6 +12725,7 @@ spec:
             - FOWNER
             - SETGID
             - SETUID
+            - SYSLOG
             drop:
             - ALL
           seLinuxOptions:
@@ -12695,7 +12739,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 2
@@ -12748,9 +12792,15 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: config
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            drop:
+            - ALL
         terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp
@@ -12767,7 +12817,7 @@ spec:
           value: /run/cilium/cgroupv2
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: mount-cgroup
         securityContext:
@@ -12797,7 +12847,7 @@ spec:
         env:
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: apply-sysctl-overwrites
         securityContext:
@@ -12823,7 +12873,7 @@ spec:
         - /bin/bash
         - -c
         - --
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: mount-bpf-fs
         securityContext:
@@ -12854,7 +12904,7 @@ spec:
               key: write-cni-conf-when-ready
               name: cilium-config
               optional: true
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         securityContext:
@@ -12880,10 +12930,13 @@ spec:
           name: cilium-run
       - command:
         - /install-plugin.sh
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: install-cni-binaries
         resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
           requests:
             cpu: 100m
             memory: 10Mi
@@ -13071,7 +13124,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: quay.io/cilium/cilium-envoy:v1.35.9-1767794330-db497dd19e346b39d81d7b5c0dedf6c812bcc5c9@sha256:81398e449f2d3d0a6a70527e4f641aaa685d3156bea0bb30712fae3fd8822b86
+        image: quay.io/cilium/cilium-envoy:v1.35.9-1770979049-232ed4a26881e4ab4f766f251f258ed424fff663@sha256:8188114a2768b5f49d6ce58e168b20d765e0fbc64eee0d83241aa2b150ccd788
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 10
@@ -13200,6 +13253,19 @@ spec:
   ingress:
   - fromEntities:
     - none
+---
+addressType: IPv4
+apiVersion: discovery.k8s.io/v1
+endpoints:
+- addresses:
+  - 192.192.192.192
+kind: EndpointSlice
+metadata:
+  labels: null
+  name: cilium-ingress
+  namespace: cilium
+ports:
+- port: 9999
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
