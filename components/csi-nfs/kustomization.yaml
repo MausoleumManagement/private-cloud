@@ -9,7 +9,7 @@ helmCharts:
   # https://artifacthub.io/packages/helm/csi-driver-nfs/csi-driver-nfs
   - name: csi-driver-nfs
     repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
-    version: 4.12.1
+    version: 4.13.1
     releaseName: csi-nfs
     # apparently helm will suppress the generation of CRDs by default 
     #includeCRDs: true
