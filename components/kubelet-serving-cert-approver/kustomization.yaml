@@ -3,6 +3,6 @@ kind: Kustomization
 
 namespace: kubelet-serving-cert-approver
 resources:
-- https://github.com/alex1989hu/kubelet-serving-cert-approver//deploy/standalone?timeout=120&ref=v0.10.2
+- https://github.com/alex1989hu/kubelet-serving-cert-approver//deploy/standalone?timeout=120&ref=v0.10.3
 # the kustomization comes with its own namespace manifest
 #- namespace.yaml
