@@ -8,7 +8,7 @@ helmCharts:
   # https://github.com/openbao/openbao-helm/tree/main/charts/openbao
   - name: openbao
     repo: https://openbao.github.io/openbao-helm
-    version: "0.23.3"
+    version: "0.25.4"
     releaseName: openbao
     valuesFile: values.yaml
 resources:
