@@ -31378,7 +31378,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: valkey
     app.kubernetes.io/version: 9.0.0
-    helm.sh/chart: valkey-0.15.3
+    helm.sh/chart: valkey-0.17.0
   name: valkey
   namespace: argocd
 ---
@@ -31492,7 +31492,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: valkey
     app.kubernetes.io/version: 9.0.0
-    helm.sh/chart: valkey-0.15.3
+    helm.sh/chart: valkey-0.17.0
   name: valkey
   namespace: argocd
 spec:
@@ -31514,7 +31514,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: valkey
     app.kubernetes.io/version: 9.0.0
-    helm.sh/chart: valkey-0.15.3
+    helm.sh/chart: valkey-0.17.0
   name: valkey-headless
   namespace: argocd
 spec:
@@ -33272,7 +33272,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: valkey
     app.kubernetes.io/version: 9.0.0
-    helm.sh/chart: valkey-0.15.3
+    helm.sh/chart: valkey-0.17.0
   name: valkey
   namespace: argocd
 spec:
