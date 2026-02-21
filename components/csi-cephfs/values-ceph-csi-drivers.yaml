@@ -1,0 +1,4 @@
+# https://github.com/ceph/ceph-csi-operator/blob/main/deploy/charts/ceph-csi-drivers/values.yaml
+
+operatorConfig:
+  namespace: "ceph-csi-operator"

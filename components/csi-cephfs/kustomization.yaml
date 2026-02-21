@@ -4,20 +4,35 @@ kind: Kustomization
 namespace: csi-cephfs
 
 helmCharts:
+  # The old way of deploying the ceph csi has been deprecated
+  # not sure if i am a fan, but eh
+  # https://github.com/ceph/ceph-csi/releases/tag/v3.15.0
+  # TODO: 20260221 Throw this out once we are sure we no longer need it
   # https://github.com/ceph/ceph-csi
   # https://github.com/ceph/ceph-csi/tree/devel/charts/ceph-csi-cephfs
   # https://artifacthub.io/packages/helm/ceph-csi/ceph-csi-cephfs
-  - name: ceph-csi-cephfs
-    repo: https://ceph.github.io/csi-charts
-    version: 3.15.1
-    releaseName: csi-cephfs
+  #- name: ceph-csi-cephfs
+  #  repo: https://ceph.github.io/csi-charts
+  #  version: 3.15.1
+  #  releaseName: csi-cephfs
+  #  # the storageClass template of the helmchart uses this value
+  #  # to determine where the secrets should live
+  #  namespace: csi-cephfs
+  #  # apparently helm will suppress the generation of CRDs by default 
+  #  #includeCRDs: true
+  #  valuesFile: values.yaml
+  # https://github.com/ceph/ceph-csi-operator/tree/main/deploy/charts/ceph-csi-operator
+  - name: ceph-csi-operator
+    repo: https://ceph.github.io/ceph-csi-operator/
+    version: v0.5.0
+    releaseName: ceph-csi-operator
     # the storageClass template of the helmchart uses this value
     # to determine where the secrets should live
-    namespace: csi-cephfs
+    namespace: ceph-csi-operator
     # apparently helm will suppress the generation of CRDs by default 
     #includeCRDs: true
-    valuesFile: values.yaml
+    valuesFile: values-ceph-csi-operator.yaml
 resources:
   - namespace.yaml
-  - poddisruptionbudget.yaml
+  #- poddisruptionbudget.yaml
   - sc_cephfs_legacy.yaml
