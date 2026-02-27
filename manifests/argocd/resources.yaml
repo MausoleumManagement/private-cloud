@@ -33552,6 +33552,8 @@ spec:
     kind: ServiceAccount
   - group: ""
     kind: Secret
+  - group: ""
+    kind: PersistentVolumeClaim
   - group: apps
     kind: Deployment
   - group: apps
