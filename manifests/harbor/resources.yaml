@@ -12,7 +12,7 @@ data:
   CORE_LOCAL_URL: http://127.0.0.1:8080
   CORE_URL: http://harbor-core:80
   DATABASE_TYPE: postgresql
-  EXT_ENDPOINT: https://core.harbor.domain
+  EXT_ENDPOINT: https://core.harbor.nekropolis.irminsul
   HTTP_PROXY: ""
   HTTPS_PROXY: ""
   JOBSERVICE_URL: http://harbor-jobservice
@@ -539,8 +539,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 7a87e3b4b336dd0ddc27b377d6e373dfc04d4b02f04a3076f7af2e82b020577c
-        checksum/secret: 2b940ffadd44d81b592f6330ccdb0e1a53db0f6eae7e74de5c25ed9d7a60b48a
+        checksum/configmap: 06c23ad2806a7224f75c4948b91fa833857d63378cdd1a3c70252d93b4b9d0a5
+        checksum/secret: e70e8aa6d6e2e9e4ea0fbc5cc77fa12df820d8269729942e6bf33d5dc37c31ac
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -702,7 +702,7 @@ spec:
         checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: 5d8e97e0bab735b9dccfc53fe08ec2433c673b597cfd27529fa74b3f57d06261
+        checksum/secret-core: 5b607e0342ae65d9c8fd8ece3c31932e93f97c5a55e1b1bb8b0dac8c958d6ff9
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -902,7 +902,7 @@ spec:
       annotations:
         checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
         checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
-        checksum/secret-core: 629d94c710ec55d4be3a7ee2aaf11dc9ae5f0f9007ffdbe3449cda4a65fd0dd8
+        checksum/secret-core: a68e5d07fd7dc5c09eaaf12e8ebbe86254f90a45bd3433296c791b3f0e33d39b
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
