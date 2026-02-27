@@ -13,6 +13,7 @@ resources:
   - application-csi-nfs.yaml
   - application-external-secrets.yaml
   - application-forgejo.yaml
+  - application-harbor.yaml
   - application-hardcoredns.yaml
   #- application-kube-vip-cloud-controller.yaml
   - application-metrics-server.yaml

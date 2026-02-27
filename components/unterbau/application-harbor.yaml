@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: harbor
+  #this finaliser causes cascading deletion (delete children)
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  # the valkey sts ends up with these extra fields when applied in k8s
+  ignoreDifferences:
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+      - /spec/volumeClaimTemplates/0/apiVersion
+      - /spec/volumeClaimTemplates/0/kind
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  destination:
+    namespace: harbor
+    server: "https://kubernetes.default.svc"
+  project: unterbau
+  source:
+    path: manifests/harbor
+    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
+    targetRevision: master
