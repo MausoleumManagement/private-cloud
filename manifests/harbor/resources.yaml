@@ -1271,6 +1271,13 @@ spec:
       metadataPolicy: None
       property: XSRF_KEY
     secretKey: XSRF_KEY
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
+      property: REGISTRY_REDIS_PASSWORD
+    secretKey: REGISTRY_REDIS_PASSWORD
   refreshInterval: 1h0m0s
   refreshPolicy: Periodic
   secretStoreRef:
@@ -1278,6 +1285,15 @@ spec:
     name: openbao-backend
   target:
     name: harbor-core
+    template:
+      data:
+        _REDIS_URL_CORE: redis://:{{ .REGISTRY_REDIS_PASSWORD }}@valkey:6379/0?idle_timeout_seconds=30
+        _REDIS_URL_REG: redis://:{{ .REGISTRY_REDIS_PASSWORD }}@valkey:6379/2?idle_timeout_seconds=30
+        HARBOR_ADMIN_PASSWORD: '{{ .HARBOR_ADMIN_PASSWORD }}'
+        XSRF_KEY: '{{ .XSRF_KEY }}'
+        secret: '{{ .secret }}'
+        secretKey: '{{ .secretKey }}'
+      engineVersion: v2
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
