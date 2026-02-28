@@ -24,7 +24,7 @@ helmcharts:
     valuesFile: values-harbor.yaml
   - name: valkey
     repo: oci://registry-1.docker.io/cloudpirates
-    version: 0.15.3
+    version: 0.17.0
     releaseName: valkey
     valuesFile: values-valkey.yaml
   # other candidates
