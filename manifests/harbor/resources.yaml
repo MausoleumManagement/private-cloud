@@ -540,7 +540,7 @@ spec:
     metadata:
       annotations:
         checksum/configmap: aa2d20329bfdd3cbef85d294e58ba9a75932608b4a369862a63c9e2ef0525884
-        checksum/secret: 77f2bbcea43f3913cef085762426ef0753195a17fe01b7b39e14bb4b6c8f51f2
+        checksum/secret: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -662,7 +662,7 @@ spec:
           secretName: harbor-core
       - name: token-service-private-key
         secret:
-          secretName: harbor-core
+          secretName: harbor-certificate-token-service
       - name: ca-download
         secret:
           secretName: harbor-certificate
@@ -702,7 +702,7 @@ spec:
         checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: fe28a22e201c4d7fcd14f07bfe8c30a38b33a4238b07dc06475a95a339c8ae5c
+        checksum/secret-core: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -902,7 +902,7 @@ spec:
       annotations:
         checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
         checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
-        checksum/secret-core: 85526748eb74ce71e003e816a8cd3604cf32d18ddccffbe353ce810b56146cb6
+        checksum/secret-core: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -1154,6 +1154,19 @@ spec:
         requests:
           storage: 8Gi
       storageClassName: cephfs-2026
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: harbor-token-service
+  namespace: harbor
+spec:
+  dnsNames:
+  - token-service.harbor.nekropolis.irminsul
+  issuerRef:
+    kind: ClusterIssuer
+    name: local-ca-issuer
+  secretName: harbor-certificate-token-service
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret

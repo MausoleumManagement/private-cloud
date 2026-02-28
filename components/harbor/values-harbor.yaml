@@ -65,7 +65,7 @@ core:
   # this needs to be a secret containing the keys `tls.key`  and `tls.crt`
   # they will be used for token decryption and encryption
   # we should handle this with cert-manager
-  secretName:
+  secretName: harbor-certificate-token-service
 
   # TODO: do we want these? i don't think so, since we provide our own encryption secret
   #tokenKey:
