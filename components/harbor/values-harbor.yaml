@@ -119,6 +119,11 @@ database:
   # Note: the default number of connections is 1024 for harbor's postgres.
   maxOpenConns: 900
 
+# we can cache image metadata, to help with high volume of requests
+# for now, let's save the RAM
+cache:
+  enabled: false
+  expireHours: 24
 
 redis:
   type: external
