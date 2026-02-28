@@ -540,7 +540,7 @@ spec:
     metadata:
       annotations:
         checksum/configmap: 06c23ad2806a7224f75c4948b91fa833857d63378cdd1a3c70252d93b4b9d0a5
-        checksum/secret: e70e8aa6d6e2e9e4ea0fbc5cc77fa12df820d8269729942e6bf33d5dc37c31ac
+        checksum/secret: 3d7b2e12f2a10bfd6213c15cca00de0640238f603ecf41cb60f197282f2157c6
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -702,7 +702,7 @@ spec:
         checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
         checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
         checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: 5b607e0342ae65d9c8fd8ece3c31932e93f97c5a55e1b1bb8b0dac8c958d6ff9
+        checksum/secret-core: 38f7fa388a9f61e636da6bdd243452330f6257a09a2e6e5278d29a712035f11b
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -902,7 +902,7 @@ spec:
       annotations:
         checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
         checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
-        checksum/secret-core: a68e5d07fd7dc5c09eaaf12e8ebbe86254f90a45bd3433296c791b3f0e33d39b
+        checksum/secret-core: ee82bdc80101e44f5d4507c8232b7af31c22d35fdc4c58d5949b504530a044da
         checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
       labels:
         app: harbor
@@ -1163,11 +1163,17 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-db-standard-user
+      metadataPolicy: None
       property: username
     secretKey: username
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-db-standard-user
+      metadataPolicy: None
       property: password
     secretKey: password
   refreshInterval: 1h0m0s
@@ -1186,11 +1192,17 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-db-superuser
+      metadataPolicy: None
       property: username
     secretKey: username
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-db-superuser
+      metadataPolicy: None
       property: password
     secretKey: password
   refreshInterval: 1h0m0s
@@ -1209,19 +1221,31 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-core
+      metadataPolicy: None
       property: HARBOR_ADMIN_PASSWORD
     secretKey: HARBOR_ADMIN_PASSWORD
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-core
+      metadataPolicy: None
       property: secretKey
     secretKey: secretKey
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-core
+      metadataPolicy: None
       property: secret
     secretKey: secret
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-core
+      metadataPolicy: None
       property: XSRF_KEY
     secretKey: XSRF_KEY
   refreshInterval: 1h0m0s
@@ -1240,15 +1264,24 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_PASSWD
     secretKey: REGISTRY_PASSWD
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_HTPASSWD
     secretKey: REGISTRY_HTPASSWD
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-jobservice
+      metadataPolicy: None
       property: JOBSERVICE_SECRET
     secretKey: JOBSERVICE_SECRET
   refreshInterval: 1h0m0s
@@ -1267,19 +1300,31 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_HTTP_SECRET
     secretKey: REGISTRY_HTTP_SECRET
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_PASSWD
     secretKey: REGISTRY_PASSWD
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_HTPASSWD
     secretKey: REGISTRY_HTPASSWD
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
       property: REGISTRY_REDIS_PASSWORD
     secretKey: REGISTRY_REDIS_PASSWORD
   refreshInterval: 1h0m0s
@@ -1298,7 +1343,10 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registryctl
+      metadataPolicy: None
       property: REGISTRYCTL_SECRET
     secretKey: REGISTRYCTL_SECRET
   refreshInterval: 1h0m0s
@@ -1317,11 +1365,17 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-trivy
+      metadataPolicy: None
       property: gitHubToken
     secretKey: gitHubToken
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-trivy
+      metadataPolicy: None
       property: redisURL
     secretKey: redisURL
   refreshInterval: 1h0m0s
