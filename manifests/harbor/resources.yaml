@@ -767,16 +767,38 @@ spec:
             type: RuntimeDefault
         volumeMounts:
         - mountPath: /etc/jobservice/config.yml
-          name: jobservice-config
+          name: jobservice-config-runtime
           subPath: config.yml
         - mountPath: /var/log/jobs
           name: job-logs
-          subPath: null
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - |
+          sed "s|redis_url: \"[^\"]*\"|redis_url: \"redis://:${REDIS_PASSWORD}@valkey:6379/1\"|" \
+            /config-template/config.yml > /config-runtime/config.yml
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: REDIS_PASSWORD
+              name: harbor-jobservice
+        image: busybox:1.36
+        name: inject-redis-url
+        volumeMounts:
+        - mountPath: /config-template
+          name: jobservice-config
+          readOnly: true
+        - mountPath: /config-runtime
+          name: jobservice-config-runtime
       securityContext:
         fsGroup: 10000
         runAsUser: 10000
       terminationGracePeriodSeconds: 120
       volumes:
+      - emptyDir: {}
+        name: jobservice-config-runtime
       - configMap:
           name: harbor-jobservice
         name: jobservice-config
@@ -1314,6 +1336,13 @@ spec:
       metadataPolicy: None
       property: JOBSERVICE_SECRET
     secretKey: JOBSERVICE_SECRET
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
+      property: REGISTRY_REDIS_PASSWORD
+    secretKey: REDIS_PASSWORD
   refreshInterval: 1h0m0s
   refreshPolicy: Periodic
   secretStoreRef:

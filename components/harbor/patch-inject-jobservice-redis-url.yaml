@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-jobservice
+  namespace: harbor
+spec:
+  template:
+    spec:
+      # Reads config.yml from the ConfigMap, injects the authenticated redis_url
+      # (sourced from a Secret), and writes the result to a shared emptyDir.
+      # The main container's volumeMount is redirected to the emptyDir below,
+      # so the ConfigMap value (which is password-free and safe to commit) is
+      # never used directly by the running process.
+      # Only redis_url is touched; everything else in config.yml is passed through
+      # unchanged, so upstream updates to the ConfigMap template are picked up
+      # automatically.
+      initContainers:
+        - name: inject-redis-url
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              sed "s|redis_url: \"[^\"]*\"|redis_url: \"redis://:${REDIS_PASSWORD}@valkey:6379/1\"|" \
+                /config-template/config.yml > /config-runtime/config.yml
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harbor-jobservice
+                  key: REDIS_PASSWORD
+          volumeMounts:
+            - name: jobservice-config
+              mountPath: /config-template
+              readOnly: true
+            - name: jobservice-config-runtime
+              mountPath: /config-runtime
+      containers:
+        - name: jobservice
+          volumeMounts:
+            # Strategic merge patch merges volumeMounts by mountPath.
+            # This entry updates the existing mount at this path, redirecting
+            # it from the ConfigMap volume to the emptyDir written by the
+            # init container above.
+            - mountPath: /etc/jobservice/config.yml
+              name: jobservice-config-runtime
+              subPath: config.yml
+      volumes:
+        - name: jobservice-config-runtime
+          emptyDir: {}
