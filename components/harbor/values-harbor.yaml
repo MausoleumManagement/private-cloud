@@ -4,7 +4,7 @@
 # caBundleSecretName:
 caSecretName: harbor-certificate
 
-externalURL: https://core.harbor.nekropolis.irminsul
+externalURL: https://harbor.nekropolis.irminsul
 
 expose:
   type: ingress
