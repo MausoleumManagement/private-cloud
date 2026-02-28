@@ -4,7 +4,9 @@
 architecture: standalone
 
 auth:
-  enabled: false
+  enabled: true
+  existingSecret: harbor-valkey
+  existingSecretPasswordKey: REGISTRY_REDIS_PASSWORD
 
 persistence:
   storageClass: cephfs-2026

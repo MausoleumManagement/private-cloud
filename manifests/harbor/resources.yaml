@@ -299,7 +299,7 @@ data:
     # Memory management
 
     # Security
-    protected-mode no
+    protected-mode yes
 
     # Additional configuration
 kind: ConfigMap
@@ -1079,8 +1079,18 @@ spec:
         - |
           CONFIG_FILE="/etc/valkey/valkey.conf"
 
-          valkey-server "$CONFIG_FILE"
-        env: null
+          valkey-server "$CONFIG_FILE" --requirepass "${VALKEY_PASSWORD}"
+        env:
+        - name: VALKEY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: REGISTRY_REDIS_PASSWORD
+              name: harbor-valkey
+        - name: REDISCLI_AUTH
+          valueFrom:
+            secretKeyRef:
+              key: REGISTRY_REDIS_PASSWORD
+              name: harbor-valkey
         image: docker.io/valkey/valkey:9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
         imagePullPolicy: Always
         livenessProbe:
@@ -1399,6 +1409,28 @@ spec:
     name: openbao-backend
   target:
     name: harbor-trivy
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: harbor-valkey
+  namespace: harbor
+spec:
+  data:
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/harbor/harbor-registry
+      metadataPolicy: None
+      property: REGISTRY_REDIS_PASSWORD
+    secretKey: REGISTRY_REDIS_PASSWORD
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: harbor-valkey
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
