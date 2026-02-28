@@ -80,9 +80,21 @@ registry:
   # Key within the existing secret for the registry service secret
   existingSecretKey: REGISTRY_HTTP_SECRET
   credentials:
+
+    # note, that the username is also used in the htpasswd creation in out externalsecrets
+    # in that case, its fetched from openbao
+    # this duplication sucks, but that's the helmchart we are workign with
     username: harbor-registry-user
+
+    # we get our secret value from the external secrets we use, no need to pass it here
+    # the password may be no longer than 16 characters
+    # password:
+    # https://github.com/goharbor/harbor-helm/blob/main/templates/registry/registry-secret.yaml#L51
+    # https://github.com/goharbor/harbor-helm/issues/1830
+    # example for how it should look like:
+    # htpasswd -nb username password
     # must contain values REGISTRY_PASSWD and REGISTRY_HTPASSWD
-    existingSecret: harbor-jobservice
+    existingSecret: harbor-registry
   
 jobservice:
   existingSecret: "harbor-jobservice"

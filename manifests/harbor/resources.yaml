@@ -582,7 +582,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: REGISTRY_PASSWD
-              name: harbor-jobservice
+              name: harbor-registry
         - name: CSRF_KEY
           valueFrom:
             secretKeyRef:
@@ -733,7 +733,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: REGISTRY_PASSWD
-              name: harbor-jobservice
+              name: harbor-registry
         envFrom:
         - configMapRef:
             name: harbor-jobservice-env
@@ -1039,7 +1039,7 @@ spec:
           items:
           - key: REGISTRY_HTPASSWD
             path: passwd
-          secretName: harbor-jobservice
+          secretName: harbor-registry
       - configMap:
           name: harbor-registry
         name: registry-config
@@ -1286,13 +1286,6 @@ spec:
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/harbor/harbor-registry
-      metadataPolicy: None
-      property: REGISTRY_HTPASSWD
-    secretKey: REGISTRY_HTPASSWD
-  - remoteRef:
-      conversionStrategy: Default
-      decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-jobservice
       metadataPolicy: None
       property: JOBSERVICE_SECRET
@@ -1324,15 +1317,15 @@ spec:
       decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
       metadataPolicy: None
-      property: REGISTRY_PASSWD
-    secretKey: REGISTRY_PASSWD
+      property: REGISTRY_USERNAME
+    secretKey: REGISTRY_USERNAME
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
       key: kv/nekropolis/harbor/harbor-registry
       metadataPolicy: None
-      property: REGISTRY_HTPASSWD
-    secretKey: REGISTRY_HTPASSWD
+      property: REGISTRY_PASSWD
+    secretKey: REGISTRY_PASSWD
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
@@ -1347,6 +1340,14 @@ spec:
     name: openbao-backend
   target:
     name: harbor-registry
+    template:
+      data:
+        REGISTRY_HTPASSWD: '{{ htpasswd .REGISTRY_USERNAME .REGISTRY_PASSWD }}'
+        REGISTRY_HTTP_SECRET: '{{ .REGISTRY_HTTP_SECRET }}'
+        REGISTRY_PASSWD: '{{ .REGISTRY_PASSWD }}'
+        REGISTRY_REDIS_PASSWORD: '{{ .REGISTRY_REDIS_PASSWORD }}'
+        REGISTRY_USERNAME: '{{ .REGISTRY_USERNAME }}'
+      engineVersion: v2
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
