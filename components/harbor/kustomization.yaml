@@ -36,6 +36,10 @@ helmcharts:
 
 patches:
   - path: patch-delete-harbor-core-secret.yaml
+  - path: patch-remove-harbor-core-redis-urls.yaml
+    target:
+      kind: ConfigMap
+      name: harbor-core
   - path: patch-delete-harbor-jobservice-secret.yaml
   #- path: patch-delete-harbor-nginx-secret.yaml
   - path: patch-delete-harbor-registry-secret.yaml

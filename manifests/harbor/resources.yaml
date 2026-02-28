@@ -5,8 +5,6 @@ metadata:
 ---
 apiVersion: v1
 data:
-  _REDIS_URL_CORE: redis://valkey:6379/0?idle_timeout_seconds=30
-  _REDIS_URL_REG: redis://valkey:6379/2?idle_timeout_seconds=30
   CHART_CACHE_DRIVER: redis
   CONFIG_PATH: /etc/core/app.conf
   CORE_LOCAL_URL: http://127.0.0.1:8080

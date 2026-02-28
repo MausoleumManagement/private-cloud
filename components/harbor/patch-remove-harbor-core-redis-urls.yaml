@@ -1,0 +1,4 @@
+- op: remove
+  path: /data/_REDIS_URL_CORE
+- op: remove
+  path: /data/_REDIS_URL_REG
