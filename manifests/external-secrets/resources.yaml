@@ -30845,8 +30845,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets
   namespace: external-secrets
 ---
@@ -30857,8 +30857,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-cert-controller
   namespace: external-secrets
 ---
@@ -30869,8 +30869,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -30881,8 +30881,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-leaderelection
   namespace: external-secrets
 rules:
@@ -30919,8 +30919,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-cert-controller
 rules:
 - apiGroups:
@@ -31001,8 +31001,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-controller
 rules:
 - apiGroups:
@@ -31152,8 +31152,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: external-secrets-edit
@@ -31205,8 +31205,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
     servicebinding.io/controller: "true"
   name: external-secrets-servicebindings
 rules:
@@ -31227,8 +31227,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -31277,8 +31277,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-leaderelection
   namespace: external-secrets
 roleRef:
@@ -31297,8 +31297,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-cert-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -31316,8 +31316,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -31335,9 +31335,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
+    app.kubernetes.io/version: v2.0.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.0.0
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -31348,9 +31348,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
+    app.kubernetes.io/version: v2.0.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.0.0
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -31371,8 +31371,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets
   namespace: external-secrets
 spec:
@@ -31388,8 +31388,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets
-        app.kubernetes.io/version: v2.0.0
-        helm.sh/chart: external-secrets-2.0.0
+        app.kubernetes.io/version: v2.0.1
+        helm.sh/chart: external-secrets-2.0.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -31398,7 +31398,7 @@ spec:
         - --metrics-addr=:8080
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.0.0
+        image: ghcr.io/external-secrets/external-secrets:v2.0.1
         imagePullPolicy: IfNotPresent
         name: external-secrets
         ports:
@@ -31426,8 +31426,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-cert-controller
   namespace: external-secrets
 spec:
@@ -31443,8 +31443,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-cert-controller
-        app.kubernetes.io/version: v2.0.0
-        helm.sh/chart: external-secrets-2.0.0
+        app.kubernetes.io/version: v2.0.1
+        helm.sh/chart: external-secrets-2.0.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -31460,7 +31460,7 @@ spec:
         - --loglevel=info
         - --zap-time-encoding=epoch
         - --enable-partial-cache=true
-        image: ghcr.io/external-secrets/external-secrets:v2.0.0
+        image: ghcr.io/external-secrets/external-secrets:v2.0.1
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
@@ -31496,8 +31496,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
-    helm.sh/chart: external-secrets-2.0.0
+    app.kubernetes.io/version: v2.0.1
+    helm.sh/chart: external-secrets-2.0.1
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -31513,8 +31513,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-webhook
-        app.kubernetes.io/version: v2.0.0
-        helm.sh/chart: external-secrets-2.0.0
+        app.kubernetes.io/version: v2.0.1
+        helm.sh/chart: external-secrets-2.0.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -31528,7 +31528,7 @@ spec:
         - --healthz-addr=:8081
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.0.0
+        image: ghcr.io/external-secrets/external-secrets:v2.0.1
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:
@@ -31594,9 +31594,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
+    app.kubernetes.io/version: v2.0.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.0.0
+    helm.sh/chart: external-secrets-2.0.1
   name: externalsecret-validate
 webhooks:
 - admissionReviewVersions:
@@ -31631,9 +31631,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.0.0
+    app.kubernetes.io/version: v2.0.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.0.0
+    helm.sh/chart: external-secrets-2.0.1
   name: secretstore-validate
 webhooks:
 - admissionReviewVersions:
