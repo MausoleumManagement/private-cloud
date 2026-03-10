@@ -11929,6 +11929,7 @@ data:
   bpf-lb-algorithm-annotation: "false"
   bpf-lb-external-clusterip: "false"
   bpf-lb-map-max: "65536"
+  bpf-lb-mode: hybrid
   bpf-lb-mode-annotation: "false"
   bpf-lb-sock: "false"
   bpf-lb-source-range-all-types: "false"
@@ -12091,7 +12092,7 @@ data:
   tofqdns-max-deferred-connection-deletes: "10000"
   tofqdns-preallocate-identities: "true"
   tofqdns-proxy-response-max-delay: 100ms
-  tunnel-protocol: vxlan
+  tunnel-protocol: geneve
   tunnel-source-port-range: 0-0
   unmanaged-pod-watcher-interval: 15s
   vtep-cidr: ""
@@ -12325,6 +12326,10 @@ spec:
               key: debug
               name: cilium-config
               optional: true
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.10.11
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
         image: quay.io/cilium/operator-generic:v1.19.1@sha256:e7278d763e448bf6c184b0682cf98cdca078d58a27e1b2f3c906792670aa211a
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -12636,6 +12641,10 @@ spec:
             resourceFieldRef:
               divisor: "1"
               resource: limits.memory
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.10.11
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
         - name: KUBE_CLIENT_BACKOFF_BASE
           value: "1"
         - name: KUBE_CLIENT_BACKOFF_DURATION
@@ -12792,6 +12801,10 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.10.11
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
         image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: config
@@ -12904,6 +12917,10 @@ spec:
               key: write-cni-conf-when-ready
               name: cilium-config
               optional: true
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.10.11
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
         image: quay.io/cilium/cilium:v1.19.1@sha256:41f1f74a0000de8656f1de4088ea00c8f2d49d6edea579034c73c5fd5fe01792
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
@@ -13124,6 +13141,10 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.10.11
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
         image: quay.io/cilium/cilium-envoy:v1.35.9-1770979049-232ed4a26881e4ab4f766f251f258ed424fff663@sha256:8188114a2768b5f49d6ce58e168b20d765e0fbc64eee0d83241aa2b150ccd788
         imagePullPolicy: IfNotPresent
         livenessProbe:

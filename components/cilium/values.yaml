@@ -52,7 +52,26 @@ envoy:
   enabled: true
   idleTimeoutDurationSeconds: 20
 
+# create pod CIDR routes between worker nodes
+# we could use this together with native routing so that we can route
+# traffic from any node to a given pod IP
+# only downside seems to be, that the routes are only created on worker nodes
+# kube-vip runs on our control plane nodes however...
+# this looks like a prime candidate for disentanglement
+# maybe we can have a separate DS for the workers
+#autoDirectNodeRoutes: true
+
+k8sServiceHost: 192.168.10.11
+k8sServicePort: 6443
+
+routingMode: tunnel
+# geneve seems to be the more modern protocol compared to vxlan
+tunnelProtocol: geneve
+
 loadBalancer:
+  # this uses DSR for TCP packets and SNAT for UDP
+  # https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#hybrid-mode
+  mode: hybrid
   l7:
     algorithm: "round_robin"
     backend: envoy
