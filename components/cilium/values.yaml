@@ -1,4 +1,5 @@
   # https://github.com/cilium/cilium/tree/main/install/kubernetes/cilium
+  # CAUTION, the helm reference does not contain all the values
   # https://docs.cilium.io/en/stable/helm-reference/
 
 # if we want to use istio with cilium, we need to configure these values
@@ -69,15 +70,27 @@ routingMode: tunnel
 tunnelProtocol: geneve
 
 loadBalancer:
-  # this uses DSR for TCP packets and SNAT for UDP
+  # this uses direct server return (DSR) for TCP packets and SNAT for UDP
   # https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#hybrid-mode
+  # the difference is, that SNAT will not pass on the source IP they way DSR does via geneve
+  # but since UDP is stateless, sending the source IP each time (rather than just once on the SYN packet
+  # in TCP would incur more costs, so we can see wheter we have any UDP services that benefit from knowing
+  # the source IP and enable DSR for UDP whenever that happens;
+  # we can also specify it per service using the lbModeAnnotation feature [see below])
   mode: hybrid
+  # how will the source IP be passed 
+  dsrDispatch: geneve
   l7:
     algorithm: "round_robin"
     backend: envoy
     # if we wanted to apply l7 load balancing to all services
     # exposing these ports, here's how that would work
     #ports: [80, 443]
+# bpf:
+  # this allows modifying the loadbalancing mode  (SNAT / DSR) per service via
+  # the service.cilium.io/forwarding-mode annotation
+  # but apparently, it doesn't work with hybrid loadbalancing mode
+  # lbModeAnnotation: true
 
 ingressController:
   enabled: true

@@ -11927,6 +11927,7 @@ data:
   bpf-events-trace-enabled: "true"
   bpf-lb-acceleration: disabled
   bpf-lb-algorithm-annotation: "false"
+  bpf-lb-dsr-dispatch: geneve
   bpf-lb-external-clusterip: "false"
   bpf-lb-map-max: "65536"
   bpf-lb-mode: hybrid
