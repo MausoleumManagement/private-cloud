@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao
   namespace: openbao
 ---
@@ -31,7 +31,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-discovery-role
   namespace: openbao
 rules:
@@ -72,7 +72,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-discovery-rolebinding
   namespace: openbao
 roleRef:
@@ -108,7 +108,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-server-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -141,7 +141,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-config
   namespace: openbao
 ---
@@ -152,12 +152,13 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao
   namespace: openbao
 spec:
   ports:
-  - name: http
+  - appProtocol: HTTP
+    name: http
     port: 8200
     targetPort: 8200
   - name: https-internal
@@ -176,13 +177,14 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
     openbao-active: "true"
   name: openbao-active
   namespace: openbao
 spec:
   ports:
-  - name: http
+  - appProtocol: HTTP
+    name: http
     port: 8200
     targetPort: 8200
   - name: https-internal
@@ -221,14 +223,15 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
     openbao-internal: "true"
   name: openbao-internal
   namespace: openbao
 spec:
   clusterIP: None
   ports:
-  - name: http
+  - appProtocol: HTTP
+    name: http
     port: 8200
     targetPort: 8200
   - name: https-internal
@@ -247,12 +250,13 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-standby
   namespace: openbao
 spec:
   ports:
-  - name: http
+  - appProtocol: HTTP
+    name: http
     port: 8200
     targetPort: 8200
   - name: https-internal
@@ -274,7 +278,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao-ui
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao-ui
   namespace: openbao
 spec:
@@ -432,7 +436,7 @@ spec:
         app.kubernetes.io/instance: openbao
         app.kubernetes.io/name: openbao
         component: server
-        helm.sh/chart: openbao-0.25.6
+        helm.sh/chart: openbao-0.26.1
     spec:
       affinity:
         podAntiAffinity:
@@ -568,7 +572,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.25.6
+    helm.sh/chart: openbao-0.26.1
   name: openbao
   namespace: openbao
 spec:
