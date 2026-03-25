@@ -13,7 +13,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-ipam-in-cluster-system/capi-ipam-in-cluster-serving-cert
     controller-gen.kubebuilder.io/version: v0.17.2
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -300,7 +299,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-ipam-in-cluster-system/capi-ipam-in-cluster-serving-cert
     controller-gen.kubebuilder.io/version: v0.17.2
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -727,7 +725,6 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -745,7 +742,6 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -762,7 +758,6 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -835,7 +830,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -853,7 +847,6 @@ spec:
     metadata:
       annotations:
         kubectl.kubernetes.io/default-container: manager
-      creationTimestamp: null
       labels:
         cluster.x-k8s.io/provider: ipam-in-cluster
         control-plane: controller-manager
@@ -948,7 +941,6 @@ kind: MutatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-ipam-in-cluster-system/capi-ipam-in-cluster-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""
@@ -1004,7 +996,6 @@ kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-ipam-in-cluster-system/capi-ipam-in-cluster-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: ipam-in-cluster
     clusterctl.cluster.x-k8s.io: ""

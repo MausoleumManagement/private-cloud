@@ -44,7 +44,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-kubeadm-control-plane-system/capi-kubeadm-control-plane-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -8168,7 +8167,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-kubeadm-control-plane-system/capi-kubeadm-control-plane-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     cluster.x-k8s.io/v1beta1: v1beta1
@@ -14517,7 +14515,6 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     clusterctl.cluster.x-k8s.io: ""
@@ -14535,7 +14532,6 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     clusterctl.cluster.x-k8s.io: ""
@@ -14567,7 +14563,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     clusterctl.cluster.x-k8s.io: ""
@@ -14583,7 +14578,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         cluster.x-k8s.io/provider: control-plane-kubeadm
         control-plane: controller-manager
@@ -14609,7 +14603,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: registry.k8s.io/cluster-api/kubeadm-control-plane-controller:v1.12.2
+        image: registry.k8s.io/cluster-api/kubeadm-control-plane-controller:v1.12.4
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -14666,7 +14660,6 @@ kind: MutatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-kubeadm-control-plane-system/capi-kubeadm-control-plane-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     clusterctl.cluster.x-k8s.io: ""
@@ -14700,7 +14693,6 @@ kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-kubeadm-control-plane-system/capi-kubeadm-control-plane-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: control-plane-kubeadm
     clusterctl.cluster.x-k8s.io: ""

@@ -13,7 +13,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -5446,7 +5445,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -5888,7 +5886,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -6799,7 +6796,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -10679,7 +10675,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -11430,7 +11425,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -12057,7 +12051,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -12421,7 +12414,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -15103,7 +15095,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -15900,7 +15891,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -17389,7 +17379,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -19744,7 +19733,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -21622,7 +21610,7 @@ spec:
                   - address
                   - type
                   type: object
-                maxItems: 128
+                maxItems: 256
                 type: array
                 x-kubernetes-list-type: atomic
               certificatesExpiryDate:
@@ -21974,7 +21962,6 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
     controller-gen.kubebuilder.io/version: v0.19.0
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -24554,7 +24541,6 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -24572,7 +24558,6 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -24604,7 +24589,6 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -24620,7 +24604,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         cluster.x-k8s.io/provider: cluster-api
         control-plane: controller-manager
@@ -24646,7 +24629,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: registry.k8s.io/cluster-api/cluster-api-controller:v1.12.2
+        image: registry.k8s.io/cluster-api/cluster-api-controller:v1.12.4
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -24734,7 +24717,6 @@ kind: MutatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
@@ -24922,7 +24904,6 @@ kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capi-system/capi-serving-cert
-  creationTimestamp: null
   labels:
     cluster.x-k8s.io/provider: cluster-api
     clusterctl.cluster.x-k8s.io: ""
