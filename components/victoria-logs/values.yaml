@@ -1,0 +1,26 @@
+# https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-logs-cluster/values.yaml 
+# https://docs.victoriametrics.com/helm/victoria-logs-cluster/
+
+
+# apparently, vmauth serves as some kind of a loadbalancer for the ingesters and query api endpoints
+vmauth:
+  enabled: true
+  # we don't want the secret to be templated
+  # so we use an existing secret managed by an ExternalSecret
+  configSecretName: vmauth-config
+  
+# since we use vmauth, we disable 
+vlinsert:
+  service:
+    clusterIP: None
+    type: ClusterIP
+vlselect:
+  service:
+    clusterIP: None
+    type: ClusterIP
+
+vlstorage:
+  replicaCount: 2
+  persistentVolume:
+    size: 15Gi
+  retentionPeriod: 21d

@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+#
+# https://docs.victoriametrics.com/helm/victoria-logs-cluster/
+
+# TODO: we are currently
+#
+helmCharts:
+  - name: victoria-logs-cluster
+    namespace: victoria-logs
+    releaseName: victoria-logs-release
+    repo: https://victoriametrics.github.io/helm-charts/
+    valuesFile: values.yaml
+    version: 0.0.31
+resources:
+  - namespace.yaml
+  - externalsecrets.yaml
