@@ -1,0 +1,40 @@
+# https://github.com/tinkerbell/tinkerbell/blob/main/helm/tinkerbell/values.yaml
+
+# TODO:  the tinkerbell-secrets cluster role binding grants permission to get/list/watch secrets clusterwide - why?
+# perhaps because tinkerbell is supposed to access secrets sitting next to CRs referencing them
+# it would be neat to limit this to a list of relevant namespaces
+
+
+# A comma-separated list of trusted proxies. This is used to configure the X-Forwarded-For header in HTTP requests for Tootles and auto.ipxe in Smee
+# supposedly, this can be retrieved using the command
+# kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}' | tr ' ' ','
+# but since our nodes are dynamic, i think it makes more sense to throw something generic in here
+# TODO: perhaps we can generate all possible node IPs
+
+trustedProxies: 10.0.1.0/24,10.0.0.0/24,10.0.5.0/24,10.0.3.0/24,10.0.2.0/24,10.0.6.0/24,10.0.4.0/24
+
+# The IP address to use for the Kubernetes North/South load balancer
+publicIP: 192.168.13.9
+
+# The full URL to the HTTP server serving HookOS artifacts like the kernel and initramfs, for example http://192.0.2.117:7173
+# TODO: this seems to not work with a hostname - why?
+# TODO: come up with a deployment for this server ?
+# or does the captainos component just handle all this?
+# if so, why all the hubbub about passing the Fileserver URL here?
+#artifactsFileServer: http://hostname.nekropolis.irminsul:9090
+artifactsFileServer: http://192.168.13.9:7173
+
+# TODO: Stop using latest tag
+deployment:
+  agentImageTag: latest
+  imageTag: latest
+  
+optional:
+  kubevip:
+    enabled: false
+  # this wants to use a weird storage class for local storage, and i don't want to pollute my cluster with that
+  # besides, captainOS seems to be where the development is headed
+  hookos:
+    enabled: false
+  captainos:
+    enabled: true
