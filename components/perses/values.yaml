@@ -1,0 +1,66 @@
+# https://github.com/perses/helm-charts/blob/main/charts/perses/values.yaml
+# https://perses.dev/helm-charts/docs/installation/
+# https://artifacthub.io/packages/helm/perses/perses
+
+# Disable helm-generated secret; managed by ExternalSecret instead
+secret:
+  create: false
+  name: perses
+
+replicas: 1
+
+envVars:
+  # the helmchart seems to convert the key value of secretKeyRefs into kebab-case
+  # i would prefer if they just kept their hands off my SCREAMING_SNAKE_CASE here, but what will you do
+  # see the statefulset template and look for the 'kebabcase' filter
+  # what this means for us is, that our externalsecrets must create the keys in secret manifests with kebab-case
+  - name: PERSES_SECURITY_ENCRYPTION_KEY
+    valueFrom:
+      secretKeyRef:
+        name: perses
+        key: PERSES_SECURITY_ENCRYPTION_KEY
+  # This attempt did not work yet with properly generated openssl unprintable bytes because they key seemed to be of an incorrect length
+  # - name: PERSES_SECURITY_ENCRYPTION_KEY_FILE
+  #   value: /etc/perses/encryption_key
+
+config:
+  security:
+    readonly: true
+    enable_auth: false
+    cookie:
+      same_site: lax
+      secure: false
+      
+
+  database:
+    file:
+      folder: /perses
+      extension: json
+
+  provisioning:
+    folders:
+      - /etc/perses/provisioning
+    interval: 10m
+
+persistence:
+  enabled: true
+  size: 8Gi
+
+#volumes:
+#  - name: encryption-key
+#    secret:
+#      secretName: perses
+#      items:
+#        - key: perses-security-encryption-key-raw
+#          path: encryption_key
+#      defaultMode: 0400
+#
+#volumeMounts:
+#  - name: encryption-key
+#    mountPath: /etc/perses/encryption_key
+#    subPath: encryption_key
+#    readOnly: true
+#
+# Disable helm test framework
+testFramework:
+  enabled: false
