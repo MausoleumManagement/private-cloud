@@ -18,3 +18,4 @@ resources:
   #- application-kube-vip-cloud-controller.yaml
   - application-metrics-server.yaml
   - application-openbao.yaml
+  - application-victoria-logs.yaml

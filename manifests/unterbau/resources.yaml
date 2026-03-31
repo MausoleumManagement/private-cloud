@@ -458,3 +458,26 @@ spec:
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: victoria-logs
+  namespace: argocd
+spec:
+  destination:
+    namespace: victoria-logs
+    server: https://kubernetes.default.svc
+  project: unterbau
+  source:
+    path: manifests/victoria-logs
+    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
