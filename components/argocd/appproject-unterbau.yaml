@@ -67,6 +67,12 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: reloader
     server: https://kubernetes.default.svc
+  - namespace: perses
+    server: https://kubernetes.default.svc
+  - namespace: victoria-logs
+    server: https://kubernetes.default.svc
+  - namespace: victoria-metrics
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace
