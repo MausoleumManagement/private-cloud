@@ -1,0 +1,5 @@
+# https://docs.victoriametrics.com/helm/victoria-logs-collector/
+# https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-logs-collector/values.yaml
+
+remoteWrite:
+  - url: "http://victoria-logs-release-victoria-logs-cluster-vmauth.victoria-logs.svc.cluster.local:8427"

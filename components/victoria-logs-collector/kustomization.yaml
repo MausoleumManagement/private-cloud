@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# https://docs.victoriametrics.com/helm/victoria-logs-collector/
+# https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-collector
+# https://artifacthub.io/packages/helm/victoriametrics/victoria-logs-collector
+
+namespace: victoria-logs-collector
+
+helmCharts:
+  - name: victoria-logs-collector
+    namespace: victoria-logs-collector
+    repo: https://victoriametrics.github.io/helm-charts/
+    version: 0.2.14
+    releaseName: victoria-logs-collector
+    valuesFile: values.yaml
+
+resources:
+  - namespace.yaml

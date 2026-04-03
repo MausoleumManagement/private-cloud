@@ -21,3 +21,4 @@ resources:
   - application-perses.yaml
   - application-victoria-logs.yaml
   - application-victoria-metrics.yaml
+  - application-victoria-logs-collector.yaml
