@@ -71,6 +71,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: victoria-logs
     server: https://kubernetes.default.svc
+  - namespace: victoria-logs-collector
+    server: https://kubernetes.default.svc
   - namespace: victoria-metrics
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
