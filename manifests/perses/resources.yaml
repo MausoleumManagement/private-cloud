@@ -15,7 +15,6 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
-  namespace: perses
 ---
 apiVersion: v1
 data:
@@ -52,7 +51,6 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
-  namespace: perses
 ---
 apiVersion: v1
 kind: Service
@@ -66,7 +64,6 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
-  namespace: perses
 spec:
   ports:
   - name: http
@@ -90,7 +87,6 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
-  namespace: perses
 spec:
   accessModes:
   - ReadWriteOnce
@@ -110,7 +106,6 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
-  namespace: perses
 spec:
   replicas: 1
   selector:
@@ -191,7 +186,10 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/perses/perses
+      metadataPolicy: None
       property: PERSES_SECURITY_ENCRYPTION_KEY
     secretKey: perses-security-encryption-key
   refreshInterval: 1h0m0s

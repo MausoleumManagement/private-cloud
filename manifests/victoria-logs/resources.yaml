@@ -388,7 +388,10 @@ metadata:
 spec:
   data:
   - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
       key: kv/nekropolis/victoria-logs/vmauth-config
+      metadataPolicy: None
       property: auth.yml
     secretKey: auth.yml
   refreshInterval: 1h0m0s
