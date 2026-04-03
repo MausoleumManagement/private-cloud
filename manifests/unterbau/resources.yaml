@@ -202,7 +202,7 @@ spec:
   project: unterbau
   source:
     path: manifests/forgejo
-    repoURL: https://github.com/MausoleumManagement/forgejo.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
