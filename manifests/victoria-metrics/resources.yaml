@@ -1,0 +1,411 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: victoria-metrics
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster
+  namespace: victoria-metrics
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vmauth
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmauth
+  namespace: victoria-metrics
+spec:
+  ports:
+  - name: http
+    port: 8427
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: vmauth
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/name: victoria-metrics-cluster
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vminsert
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vminsert
+  namespace: victoria-metrics
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8480
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: vminsert
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/name: victoria-metrics-cluster
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vmselect
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmselect
+  namespace: victoria-metrics
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8481
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: vmselect
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/name: victoria-metrics-cluster
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: vmstorage
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmstorage
+  namespace: victoria-metrics
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8482
+    protocol: TCP
+    targetPort: http
+  - name: vmselect
+    port: 8401
+    protocol: TCP
+    targetPort: vmselect
+  - name: vminsert
+    port: 8400
+    protocol: TCP
+    targetPort: vminsert
+  selector:
+    app: vmstorage
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/name: victoria-metrics-cluster
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: vmauth
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmauth
+  namespace: victoria-metrics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vmauth
+      app.kubernetes.io/instance: victoria-metrics-release
+      app.kubernetes.io/name: victoria-metrics-cluster
+  template:
+    metadata:
+      labels:
+        app: vmauth
+        app.kubernetes.io/instance: victoria-metrics-release
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: victoria-metrics-cluster
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --auth.config=/config/auth.yml
+        - --envflag.enable
+        - --envflag.prefix=VM_
+        - --httpListenAddr=:8427
+        - --loggerFormat=json
+        image: victoriametrics/vmauth:v1.139.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        name: vmauth
+        ports:
+        - containerPort: 8427
+          name: http
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /config
+          name: config
+      serviceAccountName: victoria-metrics-release-victoria-metrics-cluster
+      volumes:
+      - name: config
+        secret:
+          secretName: vmauth-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: vminsert
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vminsert
+  namespace: victoria-metrics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vminsert
+      app.kubernetes.io/instance: victoria-metrics-release
+      app.kubernetes.io/name: victoria-metrics-cluster
+  template:
+    metadata:
+      labels:
+        app: vminsert
+        app.kubernetes.io/instance: victoria-metrics-release
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: victoria-metrics-cluster
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --envflag.enable
+        - --envflag.prefix=VM_
+        - --httpListenAddr=:8480
+        - --loggerFormat=json
+        - --storageNode=victoria-metrics-release-victoria-metrics-cluster-vmstorage-0.victoria-metrics-release-victoria-metrics-cluster-vmstorage.victoria-metrics.svc.cluster.local.:8400
+        - --storageNode=victoria-metrics-release-victoria-metrics-cluster-vmstorage-1.victoria-metrics-release-victoria-metrics-cluster-vmstorage.victoria-metrics.svc.cluster.local.:8400
+        image: victoriametrics/vminsert:v1.139.0-cluster
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        name: vminsert
+        ports:
+        - containerPort: 8480
+          name: http
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+      serviceAccountName: victoria-metrics-release-victoria-metrics-cluster
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: vmselect
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmselect
+  namespace: victoria-metrics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vmselect
+      app.kubernetes.io/instance: victoria-metrics-release
+      app.kubernetes.io/name: victoria-metrics-cluster
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: vmselect
+        app.kubernetes.io/instance: victoria-metrics-release
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: victoria-metrics-cluster
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --cacheDataPath=/cache
+        - --envflag.enable
+        - --envflag.prefix=VM_
+        - --httpListenAddr=:8481
+        - --loggerFormat=json
+        - --storageNode=victoria-metrics-release-victoria-metrics-cluster-vmstorage-0.victoria-metrics-release-victoria-metrics-cluster-vmstorage.victoria-metrics.svc.cluster.local.:8401
+        - --storageNode=victoria-metrics-release-victoria-metrics-cluster-vmstorage-1.victoria-metrics-release-victoria-metrics-cluster-vmstorage.victoria-metrics.svc.cluster.local.:8401
+        image: victoriametrics/vmselect:v1.139.0-cluster
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        name: vmselect
+        ports:
+        - containerPort: 8481
+          name: http
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+        securityContext: {}
+        volumeMounts:
+        - mountPath: /cache
+          name: cache-volume
+      securityContext: {}
+      serviceAccountName: victoria-metrics-release-victoria-metrics-cluster
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir: {}
+        name: cache-volume
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: vmstorage
+    app.kubernetes.io/instance: victoria-metrics-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-cluster
+    app.kubernetes.io/version: v1.139.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.38.0
+  name: victoria-metrics-release-victoria-metrics-cluster-vmstorage
+  namespace: victoria-metrics
+spec:
+  minReadySeconds: 5
+  podManagementPolicy: OrderedReady
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vmstorage
+      app.kubernetes.io/instance: victoria-metrics-release
+      app.kubernetes.io/name: victoria-metrics-cluster
+  serviceName: victoria-metrics-release-victoria-metrics-cluster-vmstorage
+  template:
+    metadata:
+      labels:
+        app: vmstorage
+        app.kubernetes.io/instance: victoria-metrics-release
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: victoria-metrics-cluster
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --envflag.enable
+        - --envflag.prefix=VM_
+        - --httpListenAddr=:8482
+        - --loggerFormat=json
+        - --retentionPeriod=30d
+        - --storageDataPath=/storage
+        image: victoriametrics/vmstorage:v1.139.0-cluster
+        imagePullPolicy: IfNotPresent
+        name: vmstorage
+        ports:
+        - containerPort: 8482
+          name: http
+        - containerPort: 8400
+          name: vminsert
+        - containerPort: 8401
+          name: vmselect
+        readinessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /storage
+          name: vmstorage-volume
+      serviceAccountName: victoria-metrics-release-victoria-metrics-cluster
+      terminationGracePeriodSeconds: 60
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: vmstorage-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: vmauth-config
+spec:
+  data:
+  - remoteRef:
+      key: kv/nekropolis/victoria-metrics/vmauth-config
+      property: auth.yml
+    secretKey: auth.yml
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: vmauth-config

@@ -1,0 +1,26 @@
+# https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-cluster/values.yaml
+# https://docs.victoriametrics.com/helm/victoria-metrics-cluster/
+
+# vmauth serves as a unified entry point / loadbalancer for vminsert and vmselect
+vmauth:
+  enabled: true
+  # we don't want the secret to be templated
+  # so we use an existing secret managed by an ExternalSecret
+  configSecretName: vmauth-config
+
+# since we use vmauth, expose vminsert/vmselect as headless services
+vminsert:
+  service:
+    clusterIP: None
+    type: ClusterIP
+
+vmselect:
+  service:
+    clusterIP: None
+    type: ClusterIP
+
+vmstorage:
+  replicaCount: 2
+  persistentVolume:
+    size: 50Gi
+  retentionPeriod: 30d

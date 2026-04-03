@@ -20,3 +20,4 @@ resources:
   - application-openbao.yaml
   - application-perses.yaml
   - application-victoria-logs.yaml
+  - application-victoria-metrics.yaml
