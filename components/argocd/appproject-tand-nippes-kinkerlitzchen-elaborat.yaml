@@ -25,8 +25,8 @@ spec:
   #    applications:
   #      - '*'
   sourceRepos:
-  - 'https://github.com/AtomSoldat/demo_k8s_application.git'
-  - 'https://github.com/AtomSoldat/private-cloud.git'
+  - 'https://github.com/MausoleumManagement/demo_k8s_application.git'
+  - 'https://github.com/MausoleumManagement/private-cloud.git'
   # TODO: Currently we are granting permissions to create applications to this appproject, which is not great
   # TODO: This should be separated
   destinations:

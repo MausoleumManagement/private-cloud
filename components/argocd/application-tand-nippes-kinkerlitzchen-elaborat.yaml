@@ -18,5 +18,5 @@ spec:
   project: tand-nippes-kinkerlitzchen-elaborat
   source:
     path: manifests/tand-nippes-kinkerlitzchen-elaborat
-    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
+    repoURL: "https://github.com/MausoleumManagement/private-cloud.git"
     targetRevision: master

@@ -33466,8 +33466,8 @@ spec:
   signatureKeys:
   - keyID: 22C316A353F6F11ED2693628FD9D433219DA6540
   sourceRepos:
-  - https://github.com/AtomSoldat/demo_k8s_application.git
-  - https://github.com/AtomSoldat/private-cloud.git
+  - https://github.com/MausoleumManagement/demo_k8s_application.git
+  - https://github.com/MausoleumManagement/private-cloud.git
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -33621,7 +33621,7 @@ spec:
   signatureKeys:
   - keyID: 22C316A353F6F11ED2693628FD9D433219DA6540
   sourceRepos:
-  - https://github.com/AtomSoldat/private-cloud.git
+  - https://github.com/MausoleumManagement/private-cloud.git
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -33637,7 +33637,7 @@ spec:
   project: tand-nippes-kinkerlitzchen-elaborat
   source:
     path: manifests/tand-nippes-kinkerlitzchen-elaborat
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -33660,7 +33660,7 @@ spec:
   project: unterbau
   source:
     path: manifests/unterbau
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:

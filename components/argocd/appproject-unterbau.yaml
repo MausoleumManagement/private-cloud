@@ -25,7 +25,7 @@ spec:
   #    applications:
   #      - '*'
   sourceRepos:
-  - 'https://github.com/AtomSoldat/private-cloud.git'
+  - 'https://github.com/MausoleumManagement/private-cloud.git'
   destinations:
   - namespace: argocd
     server: https://kubernetes.default.svc
