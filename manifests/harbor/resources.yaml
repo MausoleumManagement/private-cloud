@@ -1395,7 +1395,8 @@ spec:
     name: harbor-registry
     template:
       data:
-        REGISTRY_HTPASSWD: '{{ htpasswd .REGISTRY_USERNAME .REGISTRY_PASSWD }}'
+        REGISTRY_HTPASSWD: '{{ htpasswd .REGISTRY_USERNAME .REGISTRY_PASSWD "bcrypt"
+          }}'
         REGISTRY_HTTP_SECRET: '{{ .REGISTRY_HTTP_SECRET }}'
         REGISTRY_PASSWD: '{{ .REGISTRY_PASSWD }}'
         REGISTRY_REDIS_PASSWORD: '{{ .REGISTRY_REDIS_PASSWORD }}'
