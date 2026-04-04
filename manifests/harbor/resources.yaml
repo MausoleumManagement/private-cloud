@@ -537,9 +537,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: aa2d20329bfdd3cbef85d294e58ba9a75932608b4a369862a63c9e2ef0525884
-        checksum/secret: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
-        checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
+        checksum/configmap: 7d740f7721221778367eb30f04aa06da4250257264edf4fae97c633d6cbc359d
+        checksum/secret: a5b27d4b362ec66b2d1c7dee1c78bd4636f2051d64cd8d5ba2d224474b4da31a
+        checksum/secret-jobservice: 2500cf424cda9c702752621cd8afaf4939242cb3d8e4719272479c74ec3d3a99
       labels:
         app: harbor
         app.kubernetes.io/component: core
@@ -697,10 +697,10 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 2d576fa1a1e1aeccc76263df47aae90450966f6139d872a9ce9ce5b2826f7e50
-        checksum/configmap-env: 3c8bb5e7be7a1ae6d8302436d00f555ae721e85b87a1ab38be27a6b10c8db5b1
-        checksum/secret: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
-        checksum/secret-core: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
+        checksum/configmap: c4099b313916eebf23a3bff904367adf0d92bce633d5292bf2dbe258a58a5c42
+        checksum/configmap-env: f9fff4baef3c38361f1df1096bbfafb68a018ec28b74aaf352c66f1973271793
+        checksum/secret: 2500cf424cda9c702752621cd8afaf4939242cb3d8e4719272479c74ec3d3a99
+        checksum/secret-core: a5b27d4b362ec66b2d1c7dee1c78bd4636f2051d64cd8d5ba2d224474b4da31a
       labels:
         app: harbor
         app.kubernetes.io/component: jobservice
@@ -834,7 +834,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: 843c66b6aef4f279a13479226415473c4fef2b270dc7ab8f0576771a2827ad44
+        checksum/configmap: 4fc78e9219df21f1aaea74b3efa5c298b9c87bd860954b9b474d2944ab5482fa
       labels:
         app: harbor
         app.kubernetes.io/component: portal
@@ -920,10 +920,10 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap: c9a561d90019d2bef15ffe7f4ab00e9a34228c9aa73a81da97345abb41126a32
-        checksum/secret: 029256d0fe77ebb31e606343e22ecddb659ae5c1d2cb4cd2deb8648721be8108
-        checksum/secret-core: ce60e32103c97ddfc0a37a3ff12f7ef52d6c0191db01b1edeb2039cd50399def
-        checksum/secret-jobservice: 4548c71c08f24bb6ca55a263e7963bacfbf0cc75fc97bf7db5160ba297f8616a
+        checksum/configmap: 6014b30cc033a4e1e7206bd7f452101a4a0bd341482e0040835b031d1cbf293b
+        checksum/secret: 8a0fabd8d2585572865e0132f50daefc514b827d3b56212611ab345242cb6ab8
+        checksum/secret-core: a5b27d4b362ec66b2d1c7dee1c78bd4636f2051d64cd8d5ba2d224474b4da31a
+        checksum/secret-jobservice: 2500cf424cda9c702752621cd8afaf4939242cb3d8e4719272479c74ec3d3a99
       labels:
         app: harbor
         app.kubernetes.io/component: registry
