@@ -18,7 +18,7 @@ spec:
   project: unterbau
   source:
     path: manifests/argocd
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -41,7 +41,7 @@ spec:
   project: unterbau
   source:
     path: manifests/cert-manager
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -64,7 +64,7 @@ spec:
   project: unterbau
   source:
     path: manifests/cilium
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -87,7 +87,7 @@ spec:
   project: unterbau
   source:
     path: manifests/cnpg-operator
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -110,7 +110,7 @@ spec:
   project: unterbau
   source:
     path: manifests/csi-cephfs
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -133,7 +133,7 @@ spec:
   project: unterbau
   source:
     path: manifests/csi-crds
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -156,7 +156,7 @@ spec:
   project: unterbau
   source:
     path: manifests/csi-nfs
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -179,7 +179,7 @@ spec:
   project: unterbau
   source:
     path: manifests/external-secrets
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -231,7 +231,7 @@ spec:
   project: unterbau
   source:
     path: manifests/harbor
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -254,7 +254,7 @@ spec:
   project: unterbau
   source:
     path: manifests/hardcoredns
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -277,7 +277,7 @@ spec:
   project: unterbau
   source:
     path: manifests/metrics-server
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -300,7 +300,7 @@ spec:
   project: unterbau
   source:
     path: manifests/nekropolis-cluster
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -323,7 +323,7 @@ spec:
   project: unterbau
   source:
     path: manifests/openbao
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -346,7 +346,7 @@ spec:
   project: unterbau
   source:
     path: manifests/perses
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -369,7 +369,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-bootstrap-kubeadm
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -398,7 +398,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-core
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -421,7 +421,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-capmox
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -450,7 +450,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-controlplane-kubeadm
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -473,7 +473,7 @@ spec:
   project: unterbau
   source:
     path: manifests/provider-ipam
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -496,7 +496,7 @@ spec:
   project: unterbau
   source:
     path: manifests/victoria-logs
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -519,7 +519,7 @@ spec:
   project: unterbau
   source:
     path: manifests/victoria-logs-collector
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:
@@ -542,7 +542,7 @@ spec:
   project: unterbau
   source:
     path: manifests/victoria-metrics
-    repoURL: https://github.com/AtomSoldat/private-cloud.git
+    repoURL: https://github.com/MausoleumManagement/private-cloud.git
     targetRevision: master
   syncPolicy:
     automated:

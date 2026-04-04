@@ -26,5 +26,5 @@ spec:
   project: unterbau
   source:
     path: manifests/harbor
-    repoURL: "https://github.com/AtomSoldat/private-cloud.git"
+    repoURL: "https://github.com/MausoleumManagement/private-cloud.git"
     targetRevision: master
