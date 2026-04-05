@@ -33422,6 +33422,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: hello-world
     server: https://kubernetes.default.svc
+  - namespace: minecraft
+    server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
   - group: argoproj.io
     kind: Application
@@ -33468,6 +33470,7 @@ spec:
   sourceRepos:
   - https://github.com/MausoleumManagement/demo_k8s_application.git
   - https://github.com/MausoleumManagement/private-cloud.git
+  - https://github.com/MausoleumManagement/minecraft.git
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject

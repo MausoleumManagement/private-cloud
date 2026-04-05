@@ -27,12 +27,17 @@ spec:
   sourceRepos:
   - 'https://github.com/MausoleumManagement/demo_k8s_application.git'
   - 'https://github.com/MausoleumManagement/private-cloud.git'
+  - 'https://github.com/MausoleumManagement/minecraft.git'
   # TODO: Currently we are granting permissions to create applications to this appproject, which is not great
   # TODO: This should be separated
   destinations:
+  # the permission to create stuff in the argocd ns is due to the necessity to create child applications
+  # TODO: would be neat to get rid of that
   - namespace: argocd
     server: https://kubernetes.default.svc
   - namespace: hello-world
+    server: https://kubernetes.default.svc
+  - namespace: minecraft
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: ''
