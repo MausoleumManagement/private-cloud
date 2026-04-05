@@ -6,3 +6,4 @@ resources:
   # disable, while we develop locally
   #- application-bibliophage.yaml
   - application-hello-world.yaml
+  - application-minecraft.yaml
