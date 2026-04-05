@@ -47,6 +47,10 @@ spec:
   - group: 'argoproj.io'
     kind: Application
   # END TODO
+  - group: ''
+    kind: PersistentVolumeClaim
+  - group: 'external-secrets.io'
+    kind: ExternalSecret
   - group: 'autoscaling'
     kind: HorizontalPodAutoscaler
   - group: 'networking.k8s.io'
