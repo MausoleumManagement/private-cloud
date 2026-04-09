@@ -6,12 +6,15 @@ spec:
   instances: 3
 
   backup:
+    # TODO: think about what we want here
+    #retentionPolicy:
     barmanObjectStore:
       # should be in the format of e.g.
       # endpointURL: bucket.us-east1.linodeobjects.com
       # destinationPath: "s3://BUCKET_NAME/path/to/folder"
       endpointURL: garage.irminsul:3900
       destinationPath: "s3://openbao-backups/"
+      #endpointCA:
       s3Credentials:
         accessKeyId:
           name: s3-backup-credentials
@@ -19,6 +22,9 @@ spec:
         secretAccessKey:
           name: s3-backup-credentials
           key: ACCESS_SECRET_KEY
+        region:
+          name: s3-backup-credentials
+          key: REGION
 
   superuserSecret:
     name: cnpg-openbao-superuser

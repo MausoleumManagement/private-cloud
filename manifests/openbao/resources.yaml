@@ -617,6 +617,13 @@ spec:
       metadataPolicy: None
       property: ACCESS_SECRET_KEY
     secretKey: ACCESS_SECRET_KEY
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/openbao/s3-backup-credentials
+      metadataPolicy: None
+      property: REGION
+    secretKey: REGION
   refreshInterval: 1h0m0s
   refreshPolicy: Periodic
   secretStoreRef:
@@ -680,6 +687,9 @@ spec:
       s3Credentials:
         accessKeyId:
           key: ACCESS_KEY_ID
+          name: s3-backup-credentials
+        region:
+          key: REGION
           name: s3-backup-credentials
         secretAccessKey:
           key: ACCESS_SECRET_KEY
