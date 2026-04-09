@@ -683,7 +683,7 @@ spec:
   backup:
     barmanObjectStore:
       destinationPath: s3://openbao-backups/
-      endpointURL: garage.irminsul:3900
+      endpointURL: http://garage.irminsul:3900
       s3Credentials:
         accessKeyId:
           key: ACCESS_KEY_ID
