@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: barman-cloud
+  namespace: cnpg-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: barman-cloud
+          env:
+            - name: SIDECAR_IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: plugin-barman-cloud-sidecar-image
+                  key: SIDECAR_IMAGE
+                secretKeyRef:

@@ -16,5 +16,17 @@ helmCharts:
 
 resources:
   - namespace.yaml
+  # TODO: make sure renovate picks up on this
+  # NOTE: The upstream uses a secret generator here, which is not exactly to my liking, but
+  # patching it out with a configmap makes maintaining stuff more annoying...
+  # the value is not actually sensitive
+  # TODO: See if there is a more elegant solution to this that still gets rid of the secret
+  # https://github.com/cloudnative-pg/plugin-barman-cloud/blob/main/kubernetes/kustomization.yaml
+  - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.11.0/manifest.yaml
+  #- configmap-sidecar-image.yaml
   - catalog-standard-trixie.yaml
   - catalog-documentdb-bookworm.yaml
+
+# patches:
+  # - path: patch-delete-image-name-secret.yaml
+  # - path: patch-sidecar-image-from-configmap.yaml
