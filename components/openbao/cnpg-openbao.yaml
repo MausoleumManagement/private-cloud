@@ -5,6 +5,21 @@ metadata:
 spec:
   instances: 3
 
+  backup:
+    barmanObjectStore:
+      # should be in the format of e.g.
+      # endpointURL: bucket.us-east1.linodeobjects.com
+      # destinationPath: "s3://BUCKET_NAME/path/to/folder"
+      endpointURL: garage.irminsul:3900
+      destinationPath: "s3://openbao-backups/"
+      s3Credentials:
+        accessKeyId:
+          name: s3-backup-credentials
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: s3-backup-credentials
+          key: ACCESS_SECRET_KEY
+
   superuserSecret:
     name: cnpg-openbao-superuser
 

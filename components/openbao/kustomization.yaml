@@ -15,5 +15,6 @@ resources:
   - namespace.yaml
   - cnpg-openbao.yaml
   - gateway-api.yaml
+  - externalsecrets.yaml
 patches:
   - path: patch-delete-helm-test-pod.yaml

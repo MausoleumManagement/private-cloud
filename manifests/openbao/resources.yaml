@@ -337,7 +337,7 @@ spec:
         - name: AGENT_INJECT_LOG_LEVEL
           value: info
         - name: AGENT_INJECT_VAULT_ADDR
-          value: http://openbao.openbao.svc:8200
+          value: http://openbao.default.svc:8200
         - name: AGENT_INJECT_VAULT_AUTH_PATH
           value: auth/kubernetes
         - name: AGENT_INJECT_VAULT_IMAGE
@@ -345,7 +345,7 @@ spec:
         - name: AGENT_INJECT_TLS_AUTO
           value: openbao-agent-injector-cfg
         - name: AGENT_INJECT_TLS_AUTO_HOSTS
-          value: openbao-agent-injector-svc,openbao-agent-injector-svc.openbao,openbao-agent-injector-svc.openbao.svc
+          value: openbao-agent-injector-svc,openbao-agent-injector-svc.default,openbao-agent-injector-svc.default.svc
         - name: AGENT_INJECT_LOG_FORMAT
           value: standard
         - name: AGENT_INJECT_REVOKE_ON_SHUTDOWN
@@ -596,6 +596,35 @@ spec:
     name: local-ca-issuer
   secretName: openbao-tls-cert
 ---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: s3-backup-credentials
+  namespace: openbao
+spec:
+  data:
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/openbao/s3-backup-credentials
+      metadataPolicy: None
+      property: ACCESS_KEY_ID
+    secretKey: ACCESS_KEY_ID
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/openbao/s3-backup-credentials
+      metadataPolicy: None
+      property: ACCESS_SECRET_KEY
+    secretKey: ACCESS_SECRET_KEY
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: vmauth-config
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -644,6 +673,17 @@ metadata:
   name: cnpg-openbao
   namespace: openbao
 spec:
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://openbao-backups/
+      endpointURL: garage.irminsul:3900
+      s3Credentials:
+        accessKeyId:
+          key: ACCESS_KEY_ID
+          name: s3-backup-credentials
+        secretAccessKey:
+          key: ACCESS_SECRET_KEY
+          name: s3-backup-credentials
   bootstrap:
     initdb:
       database: openbao
