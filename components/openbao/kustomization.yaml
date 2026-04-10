@@ -14,7 +14,8 @@ helmCharts:
 resources:
   - namespace.yaml
   - cnpg-openbao.yaml
-  - gateway-api.yaml
+  # we don't use the gateway api yet
+  #- gateway-api.yaml
   - externalsecrets.yaml
 patches:
   - path: patch-delete-helm-test-pod.yaml

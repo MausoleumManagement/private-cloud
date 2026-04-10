@@ -400,19 +400,6 @@ spec:
       app.kubernetes.io/name: openbao
       component: server
 ---
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: openbao-tls-cert
-  namespace: openbao
-spec:
-  dnsNames:
-  - openbao.irminsul
-  issuerRef:
-    kind: ClusterIssuer
-    name: local-ca-issuer
-  secretName: openbao-tls-cert
----
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -448,48 +435,6 @@ spec:
     name: openbao-backend
   target:
     name: s3-backup-credentials
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: openbao-gateway
-  namespace: openbao
-spec:
-  gatewayClassName: cilium
-  listeners:
-  - hostname: openbao.irminsul
-    name: https-2
-    port: 443
-    protocol: HTTPS
-    tls:
-      certificateRefs:
-      - group: ""
-        kind: Secret
-        name: openbao-tls-cert
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: openbao
-  namespace: openbao
-spec:
-  hostnames:
-  - openbao.irminsul
-  parentRefs:
-  - group: gateway.networking.k8s.io
-    kind: Gateway
-    name: openbao-gateway
-  rules:
-  - backendRefs:
-    - group: ""
-      kind: Service
-      name: openbao
-      port: 8200
-      weight: 1
-    matches:
-    - path:
-        type: PathPrefix
-        value: /
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
