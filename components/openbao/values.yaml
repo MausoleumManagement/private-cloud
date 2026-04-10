@@ -53,3 +53,5 @@ ui:
     kube-vip.io/loadbalancerIPs: 192.168.13.8
 csi:
   enabled: false
+injector:
+  enabled: false
