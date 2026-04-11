@@ -71,6 +71,8 @@ spec:
     kind: StatefulSet
   - group: 'postgresql.cnpg.io'
     kind: Cluster
+  - group: 'barmancloud.cnpg.io'
+    kind: ObjectStore
   - group: 'batch'
     kind: Job
   - group: 'cert-manager.io'
