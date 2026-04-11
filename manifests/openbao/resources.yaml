@@ -400,6 +400,26 @@ spec:
       app.kubernetes.io/name: openbao
       component: server
 ---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: cnpg-openbao-backups
+  namespace: openbao
+spec:
+  configuration:
+    destinationPath: s3://openbao-backups/
+    endpointURL: http://garage.irminsul:3900
+    s3Credentials:
+      accessKeyId:
+        key: ACCESS_KEY_ID
+        name: s3-backup-credentials
+      region:
+        key: REGION
+        name: s3-backup-credentials
+      secretAccessKey:
+        key: ACCESS_SECRET_KEY
+        name: s3-backup-credentials
+---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -442,20 +462,6 @@ metadata:
   name: cnpg-openbao
   namespace: openbao
 spec:
-  backup:
-    barmanObjectStore:
-      destinationPath: s3://openbao-backups/
-      endpointURL: http://garage.irminsul:3900
-      s3Credentials:
-        accessKeyId:
-          key: ACCESS_KEY_ID
-          name: s3-backup-credentials
-        region:
-          key: REGION
-          name: s3-backup-credentials
-        secretAccessKey:
-          key: ACCESS_SECRET_KEY
-          name: s3-backup-credentials
   bootstrap:
     initdb:
       database: openbao
@@ -463,6 +469,11 @@ spec:
       secret:
         name: cnpg-openbao-app-user
   instances: 3
+  plugins:
+  - isWALArchiver: true
+    name: barman-cloud.cloudnative-pg.io
+    parameters:
+      barmanObjectName: cnpg-openbao-backups
   storage:
     size: 10Gi
   superuserSecret:
