@@ -10,6 +10,9 @@ spec:
     isWALArchiver: true
     parameters:
       barmanObjectName: cnpg-openbao-backups
+  backup:
+    target: prefer-standby
+
 
   superuserSecret:
     name: cnpg-openbao-superuser

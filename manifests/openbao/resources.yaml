@@ -462,6 +462,8 @@ metadata:
   name: cnpg-openbao
   namespace: openbao
 spec:
+  backup:
+    target: prefer-standby
   bootstrap:
     initdb:
       database: openbao
