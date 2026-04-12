@@ -94,7 +94,8 @@ spec:
         - --kubernetesCollector.timeField=time,ts,timestamp
         - --loggerFormat=json
         - --remoteWrite.headers="AccountID:0^^ProjectID:0"
-        - --remoteWrite.url=http://victoria-logs-release-victoria-logs-cluster-vmauth.victoria-logs.svc.cluster.local:8427/insert/native
+        - --remoteWrite.maxDiskUsagePerURL=10GB
+        - --remoteWrite.url=http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427/insert/native
         - --tmpDataPath=/var/lib/vl-collector
         image: victoriametrics/vlagent:v1.48.0
         imagePullPolicy: IfNotPresent
