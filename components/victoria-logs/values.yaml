@@ -1,6 +1,7 @@
 # https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-logs-cluster/values.yaml 
 # https://docs.victoriametrics.com/helm/victoria-logs-cluster/
 
+fullnameOverride: victoria-logs
 
 # apparently, vmauth serves as some kind of a loadbalancer for the ingesters and query api endpoints
 vmauth:
