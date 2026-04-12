@@ -1,6 +1,8 @@
 # https://github.com/VictoriaMetrics/helm-charts/blob/master/charts/victoria-metrics-cluster/values.yaml
 # https://docs.victoriametrics.com/helm/victoria-metrics-cluster/
 
+fullnameOverride: victoria-metrics
+
 # vmauth serves as a unified entry point / loadbalancer for vminsert and vmselect
 vmauth:
   enabled: true
