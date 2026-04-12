@@ -15,6 +15,7 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
+  namespace: perses
 ---
 apiVersion: v1
 data:
@@ -51,6 +52,7 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
+  namespace: perses
 ---
 apiVersion: v1
 kind: Service
@@ -64,6 +66,7 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
+  namespace: perses
 spec:
   ports:
   - name: http
@@ -87,6 +90,7 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
+  namespace: perses
 spec:
   accessModes:
   - ReadWriteOnce
@@ -106,6 +110,7 @@ metadata:
     app.kubernetes.io/version: v0.53.1
     helm.sh/chart: perses-0.21.0
   name: perses
+  namespace: perses
 spec:
   replicas: 1
   selector:
@@ -199,3 +204,29 @@ spec:
     name: openbao-backend
   target:
     name: perses
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+    kube-vip.io/loadbalancerIPs: 192.168.13.10
+  name: perses
+  namespace: perses
+spec:
+  ingressClassName: cilium
+  rules:
+  - host: perses.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: perses
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - perses.nekropolis.irminsul
+    secretName: perses
