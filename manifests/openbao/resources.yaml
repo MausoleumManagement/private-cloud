@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao
   namespace: openbao
 ---
@@ -21,7 +21,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-discovery-role
   namespace: openbao
 rules:
@@ -43,7 +43,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-discovery-rolebinding
   namespace: openbao
 roleRef:
@@ -62,7 +62,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-server-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -95,7 +95,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-config
   namespace: openbao
 ---
@@ -106,7 +106,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao
   namespace: openbao
 spec:
@@ -131,7 +131,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
     openbao-active: "true"
   name: openbao-active
   namespace: openbao
@@ -158,7 +158,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
     openbao-internal: "true"
   name: openbao-internal
   namespace: openbao
@@ -185,7 +185,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-standby
   namespace: openbao
 spec:
@@ -213,7 +213,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao-ui
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao-ui
   namespace: openbao
 spec:
@@ -253,7 +253,7 @@ spec:
         app.kubernetes.io/instance: openbao
         app.kubernetes.io/name: openbao
         component: server
-        helm.sh/chart: openbao-0.26.1
+        helm.sh/chart: openbao-0.26.2
     spec:
       affinity:
         podAntiAffinity:
@@ -316,7 +316,7 @@ spec:
             secretKeyRef:
               key: BAO_PG_CONNECTION_URL
               name: openbao
-        image: quay.io/openbao/openbao:2.5.1
+        image: quay.io/openbao/openbao:2.5.2
         imagePullPolicy: IfNotPresent
         lifecycle:
           preStop:
@@ -389,7 +389,7 @@ metadata:
     app.kubernetes.io/instance: openbao
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: openbao
-    helm.sh/chart: openbao-0.26.1
+    helm.sh/chart: openbao-0.26.2
   name: openbao
   namespace: openbao
 spec:
