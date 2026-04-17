@@ -229,4 +229,4 @@ spec:
   tls:
   - hosts:
     - perses.nekropolis.irminsul
-    secretName: perses
+    secretName: perses-certificate
