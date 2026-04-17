@@ -38,7 +38,7 @@ data:
     security:
       cookie:
         same_site: lax
-        secure: false
+        secure: true
       enable_auth: false
       readonly: true
 kind: ConfigMap
@@ -121,7 +121,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: f33110337d36d2ae093a4ba111e54e551a7bd773c6862c2f20b752adbb2e1b21
+        checksum/config: 98ca4cda60c00d4a0680921242e43bf00581e647503c9eefcb4f97f79611cc21
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses

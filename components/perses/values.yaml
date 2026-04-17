@@ -29,7 +29,10 @@ config:
     enable_auth: false
     cookie:
       same_site: lax
-      secure: false
+      # the docs state that we should set this to true when we perform SSL termination ourselves
+      # https://perses.dev/perses/docs/configuration/configuration/?h=cookie#cookie-config
+      # TODO: figure out what this actually does, seems security related
+      secure: true
       
 
   database:
