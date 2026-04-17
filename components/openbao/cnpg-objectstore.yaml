@@ -1,38 +1,10 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: cnpg-openbao
-spec:
-  instances: 3
-
-  plugins:
-  - name: barman-cloud.cloudnative-pg.io
-    isWALArchiver: true
-    parameters:
-      barmanObjectName: cnpg-openbao-backups
-  backup:
-    target: prefer-standby
-
-
-  superuserSecret:
-    name: cnpg-openbao-superuser
-
-  bootstrap:
-    initdb:
-      database: openbao
-      owner: openbao
-      secret:
-        name: cnpg-openbao-app-user
-  storage:
-    size: 10Gi
 ---
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
   name: cnpg-openbao-backups
 spec:
-  # TODO: think about what we want here
-  #retentionPolicy:
+  retentionPolicy: 30d
   configuration:
     # should be in the format of e.g.
     # endpointURL: bucket.us-east1.linodeobjects.com

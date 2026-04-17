@@ -419,6 +419,7 @@ spec:
       secretAccessKey:
         key: ACCESS_SECRET_KEY
         name: s3-backup-credentials
+  retentionPolicy: 30d
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
@@ -480,3 +481,15 @@ spec:
     size: 10Gi
   superuserSecret:
     name: cnpg-openbao-superuser
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: backup-cnpg-openbao
+  namespace: openbao
+spec:
+  backupOwnerReference: self
+  cluster:
+    method: plugin
+    name: pg-backup
+  schedule: 0 0 23 * * WED

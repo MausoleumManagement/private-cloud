@@ -13,7 +13,9 @@ helmCharts:
     valuesFile: values.yaml
 resources:
   - namespace.yaml
-  - cnpg-openbao.yaml
+  - cnpg-cluster.yaml
+  - cnpg-objectstore.yaml
+  - cnpg-scheduled-backup.yaml
   # we don't use the gateway api yet
   #- gateway-api.yaml
   - externalsecrets.yaml

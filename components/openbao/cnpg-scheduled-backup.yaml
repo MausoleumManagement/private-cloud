@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: backup-cnpg-openbao
+spec:
+  # this is not the usual crontab syntax
+  # has an extra seconds field at the front
+  # https://pkg.go.dev/github.com/robfig/cron#hdr-CRON_Expression_Format
+  schedule: "0 0 23 * * WED"
+  backupOwnerReference: self
+  cluster:
+    name: pg-backup
+    method: plugin
