@@ -1,0 +1,6 @@
+kind: Project
+metadata:
+  name: myproject
+spec:
+  display:
+  name: "default"

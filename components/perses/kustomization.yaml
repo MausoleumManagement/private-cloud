@@ -19,3 +19,9 @@ resources:
   - namespace.yaml
   - externalsecrets.yaml
   - ingress.yaml
+
+configMapGenerator:
+- name: perses-provisioning
+  files:
+  - perses_provisioning/global-datasource.yaml
+  - perses_provisioning/project.yaml
