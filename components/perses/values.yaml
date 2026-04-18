@@ -45,6 +45,15 @@ config:
       - /etc/perses/provisioning
     interval: 10m
 
+volumes:
+  # for getting our declarative perses API stuff into the provisioning directory
+  - name: provisioning-volume
+    configMap:
+      name: perses-provisioning
+volumeMounts:
+  - name: perses-provisioning
+    mountPath: /etc/perses/provisioning
+
 persistence:
   enabled: true
   size: 8Gi

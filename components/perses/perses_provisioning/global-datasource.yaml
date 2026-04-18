@@ -1,0 +1,12 @@
+kind: "GlobalDatasource"
+metadata:
+  name: PrometheusDemo
+spec:
+  # If true, then it's the default datasource for the type defined in the plugin.
+  default: true
+  plugin:
+    # The type of the datasource. For example, `PrometheusDatasource`
+    kind: PrometheusDatasource
+    # The actual definition of the datasource. It will depend on the type defined in the previous field `kind`
+    spec:
+      directUrl: https://demo.promlabs.com

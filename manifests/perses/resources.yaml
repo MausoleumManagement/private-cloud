@@ -55,6 +55,33 @@ metadata:
   namespace: perses
 ---
 apiVersion: v1
+data:
+  global-datasource.yaml: |-
+    kind: "GlobalDatasource"
+    metadata:
+      name: PrometheusDemo
+    spec:
+      # If true, then it's the default datasource for the type defined in the plugin.
+      default: true
+      plugin:
+        # The type of the datasource. For example, `PrometheusDatasource`
+        kind: PrometheusDatasource
+        # The actual definition of the datasource. It will depend on the type defined in the previous field `kind`
+        spec:
+          directUrl: https://demo.promlabs.com
+  project.yaml: |-
+    kind: Project
+    metadata:
+      name: myproject
+    spec:
+      display:
+      name: "default"
+kind: ConfigMap
+metadata:
+  name: perses-provisioning-b4fbf646gd
+  namespace: perses
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -167,6 +194,8 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         volumeMounts:
+        - mountPath: /etc/perses/provisioning
+          name: perses-provisioning
         - mountPath: /etc/perses/config
           name: config
         - mountPath: /perses
@@ -175,6 +204,9 @@ spec:
         fsGroup: 2000
       serviceAccountName: perses
       volumes:
+      - configMap:
+          name: perses-provisioning-b4fbf646gd
+        name: provisioning-volume
       - name: data
         persistentVolumeClaim:
           claimName: perses
