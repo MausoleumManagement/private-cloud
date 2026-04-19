@@ -1,0 +1,10 @@
+kind: "Datasource"
+metadata:
+  name: "victoria-logs-nekropolis"
+  project: "nekropolis"
+spec:
+  default: true
+  plugin:
+    kind: "VictoriaLogsDatasource"
+    spec:
+      directUrl: "http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427"
