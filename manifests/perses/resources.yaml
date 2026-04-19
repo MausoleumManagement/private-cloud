@@ -40,7 +40,7 @@ data:
         same_site: lax
         secure: true
       enable_auth: false
-      readonly: true
+      readonly: false
 kind: ConfigMap
 metadata:
   labels:
@@ -116,26 +116,6 @@ spec:
     app.kubernetes.io/name: perses
   type: ClusterIP
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app.kubernetes.io/component: storage
-    app.kubernetes.io/instance: perses
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: perses
-    app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.0
-  name: perses
-  namespace: perses
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 8Gi
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -159,7 +139,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 98ca4cda60c00d4a0680921242e43bf00581e647503c9eefcb4f97f79611cc21
+        checksum/config: a42758114e7e69cab7a33207a98d64c7165d46488331d7cc5c1bc4c66e1f6622
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses
@@ -218,9 +198,8 @@ spec:
       - configMap:
           name: perses-provisioning-m4dckhdkc4
         name: perses-provisioning
-      - name: data
-        persistentVolumeClaim:
-          claimName: perses
+      - emptyDir: {}
+        name: data
       - configMap:
           defaultMode: 420
           name: perses

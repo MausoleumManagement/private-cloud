@@ -25,7 +25,9 @@ envVars:
 
 config:
   security:
-    readonly: true
+    # until we have figured out how things work, we should allow user created objects
+    #readonly: true
+    readonly: false
     enable_auth: false
     cookie:
       same_site: lax
@@ -55,7 +57,9 @@ volumeMounts:
     mountPath: /etc/perses/provisioning
 
 persistence:
-  enabled: true
+  # since we allow interactively creating API objects, we don't want to be stuck with them
+  # enabled: true
+  enabled: false
   size: 8Gi
 
 #volumes:
