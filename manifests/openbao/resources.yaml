@@ -490,6 +490,6 @@ metadata:
 spec:
   backupOwnerReference: self
   cluster:
-    method: plugin
     name: pg-backup
+  method: plugin
   schedule: 0 0 23 * * WED

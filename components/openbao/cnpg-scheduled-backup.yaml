@@ -10,4 +10,4 @@ spec:
   backupOwnerReference: self
   cluster:
     name: pg-backup
-    method: plugin
+  method: plugin
