@@ -131,6 +131,10 @@ spec:
     kind: AppProject
   - group: 'postgresql.cnpg.io'
     kind: Cluster
+  - group: 'postgresql.cnpg.io'
+    kind: Backup
+  - group: 'postgresql.cnpg.io'
+    kind: ScheduledBackup
   - group: 'barmancloud.cnpg.io'
     kind: ObjectStore
   - group: 'batch'
