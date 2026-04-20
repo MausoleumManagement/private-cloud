@@ -7,4 +7,5 @@ spec:
   plugin:
     kind: "VictoriaLogsDatasource"
     spec:
-      directUrl: "http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427"
+      #directUrl: "http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427"
+      directUrl: "http://victoria-logs.nekropolis.irminsul:8427"
