@@ -401,3 +401,24 @@ spec:
     name: openbao-backend
   target:
     name: vmauth-config
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kube-vip.io/loadbalancerIPs: 192.168.13.11
+  name: victoria-logs-vmauth
+  namespace: victoria-logs
+spec:
+  ingressClassName: cilium
+  rules:
+  - host: victoria-logs.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: victoria-logs-vmauth
+            port:
+              number: 8427
+        path: /
+        pathType: Prefix
