@@ -56,6 +56,50 @@ metadata:
 ---
 apiVersion: v1
 data:
+  dashboard_nekropolis_logs.yaml: |+
+    kind: Dashboard
+    metadata:
+        name: nekropolis-logs
+        project: nekropolis
+    spec:
+        display:
+            name: Nekropolis-Logs
+        panels:
+            6ef61befa6794b53a98db9f750e00c00:
+                kind: Panel
+                spec:
+                    display:
+                        name: Errors
+                    plugin:
+                        kind: LogsTable
+                        spec:
+                            allowWrap: true
+                            enableDetails: true
+                            showTime: true
+                    queries:
+                        - kind: LogQuery
+                          spec:
+                            plugin:
+                                kind: VictoriaLogsLogQuery
+                                spec:
+                                    query: i(ERROR)
+        layouts:
+            - kind: Grid
+              spec:
+                display:
+                    title: Panel Group
+                    collapse:
+                        open: true
+                items:
+                    - x: 0
+                      "y": 0
+                      width: 10
+                      height: 18
+                      content:
+                        $ref: '#/spec/panels/6ef61befa6794b53a98db9f750e00c00'
+        duration: 1h
+        refreshInterval: 0s
+
   datasource-victoria-logs-directurl.yaml: |
     # see here for some examples and explanations
     # https://perses.dev/plugins/docs/victorialogs/model/#victorialogsdatasource
@@ -158,7 +202,7 @@ data:
 
 kind: ConfigMap
 metadata:
-  name: perses-provisioning-gk74d2fg52
+  name: perses-provisioning-2557gf95c9
   namespace: perses
 ---
 apiVersion: v1
@@ -265,7 +309,7 @@ spec:
       serviceAccountName: perses
       volumes:
       - configMap:
-          name: perses-provisioning-gk74d2fg52
+          name: perses-provisioning-2557gf95c9
         name: perses-provisioning
       - emptyDir: {}
         name: data

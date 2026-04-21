@@ -26,5 +26,6 @@ configMapGenerator:
   - perses_provisioning/global-datasource.yaml
   - perses_provisioning/datasource-victoria-logs-proxy.yaml
   - perses_provisioning/datasource-victoria-logs-directurl.yaml
+  - perses_provisioning/dashboard_nekropolis_logs.yaml
   - perses_provisioning/project.yaml
   - perses_provisioning/variable.yaml

@@ -1,0 +1,43 @@
+kind: Dashboard
+metadata:
+    name: nekropolis-logs
+    project: nekropolis
+spec:
+    display:
+        name: Nekropolis-Logs
+    panels:
+        6ef61befa6794b53a98db9f750e00c00:
+            kind: Panel
+            spec:
+                display:
+                    name: Errors
+                plugin:
+                    kind: LogsTable
+                    spec:
+                        allowWrap: true
+                        enableDetails: true
+                        showTime: true
+                queries:
+                    - kind: LogQuery
+                      spec:
+                        plugin:
+                            kind: VictoriaLogsLogQuery
+                            spec:
+                                query: i(ERROR)
+    layouts:
+        - kind: Grid
+          spec:
+            display:
+                title: Panel Group
+                collapse:
+                    open: true
+            items:
+                - x: 0
+                  "y": 0
+                  width: 10
+                  height: 18
+                  content:
+                    $ref: '#/spec/panels/6ef61befa6794b53a98db9f750e00c00'
+    duration: 1h
+    refreshInterval: 0s
+
