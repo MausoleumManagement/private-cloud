@@ -81,8 +81,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kube-vip.io/loadbalancerIPs: 192.168.13.11
   labels:
     app: vmauth
     app.kubernetes.io/instance: victoria-logs-release
@@ -102,7 +100,7 @@ spec:
     app: vmauth
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/name: victoria-logs-cluster
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -403,3 +401,36 @@ spec:
     name: openbao-backend
   target:
     name: vmauth-config
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+    kube-vip.io/loadbalancerIPs: 192.168.13.11
+  labels:
+    app: vmauth
+    app.kubernetes.io/instance: victoria-logs-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-logs-cluster
+    app.kubernetes.io/version: v1.116.0
+    helm.sh/chart: victoria-logs-cluster-0.0.31
+  name: victoria-logs-vmauth
+  namespace: victoria-logs
+spec:
+  ingressClassName: cilium
+  rules:
+  - host: victoria-logs.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: victoria-logs-vmauth
+            port:
+              name: http
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - victoria-logs.nekropolis.irminsul
+    secretName: victoria-logs-vmauth-certificate
