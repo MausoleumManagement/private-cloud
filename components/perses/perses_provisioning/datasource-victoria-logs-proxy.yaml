@@ -1,0 +1,42 @@
+# see here for some examples and explanations
+# https://perses.dev/plugins/docs/victorialogs/model/#victorialogsdatasource
+kind: Datasource
+metadata:
+    name: victoria-logs-nekropolis-proxy
+    project: nekropolis
+spec:
+    default: false
+    plugin:
+        kind: VictoriaLogsDatasource
+        spec:
+            proxy:
+                kind: HTTPProxy
+                spec:
+                    allowedEndpoints:
+                        - endpointPattern: /select/logsql/stats_query
+                          method: POST
+                        - endpointPattern: /select/logsql/stats_query_range
+                          method: POST
+                        - endpointPattern: /select/logsql/field_names
+                          method: POST
+                        - endpointPattern: /select/logsql/field_values
+                          method: POST
+                        - endpointPattern: /select/logsql/tail
+                          method: POST
+                        - endpointPattern: /select/logsql/query
+                          method: POST
+                        - endpointPattern: /select/logsql/hits
+                          method: POST
+                        - endpointPattern: /select/logsql/facets
+                          method: POST
+                        - endpointPattern: /select/logsql/stream_ids
+                          method: POST
+                        - endpointPattern: /select/logsql/streams
+                          method: POST
+                        - endpointPattern: /select/logsql/stream_field_names
+                          method: POST
+                        - endpointPattern: /select/logsql/stream_field_values
+                          method: POST
+                    url: http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427
+
+

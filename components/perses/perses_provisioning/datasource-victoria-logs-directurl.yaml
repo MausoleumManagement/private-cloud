@@ -1,0 +1,16 @@
+# see here for some examples and explanations
+# https://perses.dev/plugins/docs/victorialogs/model/#victorialogsdatasource
+kind: "Datasource"
+metadata:
+  name: "victoria-logs-nekropolis-directurl"
+  project: "nekropolis"
+spec:
+  default: true
+  plugin:
+    kind: "VictoriaLogsDatasource"
+    spec:
+      # note, that directURL means, that our browser will directly query the datasource
+      # if we want perses to make requests on our behalf, we need to use "proxy:"
+      # TODO: Pros and Cons
+      #proxy: "http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427"
+      directUrl: "https://victoria-logs.nekropolis.irminsul"

@@ -1,0 +1,19 @@
+kind: Variable
+metadata:
+    name: namespace
+    project: nekropolis
+spec:
+    kind: ListVariable
+    spec:
+        allowAllValue: false
+        allowMultiple: false
+        sort: none
+        plugin:
+            kind: VictoriaLogsFieldValuesVariable
+            spec:
+                datasource:
+                    kind: VictoriaLogsDatasource
+                    name: victoria-logs-nekropolis-proxy
+                field: kubernetes.pod_namespace
+                query: '*'
+
