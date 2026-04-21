@@ -6,11 +6,15 @@ fullnameOverride: victoria-logs
 # apparently, vmauth serves as some kind of a loadbalancer for the ingesters and query api endpoints
 vmauth:
   enabled: true
+  service:
+    type: LoadBalancer
+    annotations:
+      kube-vip.io/loadbalancerIPs: 192.168.13.11
   # we don't want the secret to be templated
   # so we use an existing secret managed by an ExternalSecret
   configSecretName: vmauth-config
   
-# since we use vmauth, we disable 
+# since we use vmauth, we don't need to talk to these two
 vlinsert:
   service:
     clusterIP: None
