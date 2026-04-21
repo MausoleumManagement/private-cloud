@@ -7,12 +7,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vlinsert
+    app.kubernetes.io/component: vlinsert
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlinsert
   namespace: victoria-logs
 spec:
@@ -32,12 +32,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vlselect
+    app.kubernetes.io/component: vlselect
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlselect
   namespace: victoria-logs
 spec:
@@ -57,12 +57,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vlstorage
+    app.kubernetes.io/component: vlstorage
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlstorage
   namespace: victoria-logs
 spec:
@@ -82,12 +82,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vmauth
+    app.kubernetes.io/component: vmauth
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.116.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
@@ -106,12 +106,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vlinsert
+    app.kubernetes.io/component: vlinsert
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlinsert
   namespace: victoria-logs
 spec:
@@ -125,6 +125,7 @@ spec:
     metadata:
       labels:
         app: vlinsert
+        app.kubernetes.io/component: vlinsert
         app.kubernetes.io/instance: victoria-logs-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-logs-cluster
@@ -138,7 +139,7 @@ spec:
         - --select.disable
         - --storageNode=victoria-logs-vlstorage-0.victoria-logs-vlstorage.victoria-logs.svc.cluster.local.:9491
         - --storageNode=victoria-logs-vlstorage-1.victoria-logs-vlstorage.victoria-logs.svc.cluster.local.:9491
-        image: victoriametrics/victoria-logs:v1.48.0
+        image: victoriametrics/victoria-logs:v1.50.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -172,12 +173,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vlselect
+    app.kubernetes.io/component: vlselect
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlselect
   namespace: victoria-logs
 spec:
@@ -191,6 +192,7 @@ spec:
     metadata:
       labels:
         app: vlselect
+        app.kubernetes.io/component: vlselect
         app.kubernetes.io/instance: victoria-logs-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-logs-cluster
@@ -204,7 +206,7 @@ spec:
         - --loggerFormat=json
         - --storageNode=victoria-logs-vlstorage-0.victoria-logs-vlstorage.victoria-logs.svc.cluster.local.:9491
         - --storageNode=victoria-logs-vlstorage-1.victoria-logs-vlstorage.victoria-logs.svc.cluster.local.:9491
-        image: victoriametrics/victoria-logs:v1.48.0
+        image: victoriametrics/victoria-logs:v1.50.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -238,12 +240,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vmauth
+    app.kubernetes.io/component: vmauth
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.116.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
@@ -259,6 +261,7 @@ spec:
         checksum/config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
       labels:
         app: vmauth
+        app.kubernetes.io/component: vmauth
         app.kubernetes.io/instance: victoria-logs-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-logs-cluster
@@ -310,12 +313,12 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: vlstorage
+    app.kubernetes.io/component: vlstorage
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vlstorage
   namespace: victoria-logs
 spec:
@@ -332,6 +335,7 @@ spec:
     metadata:
       labels:
         app: vlstorage
+        app.kubernetes.io/component: vlstorage
         app.kubernetes.io/instance: victoria-logs-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-logs-cluster
@@ -344,7 +348,7 @@ spec:
         - --loggerFormat=json
         - --retentionPeriod=21d
         - --storageDataPath=/storage
-        image: victoriametrics/victoria-logs:v1.48.0
+        image: victoriametrics/victoria-logs:v1.50.0
         imagePullPolicy: IfNotPresent
         name: vlstorage
         ports:
@@ -409,12 +413,12 @@ metadata:
     cert-manager.io/cluster-issuer: local-ca-issuer
     kube-vip.io/loadbalancerIPs: 192.168.13.11
   labels:
-    app: vmauth
+    app.kubernetes.io/component: vmauth
     app.kubernetes.io/instance: victoria-logs-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.116.0
-    helm.sh/chart: victoria-logs-cluster-0.0.31
+    helm.sh/chart: victoria-logs-cluster-0.1.1
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
