@@ -1,0 +1,34 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cnpg-openbao-restoretest
+spec:
+  instances: 1
+
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    name: postgresql-standard-trixie
+    major: 17
+
+  # we don't use a dedicated s3-bucket for the restore test
+  # and we don't want the restore-test to write transaction logs
+  # back into the original bucket, because that can get messy and/or cause data loss
+  #plugins:
+  #  ...
+
+  superuserSecret:
+    name: cnpg-openbao-superuser
+
+  externalClusters:
+    - name: cnpg-openbao
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: cnpg-openbao-backups
+          serverName: cnpg-openbao
+  bootstrap:
+    recovery:
+      source: cnpg-openbao
+  storage:
+    size: 10Gi
