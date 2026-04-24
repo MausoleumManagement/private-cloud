@@ -471,6 +471,11 @@ spec:
       owner: openbao
       secret:
         name: cnpg-openbao-app-user
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    major: 17
+    name: postgresql-standard-trixie
   instances: 3
   plugins:
   - isWALArchiver: true
