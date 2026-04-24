@@ -490,6 +490,8 @@ metadata:
 spec:
   backupOwnerReference: self
   cluster:
-    name: pg-backup
+    name: cnpg-openbao
   method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
   schedule: 0 0 23 * * WED
