@@ -24,6 +24,7 @@ helmcharts:
 resources:
   - namespace.yaml
   - cnpg-forgejo.yaml
+  - ingress-forgejo.yaml
 
 patches:
   - path: patch-delete-valkey-secret.yaml

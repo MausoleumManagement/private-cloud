@@ -44,8 +44,6 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kube-vip.io/loadbalancerIPs: 192.168.13.6
   labels:
     app: forgejo
     app.kubernetes.io/instance: forgejo
@@ -64,7 +62,7 @@ spec:
   selector:
     app.kubernetes.io/instance: forgejo
     app.kubernetes.io/name: forgejo
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -180,7 +178,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 542310dee69a9b9fbf5365ed438f251389c97533d1d40e1886b2b4583d9ba7e7
+        checksum/config: e8382a0d3ea23f2993c5ff131c8ac4b2b42d0c0073cf47d66b9d373303c2e3b0
       labels:
         app: forgejo
         app.kubernetes.io/instance: forgejo
@@ -470,6 +468,32 @@ spec:
       resources:
         requests:
           storage: 8Gi
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: local-ca-issuer
+    kube-vip.io/loadbalancerIPs: 192.168.13.6
+  name: forgejo
+  namespace: forgejo
+spec:
+  ingressClassName: cilium
+  rules:
+  - host: forgejo.nekropolis.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: forgejo-http
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - forgejo.nekropolis.irminsul
+    secretName: forgejo
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster

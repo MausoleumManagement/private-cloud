@@ -5,9 +5,7 @@
 
 service:
   http:
-    type: LoadBalancer
-    annotations:
-      kube-vip.io/loadbalancerIPs: 192.168.13.6
+    type: ClusterIP
   ssh:
     type: LoadBalancer
     annotations:
@@ -27,7 +25,9 @@ gitea:
   config:
     APP_NAME: "The Ebon Enginarium: Dark Dreams Deprave Decrepit Dungeon Dwelling Developer."
     server:
-      DOMAIN: forgejo.irminsul
+      DOMAIN: forgejo.nekropolis.irminsul
+      ROOT_URL: https://forgejo.nekropolis.irminsul/
+      PROTOCOL: http
     database:
       DB_TYPE: postgres
       HOST: cnpg-forgejo-rw:5432
