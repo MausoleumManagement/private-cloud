@@ -9,6 +9,16 @@ configs:
     # we terminate SSL in envoy
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/tls/#configuring-tls-for-argocd-server
     server.insecure: true
+    # basically, this works like server-side apply, but for the decision whether we need to sync
+    # i.e. only sync, when stuff argocd manages gets messed with
+    # this way we can have argocd manage the bits that we actually define in the manifests
+    # while webhooks and operators and whatnot can add their own stuff without causing a sync
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/diff-strategies/#server-side-diff
+    # n.b.: ArgoCD does not use server-side apply by default, and it can only be enabled on
+    # the application level, i.e. *when* we sync, we squish all those funny bits that the
+    # other actors added
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#server-side-apply
+    controller.diff.server-side: true
   gpg:
     keys:
       FD9D433219DA6540: |
