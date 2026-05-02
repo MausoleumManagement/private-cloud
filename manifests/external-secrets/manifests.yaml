@@ -9550,6 +9550,50 @@ spec:
                         - passwordSecretRef
                         - privateKeySecretRef
                         type: object
+                      caBundle:
+                        description: |-
+                          PEM encoded CA bundle used to validate Passbolt server certificate. Only used
+                          if the Host URL is using HTTPS protocol. If not set the system root certificates
+                          are used to validate the TLS connection.
+                        format: byte
+                        type: string
+                      caProvider:
+                        description: The provider for the CA bundle to use to validate
+                          Passbolt server certificate.
+                        properties:
+                          key:
+                            description: The key where the CA certificate can be found
+                              in the Secret or ConfigMap.
+                            maxLength: 253
+                            minLength: 1
+                            pattern: ^[-._a-zA-Z0-9]+$
+                            type: string
+                          name:
+                            description: The name of the object located at the provider
+                              type.
+                            maxLength: 253
+                            minLength: 1
+                            pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                            type: string
+                          namespace:
+                            description: |-
+                              The namespace the Provider type is in.
+                              Can only be defined when used in a ClusterSecretStore.
+                            maxLength: 63
+                            minLength: 1
+                            pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                            type: string
+                          type:
+                            description: The type of provider to use such as "Secret",
+                              or "ConfigMap".
+                            enum:
+                            - Secret
+                            - ConfigMap
+                            type: string
+                        required:
+                        - name
+                        - type
+                        type: object
                       host:
                         description: Host defines the Passbolt Server to connect to
                         type: string
@@ -23756,6 +23800,50 @@ spec:
                         - passwordSecretRef
                         - privateKeySecretRef
                         type: object
+                      caBundle:
+                        description: |-
+                          PEM encoded CA bundle used to validate Passbolt server certificate. Only used
+                          if the Host URL is using HTTPS protocol. If not set the system root certificates
+                          are used to validate the TLS connection.
+                        format: byte
+                        type: string
+                      caProvider:
+                        description: The provider for the CA bundle to use to validate
+                          Passbolt server certificate.
+                        properties:
+                          key:
+                            description: The key where the CA certificate can be found
+                              in the Secret or ConfigMap.
+                            maxLength: 253
+                            minLength: 1
+                            pattern: ^[-._a-zA-Z0-9]+$
+                            type: string
+                          name:
+                            description: The name of the object located at the provider
+                              type.
+                            maxLength: 253
+                            minLength: 1
+                            pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                            type: string
+                          namespace:
+                            description: |-
+                              The namespace the Provider type is in.
+                              Can only be defined when used in a ClusterSecretStore.
+                            maxLength: 63
+                            minLength: 1
+                            pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                            type: string
+                          type:
+                            description: The type of provider to use such as "Secret",
+                              or "ConfigMap".
+                            enum:
+                            - Secret
+                            - ConfigMap
+                            type: string
+                        required:
+                        - name
+                        - type
+                        type: object
                       host:
                         description: Host defines the Passbolt Server to connect to
                         type: string
@@ -31890,8 +31978,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets
   namespace: external-secrets
 ---
@@ -31902,8 +31990,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-cert-controller
   namespace: external-secrets
 ---
@@ -31914,8 +32002,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -31926,8 +32014,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-leaderelection
   namespace: external-secrets
 rules:
@@ -31964,8 +32052,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-cert-controller
 rules:
 - apiGroups:
@@ -32046,8 +32134,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-controller
 rules:
 - apiGroups:
@@ -32197,8 +32285,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: external-secrets-edit
@@ -32250,8 +32338,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
     servicebinding.io/controller: "true"
   name: external-secrets-servicebindings
 rules:
@@ -32272,8 +32360,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -32322,8 +32410,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-leaderelection
   namespace: external-secrets
 roleRef:
@@ -32342,8 +32430,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-cert-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -32361,8 +32449,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -32380,9 +32468,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
+    app.kubernetes.io/version: v2.4.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.0
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -32393,9 +32481,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
+    app.kubernetes.io/version: v2.4.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.0
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -32416,8 +32504,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets
   namespace: external-secrets
 spec:
@@ -32433,8 +32521,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets
-        app.kubernetes.io/version: v2.4.0
-        helm.sh/chart: external-secrets-2.4.0
+        app.kubernetes.io/version: v2.4.1
+        helm.sh/chart: external-secrets-2.4.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32443,7 +32531,7 @@ spec:
         - --metrics-addr=:8080
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.4.0
+        image: ghcr.io/external-secrets/external-secrets:v2.4.1
         imagePullPolicy: IfNotPresent
         name: external-secrets
         ports:
@@ -32471,8 +32559,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-cert-controller
   namespace: external-secrets
 spec:
@@ -32488,8 +32576,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-cert-controller
-        app.kubernetes.io/version: v2.4.0
-        helm.sh/chart: external-secrets-2.4.0
+        app.kubernetes.io/version: v2.4.1
+        helm.sh/chart: external-secrets-2.4.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32505,7 +32593,7 @@ spec:
         - --loglevel=info
         - --zap-time-encoding=epoch
         - --enable-partial-cache=true
-        image: ghcr.io/external-secrets/external-secrets:v2.4.0
+        image: ghcr.io/external-secrets/external-secrets:v2.4.1
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
@@ -32516,11 +32604,14 @@ spec:
           name: ready
           protocol: TCP
         readinessProbe:
+          failureThreshold: 3
           httpGet:
             path: /readyz
             port: ready
           initialDelaySeconds: 20
           periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -32541,8 +32632,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
-    helm.sh/chart: external-secrets-2.4.0
+    app.kubernetes.io/version: v2.4.1
+    helm.sh/chart: external-secrets-2.4.1
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -32558,8 +32649,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-webhook
-        app.kubernetes.io/version: v2.4.0
-        helm.sh/chart: external-secrets-2.4.0
+        app.kubernetes.io/version: v2.4.1
+        helm.sh/chart: external-secrets-2.4.1
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32573,7 +32664,7 @@ spec:
         - --healthz-addr=:8081
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.4.0
+        image: ghcr.io/external-secrets/external-secrets:v2.4.1
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:
@@ -32587,11 +32678,14 @@ spec:
           name: ready
           protocol: TCP
         readinessProbe:
+          failureThreshold: 3
           httpGet:
             path: /readyz
             port: ready
           initialDelaySeconds: 20
           periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -32639,9 +32733,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
+    app.kubernetes.io/version: v2.4.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.0
+    helm.sh/chart: external-secrets-2.4.1
   name: externalsecret-validate
 webhooks:
 - admissionReviewVersions:
@@ -32676,9 +32770,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.0
+    app.kubernetes.io/version: v2.4.1
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.0
+    helm.sh/chart: external-secrets-2.4.1
   name: secretstore-validate
 webhooks:
 - admissionReviewVersions:
