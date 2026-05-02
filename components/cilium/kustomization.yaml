@@ -8,7 +8,7 @@ helmCharts:
     releaseName: ciliumrelease
     repo: https://helm.cilium.io/
     valuesFile: values.yaml
-    version: 1.19.2
+    version: 1.19.3
 resources:
   - namespace.yaml
   - ingress-hubble-ui.yaml
