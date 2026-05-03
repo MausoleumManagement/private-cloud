@@ -1,5 +1,5 @@
-name: Bug Report
-description: File a bug report.
+name: K8s Upgrade
+description: Checklist for K8s Upgrades
 title: "[Chore]: Kubernetes Version Upgrade v1.XX.YY "
 assignees:
   - Atomsoldat
@@ -8,7 +8,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        - [ ] Read Release notes for any relevant breaking changes
+        - [ ] Read Release notes / Changelog / Blog Article for any relevant breaking changes
+          - e.g. https://kubernetes.io/releases/1.36/ 
         - [ ] Build new image using [image-builder-wrapper](https://github.com/MausoleumManagement/image-builder-k8s)
         - [ ] Ensure, that `cpu_type=x86-64-v3` correctly transferred to the VM template (Hardware > Processors)
           - Pods like the csi-cephfs will be sad, when the default `kvm64` is set, and that means pods get stuck scheduling, which means work getting the sand out of the gears again, because of pdbs
