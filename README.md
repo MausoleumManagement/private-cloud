@@ -5,7 +5,7 @@ This repository contains the manifests for the infrastructure services of my kub
 
 ## Further reading
 
-The [documentation](docs/) is still WIP, as you can tell, but i've wrotten some articles on my blog about this project: [[1](https://lichturm.de/en/posts/pve_k8s_considerations/),[2](https://lichturm.de/de/posts/pve_k8s_image-builder/),[3](https://lichturm.de/de/posts/pve_k8s_capi_testrun/)]. If you want to get a better idea, i think the [official documentation](https://cluster-api.sigs.k8s.io/user/concepts) of Cluster API will serve you better than most things i could write.
+The [documentation](docs/) is still WIP, as you can tell, but i've written some articles on my blog about this project: [[1](https://lichturm.de/en/posts/pve_k8s_considerations/),[2](https://lichturm.de/de/posts/pve_k8s_image-builder/),[3](https://lichturm.de/de/posts/pve_k8s_capi_testrun/)]. If you want to get a better idea, i think the [official documentation](https://cluster-api.sigs.k8s.io/user/concepts) of Cluster API will serve you better than most things i could write.
 The idea is to have a fully declarative setup that can be published without too much to think about.
 
 
