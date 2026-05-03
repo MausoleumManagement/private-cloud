@@ -16,3 +16,6 @@ body:
         - [ ] Raise Control Plane k8s version
         - [ ] Raise Worker k8s version
         - [ ] Document any interesting findings
+  - type: textarea
+    attributes:
+      label: "Relevant Info for this upgrade:"
