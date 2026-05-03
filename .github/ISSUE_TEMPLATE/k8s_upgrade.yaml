@@ -1,0 +1,17 @@
+name: Bug Report
+description: File a bug report.
+title: "[Chore]: Kubernetes Version Upgrade v1.XX.YY "
+assignees:
+  - Atomsoldat
+type: task
+body:
+  - type: markdown
+    attributes:
+      value: |
+        - [ ] Read Release notes for any relevant breaking changes
+        - [ ] Build new image using [image-builder-wrapper](https://github.com/MausoleumManagement/image-builder-k8s)
+        - [ ] Ensure, that `cpu_type=x86-64-v3` correctly transferred to the VM template (Hardware > Processors)
+          - Pods like the csi-cephfs will be sad, when the default `kvm64` is set, and that means pods get stuck scheduling, which means work getting the sand out of the gears again, because of pdbs
+        - [ ] Raise Control Plane k8s version
+        - [ ] Raise Worker k8s version
+        - [ ] Document any interesting findings
