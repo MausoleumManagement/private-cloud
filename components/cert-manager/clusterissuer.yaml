@@ -18,7 +18,7 @@ spec:
   # default duration is 90 days, ie 90*24=2160h
   # hours seems to be the largest unit accepted here
   # https://pkg.go.dev/time#ParseDuration
-  duration: 2160h
+  duration: 87600h  # 10 years; this is a private internal CA, long lifetime is fine
   commonName: nekropolis-selfsigned-ca
   subject:
     organizations:

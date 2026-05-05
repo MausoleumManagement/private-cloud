@@ -14784,7 +14784,7 @@ metadata:
   namespace: cert-manager
 spec:
   commonName: nekropolis-selfsigned-ca
-  duration: 2160h
+  duration: 87600h
   isCA: true
   issuerRef:
     group: cert-manager.io
