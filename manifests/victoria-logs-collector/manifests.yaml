@@ -11,8 +11,8 @@ metadata:
     app.kubernetes.io/instance: victoria-logs-collector
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-collector-0.2.14
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-collector-0.3.3
   name: victoria-logs-collector
   namespace: victoria-logs-collector
 ---
@@ -23,8 +23,8 @@ metadata:
     app.kubernetes.io/instance: victoria-logs-collector
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-collector-0.2.14
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-collector-0.3.3
   name: victoria-logs-collector
 rules:
 - apiGroups:
@@ -45,8 +45,8 @@ metadata:
     app.kubernetes.io/instance: victoria-logs-collector
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-collector-0.2.14
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-collector-0.3.3
   name: victoria-logs-collector
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -64,8 +64,8 @@ metadata:
     app.kubernetes.io/instance: victoria-logs-collector
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
-    app.kubernetes.io/version: v1.48.0
-    helm.sh/chart: victoria-logs-collector-0.2.14
+    app.kubernetes.io/version: v1.50.0
+    helm.sh/chart: victoria-logs-collector-0.3.3
   name: victoria-logs-collector
   namespace: victoria-logs-collector
 spec:
@@ -97,7 +97,7 @@ spec:
         - --remoteWrite.maxDiskUsagePerURL=10GB
         - --remoteWrite.url=http://victoria-logs-vmauth.victoria-logs.svc.cluster.local:8427/insert/native
         - --tmpDataPath=/var/lib/vl-collector
-        image: victoriametrics/vlagent:v1.48.0
+        image: victoriametrics/vlagent:v1.50.0
         imagePullPolicy: IfNotPresent
         name: vlagent
         ports:
