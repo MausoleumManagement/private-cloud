@@ -418,12 +418,12 @@ spec:
                               apply common labels to resource selectors or not
                             type: boolean
                           namePrefix:
-                            description: NamePrefix is a prefix appended to resources
-                              for Kustomize apps
+                            description: NamePrefix overrides the namePrefix in the
+                              kustomization.yaml for Kustomize apps
                             type: string
                           nameSuffix:
-                            description: NameSuffix is a suffix appended to resources
-                              for Kustomize apps
+                            description: NameSuffix overrides the nameSuffix in the
+                              kustomization.yaml for Kustomize apps
                             type: string
                           namespace:
                             description: Namespace sets the namespace that Kustomize
@@ -807,12 +807,12 @@ spec:
                                 to apply common labels to resource selectors or not
                               type: boolean
                             namePrefix:
-                              description: NamePrefix is a prefix appended to resources
-                                for Kustomize apps
+                              description: NamePrefix overrides the namePrefix in
+                                the kustomization.yaml for Kustomize apps
                               type: string
                             nameSuffix:
-                              description: NameSuffix is a suffix appended to resources
-                                for Kustomize apps
+                              description: NameSuffix overrides the nameSuffix in
+                                the kustomization.yaml for Kustomize apps
                               type: string
                             namespace:
                               description: Namespace sets the namespace that Kustomize
@@ -1306,11 +1306,11 @@ spec:
                           common labels to resource selectors or not
                         type: boolean
                       namePrefix:
-                        description: NamePrefix is a prefix appended to resources
+                        description: NamePrefix overrides the namePrefix in the kustomization.yaml
                           for Kustomize apps
                         type: string
                       nameSuffix:
-                        description: NameSuffix is a suffix appended to resources
+                        description: NameSuffix overrides the nameSuffix in the kustomization.yaml
                           for Kustomize apps
                         type: string
                       namespace:
@@ -1683,12 +1683,12 @@ spec:
                               apply common labels to resource selectors or not
                             type: boolean
                           namePrefix:
-                            description: NamePrefix is a prefix appended to resources
-                              for Kustomize apps
+                            description: NamePrefix overrides the namePrefix in the
+                              kustomization.yaml for Kustomize apps
                             type: string
                           nameSuffix:
-                            description: NameSuffix is a suffix appended to resources
-                              for Kustomize apps
+                            description: NameSuffix overrides the nameSuffix in the
+                              kustomization.yaml for Kustomize apps
                             type: string
                           namespace:
                             description: Namespace sets the namespace that Kustomize
@@ -2094,12 +2094,12 @@ spec:
                             common labels to resource selectors or not
                           type: boolean
                         namePrefix:
-                          description: NamePrefix is a prefix appended to resources
-                            for Kustomize apps
+                          description: NamePrefix overrides the namePrefix in the
+                            kustomization.yaml for Kustomize apps
                           type: string
                         nameSuffix:
-                          description: NameSuffix is a suffix appended to resources
-                            for Kustomize apps
+                          description: NameSuffix overrides the nameSuffix in the
+                            kustomization.yaml for Kustomize apps
                           type: string
                         namespace:
                           description: Namespace sets the namespace that Kustomize
@@ -2653,12 +2653,12 @@ spec:
                                 to apply common labels to resource selectors or not
                               type: boolean
                             namePrefix:
-                              description: NamePrefix is a prefix appended to resources
-                                for Kustomize apps
+                              description: NamePrefix overrides the namePrefix in
+                                the kustomization.yaml for Kustomize apps
                               type: string
                             nameSuffix:
-                              description: NameSuffix is a suffix appended to resources
-                                for Kustomize apps
+                              description: NameSuffix overrides the nameSuffix in
+                                the kustomization.yaml for Kustomize apps
                               type: string
                             namespace:
                               description: Namespace sets the namespace that Kustomize
@@ -3046,12 +3046,12 @@ spec:
                                   not
                                 type: boolean
                               namePrefix:
-                                description: NamePrefix is a prefix appended to resources
-                                  for Kustomize apps
+                                description: NamePrefix overrides the namePrefix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               nameSuffix:
-                                description: NameSuffix is a suffix appended to resources
-                                  for Kustomize apps
+                                description: NameSuffix overrides the nameSuffix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               namespace:
                                 description: Namespace sets the namespace that Kustomize
@@ -3198,6 +3198,7 @@ spec:
               observedAt:
                 description: |-
                   ObservedAt indicates when the application state was updated without querying latest git state
+
                   Deprecated: controller no longer updates ObservedAt field
                 format: date-time
                 type: string
@@ -3594,12 +3595,12 @@ spec:
                                       or not
                                     type: boolean
                                   namePrefix:
-                                    description: NamePrefix is a prefix appended to
-                                      resources for Kustomize apps
+                                    description: NamePrefix overrides the namePrefix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   nameSuffix:
-                                    description: NameSuffix is a suffix appended to
-                                      resources for Kustomize apps
+                                    description: NameSuffix overrides the nameSuffix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   namespace:
                                     description: Namespace sets the namespace that
@@ -4007,12 +4008,12 @@ spec:
                                         selectors or not
                                       type: boolean
                                     namePrefix:
-                                      description: NamePrefix is a prefix appended
-                                        to resources for Kustomize apps
+                                      description: NamePrefix overrides the namePrefix
+                                        in the kustomization.yaml for Kustomize apps
                                       type: string
                                     nameSuffix:
-                                      description: NameSuffix is a suffix appended
-                                        to resources for Kustomize apps
+                                      description: NameSuffix overrides the nameSuffix
+                                        in the kustomization.yaml for Kustomize apps
                                       type: string
                                     namespace:
                                       description: Namespace sets the namespace that
@@ -4537,12 +4538,12 @@ spec:
                                   not
                                 type: boolean
                               namePrefix:
-                                description: NamePrefix is a prefix appended to resources
-                                  for Kustomize apps
+                                description: NamePrefix overrides the namePrefix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               nameSuffix:
-                                description: NameSuffix is a suffix appended to resources
-                                  for Kustomize apps
+                                description: NameSuffix overrides the nameSuffix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               namespace:
                                 description: Namespace sets the namespace that Kustomize
@@ -4941,12 +4942,12 @@ spec:
                                     not
                                   type: boolean
                                 namePrefix:
-                                  description: NamePrefix is a prefix appended to
-                                    resources for Kustomize apps
+                                  description: NamePrefix overrides the namePrefix
+                                    in the kustomization.yaml for Kustomize apps
                                   type: string
                                 nameSuffix:
-                                  description: NameSuffix is a suffix appended to
-                                    resources for Kustomize apps
+                                  description: NameSuffix overrides the nameSuffix
+                                    in the kustomization.yaml for Kustomize apps
                                   type: string
                                 namespace:
                                   description: Namespace sets the namespace that Kustomize
@@ -5466,12 +5467,12 @@ spec:
                                       or not
                                     type: boolean
                                   namePrefix:
-                                    description: NamePrefix is a prefix appended to
-                                      resources for Kustomize apps
+                                    description: NamePrefix overrides the namePrefix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   nameSuffix:
-                                    description: NameSuffix is a suffix appended to
-                                      resources for Kustomize apps
+                                    description: NameSuffix overrides the nameSuffix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   namespace:
                                     description: Namespace sets the namespace that
@@ -5919,12 +5920,12 @@ spec:
                                       or not
                                     type: boolean
                                   namePrefix:
-                                    description: NamePrefix is a prefix appended to
-                                      resources for Kustomize apps
+                                    description: NamePrefix overrides the namePrefix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   nameSuffix:
-                                    description: NameSuffix is a suffix appended to
-                                      resources for Kustomize apps
+                                    description: NameSuffix overrides the nameSuffix
+                                      in the kustomization.yaml for Kustomize apps
                                     type: string
                                   namespace:
                                     description: Namespace sets the namespace that
@@ -6432,12 +6433,12 @@ spec:
                                   not
                                 type: boolean
                               namePrefix:
-                                description: NamePrefix is a prefix appended to resources
-                                  for Kustomize apps
+                                description: NamePrefix overrides the namePrefix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               nameSuffix:
-                                description: NameSuffix is a suffix appended to resources
-                                  for Kustomize apps
+                                description: NameSuffix overrides the nameSuffix in
+                                  the kustomization.yaml for Kustomize apps
                                 type: string
                               namespace:
                                 description: Namespace sets the namespace that Kustomize
@@ -6836,12 +6837,12 @@ spec:
                                     not
                                   type: boolean
                                 namePrefix:
-                                  description: NamePrefix is a prefix appended to
-                                    resources for Kustomize apps
+                                  description: NamePrefix overrides the namePrefix
+                                    in the kustomization.yaml for Kustomize apps
                                   type: string
                                 nameSuffix:
-                                  description: NameSuffix is a suffix appended to
-                                    resources for Kustomize apps
+                                  description: NameSuffix overrides the nameSuffix
+                                    in the kustomization.yaml for Kustomize apps
                                   type: string
                                 namespace:
                                   description: Namespace sets the namespace that Kustomize
@@ -30129,6 +30130,16 @@ spec:
                   - type
                   type: object
                 type: array
+              health:
+                properties:
+                  lastTransitionTime:
+                    format: date-time
+                    type: string
+                  message:
+                    type: string
+                  status:
+                    type: string
+                type: object
               resources:
                 items:
                   properties:
@@ -30566,8 +30577,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
   namespace: argocd
 ---
@@ -30581,8 +30592,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-applicationset-controller
   namespace: argocd
 ---
@@ -30596,8 +30607,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-dex-server
   namespace: argocd
 ---
@@ -30611,8 +30622,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-repo-server
   namespace: argocd
 ---
@@ -30626,8 +30637,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
   namespace: argocd
 ---
@@ -30640,8 +30651,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
   namespace: argocd
 rules:
@@ -30693,8 +30704,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-applicationset-controller
   namespace: argocd
 rules:
@@ -30793,8 +30804,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-dex-server
   namespace: argocd
 rules:
@@ -30817,8 +30828,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-repo-server
   namespace: argocd
 rules: null
@@ -30832,8 +30843,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
   namespace: argocd
 rules:
@@ -30881,8 +30892,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
 rules:
 - apiGroups:
@@ -30905,8 +30916,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
 rules:
 - apiGroups:
@@ -30963,8 +30974,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
   namespace: argocd
 roleRef:
@@ -30985,8 +30996,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-applicationset-controller
   namespace: argocd
 roleRef:
@@ -31007,8 +31018,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-dex-server
   namespace: argocd
 roleRef:
@@ -31029,8 +31040,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-repo-server
   namespace: argocd
 roleRef:
@@ -31051,8 +31062,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
   namespace: argocd
 roleRef:
@@ -31073,8 +31084,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -31094,8 +31105,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -31218,8 +31229,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-cm
   namespace: argocd
 ---
@@ -31255,8 +31266,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-cmd-params-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-cmd-params-cm
   namespace: argocd
 ---
@@ -31283,8 +31294,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-gpg-keys-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-gpg-keys-cm
   namespace: argocd
 ---
@@ -31302,8 +31313,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-rbac-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-rbac-cm
   namespace: argocd
 ---
@@ -31331,8 +31342,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-ssh-known-hosts-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-ssh-known-hosts-cm
   namespace: argocd
 ---
@@ -31344,8 +31355,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-tls-certs-cm
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-tls-certs-cm
   namespace: argocd
 ---
@@ -31396,8 +31407,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-applicationset-controller
   namespace: argocd
 spec:
@@ -31419,8 +31430,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-dex-server
   namespace: argocd
 spec:
@@ -31446,8 +31457,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-repo-server
   namespace: argocd
 spec:
@@ -31469,8 +31480,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
   namespace: argocd
 spec:
@@ -31543,8 +31554,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-applicationset-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-applicationset-controller
   namespace: argocd
 spec:
@@ -31557,15 +31568,15 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 0b1a465286494c382a87dd5506a960f05e0a74c2be90388b324aa20898c5522b
+        checksum/cmd-params: 6f8af387826d40195a6d149c1c98c4cd8f516e2bc684a72be000006e2d6afc92
       labels:
         app.kubernetes.io/component: applicationset-controller
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argocd-applicationset-controller
         app.kubernetes.io/part-of: argocd
-        app.kubernetes.io/version: v3.3.9
-        helm.sh/chart: argo-cd-9.5.11
+        app.kubernetes.io/version: v3.4.1
+        helm.sh/chart: argo-cd-9.5.12
     spec:
       affinity:
         podAntiAffinity:
@@ -31750,7 +31761,7 @@ spec:
               key: applicationsetcontroller.status.max.resources.count
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         name: applicationset-controller
         ports:
@@ -31835,8 +31846,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-dex-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-dex-server
   namespace: argocd
 spec:
@@ -31849,15 +31860,15 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 0b1a465286494c382a87dd5506a960f05e0a74c2be90388b324aa20898c5522b
+        checksum/cmd-params: 6f8af387826d40195a6d149c1c98c4cd8f516e2bc684a72be000006e2d6afc92
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argocd-dex-server
         app.kubernetes.io/part-of: argocd
-        app.kubernetes.io/version: v3.3.9
-        helm.sh/chart: argo-cd-9.5.11
+        app.kubernetes.io/version: v3.4.1
+        helm.sh/chart: argo-cd-9.5.12
     spec:
       affinity:
         podAntiAffinity:
@@ -31937,7 +31948,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
@@ -31986,8 +31997,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-repo-server
   namespace: argocd
 spec:
@@ -32000,16 +32011,16 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 494490818cb637b678d1b281f3e8ebbed4ed831a7d836f48a0787f6ac5588fb2
-        checksum/cmd-params: 0b1a465286494c382a87dd5506a960f05e0a74c2be90388b324aa20898c5522b
+        checksum/cm: 36659b6aa482f8310533ff2d25f8363175744f5e3b7f38e5cab1245386d78fdb
+        checksum/cmd-params: 6f8af387826d40195a6d149c1c98c4cd8f516e2bc684a72be000006e2d6afc92
       labels:
         app.kubernetes.io/component: repo-server
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argocd-repo-server
         app.kubernetes.io/part-of: argocd
-        app.kubernetes.io/version: v3.3.9
-        helm.sh/chart: argo-cd-9.5.11
+        app.kubernetes.io/version: v3.4.1
+        helm.sh/chart: argo-cd-9.5.12
     spec:
       affinity:
         podAntiAffinity:
@@ -32287,7 +32298,7 @@ spec:
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -32350,7 +32361,7 @@ spec:
         command:
         - sh
         - -c
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
@@ -32411,8 +32422,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-server
   namespace: argocd
 spec:
@@ -32425,16 +32436,16 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 494490818cb637b678d1b281f3e8ebbed4ed831a7d836f48a0787f6ac5588fb2
-        checksum/cmd-params: 0b1a465286494c382a87dd5506a960f05e0a74c2be90388b324aa20898c5522b
+        checksum/cm: 36659b6aa482f8310533ff2d25f8363175744f5e3b7f38e5cab1245386d78fdb
+        checksum/cmd-params: 6f8af387826d40195a6d149c1c98c4cd8f516e2bc684a72be000006e2d6afc92
       labels:
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argocd-server
         app.kubernetes.io/part-of: argocd
-        app.kubernetes.io/version: v3.3.9
-        helm.sh/chart: argo-cd-9.5.11
+        app.kubernetes.io/version: v3.4.1
+        helm.sh/chart: argo-cd-9.5.12
     spec:
       affinity:
         podAntiAffinity:
@@ -32760,7 +32771,7 @@ spec:
               key: server.sync.replace.allowed
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -32872,8 +32883,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/part-of: argocd
-    app.kubernetes.io/version: v3.3.9
-    helm.sh/chart: argo-cd-9.5.11
+    app.kubernetes.io/version: v3.4.1
+    helm.sh/chart: argo-cd-9.5.12
   name: argocd-application-controller
   namespace: argocd
 spec:
@@ -32887,16 +32898,16 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 494490818cb637b678d1b281f3e8ebbed4ed831a7d836f48a0787f6ac5588fb2
-        checksum/cmd-params: 0b1a465286494c382a87dd5506a960f05e0a74c2be90388b324aa20898c5522b
+        checksum/cm: 36659b6aa482f8310533ff2d25f8363175744f5e3b7f38e5cab1245386d78fdb
+        checksum/cmd-params: 6f8af387826d40195a6d149c1c98c4cd8f516e2bc684a72be000006e2d6afc92
       labels:
         app.kubernetes.io/component: application-controller
         app.kubernetes.io/instance: argocd
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: argocd-application-controller
         app.kubernetes.io/part-of: argocd
-        app.kubernetes.io/version: v3.3.9
-        helm.sh/chart: argo-cd-9.5.11
+        app.kubernetes.io/version: v3.4.1
+        helm.sh/chart: argo-cd-9.5.12
     spec:
       affinity:
         podAntiAffinity:
@@ -33197,7 +33208,7 @@ spec:
               optional: true
         - name: KUBECACHEDIR
           value: /tmp/kubecache
-        image: quay.io/argoproj/argocd:v3.3.9
+        image: quay.io/argoproj/argocd:v3.4.1
         imagePullPolicy: IfNotPresent
         name: application-controller
         ports:
