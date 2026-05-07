@@ -8,7 +8,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics
   namespace: victoria-metrics
 ---
@@ -16,12 +16,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vmauth
+    app.kubernetes.io/component: vmauth
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmauth
   namespace: victoria-metrics
 spec:
@@ -40,12 +40,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vminsert
+    app.kubernetes.io/component: vminsert
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vminsert
   namespace: victoria-metrics
 spec:
@@ -65,12 +65,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vmselect
+    app.kubernetes.io/component: vmselect
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmselect
   namespace: victoria-metrics
 spec:
@@ -90,12 +90,12 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: vmstorage
+    app.kubernetes.io/component: vmstorage
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmstorage
   namespace: victoria-metrics
 spec:
@@ -123,12 +123,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vmauth
+    app.kubernetes.io/component: vmauth
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmauth
   namespace: victoria-metrics
 spec:
@@ -142,6 +142,7 @@ spec:
     metadata:
       labels:
         app: vmauth
+        app.kubernetes.io/component: vmauth
         app.kubernetes.io/instance: victoria-metrics-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-metrics-cluster
@@ -154,7 +155,7 @@ spec:
         - --envflag.prefix=VM_
         - --httpListenAddr=:8427
         - --loggerFormat=json
-        image: victoriametrics/vmauth:v1.139.0
+        image: victoriametrics/vmauth:v1.142.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -189,12 +190,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vminsert
+    app.kubernetes.io/component: vminsert
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vminsert
   namespace: victoria-metrics
 spec:
@@ -208,6 +209,7 @@ spec:
     metadata:
       labels:
         app: vminsert
+        app.kubernetes.io/component: vminsert
         app.kubernetes.io/instance: victoria-metrics-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-metrics-cluster
@@ -221,7 +223,7 @@ spec:
         - --loggerFormat=json
         - --storageNode=victoria-metrics-vmstorage-0.victoria-metrics-vmstorage.victoria-metrics.svc.cluster.local.:8400
         - --storageNode=victoria-metrics-vmstorage-1.victoria-metrics-vmstorage.victoria-metrics.svc.cluster.local.:8400
-        image: victoriametrics/vminsert:v1.139.0-cluster
+        image: victoriametrics/vminsert:v1.142.0-cluster
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -250,12 +252,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: vmselect
+    app.kubernetes.io/component: vmselect
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmselect
   namespace: victoria-metrics
 spec:
@@ -270,6 +272,7 @@ spec:
     metadata:
       labels:
         app: vmselect
+        app.kubernetes.io/component: vmselect
         app.kubernetes.io/instance: victoria-metrics-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-metrics-cluster
@@ -284,7 +287,7 @@ spec:
         - --loggerFormat=json
         - --storageNode=victoria-metrics-vmstorage-0.victoria-metrics-vmstorage.victoria-metrics.svc.cluster.local.:8401
         - --storageNode=victoria-metrics-vmstorage-1.victoria-metrics-vmstorage.victoria-metrics.svc.cluster.local.:8401
-        image: victoriametrics/vmselect:v1.139.0-cluster
+        image: victoriametrics/vmselect:v1.142.0-cluster
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -321,12 +324,12 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: vmstorage
+    app.kubernetes.io/component: vmstorage
     app.kubernetes.io/instance: victoria-metrics-release
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-metrics-cluster
-    app.kubernetes.io/version: v1.139.0-cluster
-    helm.sh/chart: victoria-metrics-cluster-0.38.0
+    app.kubernetes.io/version: v1.142.0-cluster
+    helm.sh/chart: victoria-metrics-cluster-0.41.2
   name: victoria-metrics-vmstorage
   namespace: victoria-metrics
 spec:
@@ -343,6 +346,7 @@ spec:
     metadata:
       labels:
         app: vmstorage
+        app.kubernetes.io/component: vmstorage
         app.kubernetes.io/instance: victoria-metrics-release
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: victoria-metrics-cluster
@@ -356,7 +360,7 @@ spec:
         - --loggerFormat=json
         - --retentionPeriod=30d
         - --storageDataPath=/storage
-        image: victoriametrics/vmstorage:v1.139.0-cluster
+        image: victoriametrics/vmstorage:v1.142.0-cluster
         imagePullPolicy: IfNotPresent
         name: vmstorage
         ports:
