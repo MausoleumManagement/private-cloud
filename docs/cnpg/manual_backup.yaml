@@ -1,7 +1,10 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Backup
 metadata:
-  name: backup-test
+  name: backup-test-mechanicum
 spec:
   cluster:
-    name: cnpg-openbao
+    name: cnpg-wiki-mechanicum
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
