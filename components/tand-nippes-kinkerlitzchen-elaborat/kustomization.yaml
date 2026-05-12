@@ -7,3 +7,5 @@ resources:
   #- application-bibliophage.yaml
   - application-hello-world.yaml
   - application-minecraft.yaml
+  - application-wiki-denkarium.yaml
+  - application-wiki-mechanicum.yaml

@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: hello-world
+  namespace: argocd
+spec:
+  destination:
+    namespace: hello-world
+    server: https://kubernetes.default.svc
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/hello-world
+    repoURL: https://github.com/Atomsoldat/demo_k8s_application.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: minecraft
+  namespace: argocd
+spec:
+  destination:
+    namespace: minecraft
+    server: https://kubernetes.default.svc
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/minecraft-server
+    repoURL: https://github.com/MausoleumManagement/minecraft.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: wiki-denkarium
+  namespace: argocd
+spec:
+  destination:
+    namespace: wiki-denkarium
+    server: https://kubernetes.default.svc
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/wiki-denkarium
+    repoURL: https://github.com/MausoleumManagement/wikis.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: wiki-mechanicum
+  namespace: argocd
+spec:
+  destination:
+    namespace: wiki-mechanicum
+    server: https://kubernetes.default.svc
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/wiki-mechanicum
+    repoURL: https://github.com/MausoleumManagement/wikis.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
