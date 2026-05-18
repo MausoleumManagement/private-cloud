@@ -4,8 +4,11 @@
 #clusterDomain: irminsul
 
 service:
+  # don't want to use the chart defined ingress, because we like to standardise that
+  # we just point our own ingress at the ClusterIP  service for http
   http:
     type: ClusterIP
+  # can't pass SSH via an ingress, so we use a loadbalancer
   ssh:
     type: LoadBalancer
     annotations:

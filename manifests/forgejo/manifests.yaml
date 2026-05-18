@@ -487,12 +487,23 @@ spec:
           service:
             name: forgejo-http
             port:
-              number: 80
+              number: 3000
+        path: /
+        pathType: Prefix
+  - host: forgejo.irminsul
+    http:
+      paths:
+      - backend:
+          service:
+            name: forgejo-http
+            port:
+              number: 3000
         path: /
         pathType: Prefix
   tls:
   - hosts:
     - forgejo.nekropolis.irminsul
+    - forgejo.irminsul
     secretName: forgejo
 ---
 apiVersion: postgresql.cnpg.io/v1
