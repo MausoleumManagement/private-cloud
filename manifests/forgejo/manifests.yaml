@@ -764,14 +764,14 @@ spec:
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-db-app-user
+      key: kv/nekropolis/forgejo/cnpg-forgejo-app-user
       metadataPolicy: None
       property: username
     secretKey: username
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-db-app-user
+      key: kv/nekropolis/forgejo/cnpg-forgejo-app-user
       metadataPolicy: None
       property: password
     secretKey: password
@@ -793,14 +793,14 @@ spec:
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-db-superuser
+      key: kv/nekropolis/forgejo/cnpg-forgejo-superuser
       metadataPolicy: None
       property: username
     secretKey: username
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-db-superuser
+      key: kv/nekropolis/forgejo/cnpg-forgejo-superuser
       metadataPolicy: None
       property: password
     secretKey: password
@@ -822,14 +822,14 @@ spec:
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-admin
+      key: kv/nekropolis/forgejo/forgejo-admin-secret
       metadataPolicy: None
       property: username
     secretKey: username
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-admin
+      key: kv/nekropolis/forgejo/forgejo-admin-secret
       metadataPolicy: None
       property: password
     secretKey: password
@@ -851,7 +851,7 @@ spec:
   - remoteRef:
       conversionStrategy: Default
       decodingStrategy: None
-      key: kv/nekropolis/forgejo/forgejo-db-app-user
+      key: kv/nekropolis/forgejo/cnpg-forgejo-app-user
       metadataPolicy: None
       property: password
     secretKey: db_password
