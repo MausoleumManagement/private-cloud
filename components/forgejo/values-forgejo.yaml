@@ -28,8 +28,8 @@ gitea:
   config:
     APP_NAME: "The Ebon Enginarium: Dark Dreams Deprave Decrepit Dungeon Dwelling Developer."
     server:
-      DOMAIN: forgejo.nekropolis.irminsul
-      ROOT_URL: https://forgejo.nekropolis.irminsul/
+      DOMAIN: forgejo.irminsul
+      ROOT_URL: https://forgejo.irminsul/
       PROTOCOL: http
     database:
       DB_TYPE: postgres
