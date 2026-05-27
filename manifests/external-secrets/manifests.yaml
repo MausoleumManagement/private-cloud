@@ -2631,6 +2631,18 @@ spec:
                                   credential_source.url in the provided credConfig. This field is merely to double-check the external token source
                                   URL is having the expected value.
                                 type: string
+                              gcpServiceAccountEmail:
+                                description: |-
+                                  GCPServiceAccountEmail is the email of the Google Cloud service account to impersonate
+                                  after Workload Identity Federation. Use this to grant access through the service account's
+                                  IAM bindings (for example roles/secretmanager.secretAccessor). When set, it overrides
+                                  service_account_impersonation_url in the external account JSON from credConfig;
+                                  when serviceAccountRef is set, it also overrides the "iam.gke.io/gcp-service-account" annotation
+                                  on that ServiceAccount.
+                                example: my-gsa@my-project.iam.gserviceaccount.com
+                                minLength: 1
+                                pattern: ^.*@.*\.iam\.gserviceaccount\.com$
+                                type: string
                               serviceAccountRef:
                                 description: |-
                                   serviceAccountRef is the reference to the kubernetes ServiceAccount to be used for obtaining the tokens,
@@ -5675,6 +5687,18 @@ spec:
                                 type: object
                             type: object
                         type: object
+                      customSessionTags:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          CustomSessionTags defines additional STS session tags to include when SessionTagsPolicy is Custom.
+                          These are merged with the automatically injected esoNamespace, esoStoreName, and esoStoreKind tags.
+                        type: object
+                        x-kubernetes-validations:
+                        - message: 'customSessionTags cannot contain automatically
+                            injected reserved keys: esoNamespace, esoStoreName, esoStoreKind'
+                          rule: '!(''esoNamespace'' in self) && !(''esoStoreName''
+                            in self) && !(''esoStoreKind'' in self)'
                       externalID:
                         description: AWS External ID set on assumed IAM roles
                         type: string
@@ -5732,6 +5756,19 @@ spec:
                           - value
                           type: object
                         type: array
+                      sessionTagsPolicy:
+                        default: None
+                        description: |-
+                          SessionTagsPolicy controls whether and how STS session tags are added when assuming roles.
+                          None (default): no tags are added.
+                          Simple: automatically adds esoNamespace (from the ExternalSecret), esoStoreName, and esoStoreKind tags.
+                          Custom: adds esoNamespace, esoStoreName, and esoStoreKind plus any tags defined in CustomSessionTags.
+                          Note: the IAM role must have sts:TagSession permission when using Simple or Custom.
+                        enum:
+                        - None
+                        - Simple
+                        - Custom
+                        type: string
                       transitiveTagKeys:
                         description: AWS STS assume role transitive session tags.
                           Required when multiple rules are used with the provider
@@ -7317,6 +7354,18 @@ spec:
                                   externalTokenEndpoint is the endpoint explicitly set up to provide tokens, which will be matched against the
                                   credential_source.url in the provided credConfig. This field is merely to double-check the external token source
                                   URL is having the expected value.
+                                type: string
+                              gcpServiceAccountEmail:
+                                description: |-
+                                  GCPServiceAccountEmail is the email of the Google Cloud service account to impersonate
+                                  after Workload Identity Federation. Use this to grant access through the service account's
+                                  IAM bindings (for example roles/secretmanager.secretAccessor). When set, it overrides
+                                  service_account_impersonation_url in the external account JSON from credConfig;
+                                  when serviceAccountRef is set, it also overrides the "iam.gke.io/gcp-service-account" annotation
+                                  on that ServiceAccount.
+                                example: my-gsa@my-project.iam.gserviceaccount.com
+                                minLength: 1
+                                pattern: ^.*@.*\.iam\.gserviceaccount\.com$
                                 type: string
                               serviceAccountRef:
                                 description: |-
@@ -9707,8 +9756,10 @@ spec:
                       the Pulumi provider
                     properties:
                       accessToken:
-                        description: AccessToken is the access tokens to sign in to
-                          the Pulumi Cloud Console.
+                        description: |-
+                          AccessToken is the access tokens to sign in to the Pulumi Cloud Console.
+
+                          Deprecated: Use auth.accessToken instead.
                         properties:
                           secretRef:
                             description: SecretRef is a reference to a secret containing
@@ -9743,6 +9794,100 @@ spec:
                         default: https://api.pulumi.com/api/esc
                         description: APIURL is the URL of the Pulumi API.
                         type: string
+                      auth:
+                        description: |-
+                          Auth configures how the Operator authenticates with the Pulumi API.
+                          Either auth or the deprecated accessToken field must be specified.
+                        properties:
+                          accessToken:
+                            description: AccessToken authenticates using a Pulumi
+                              access token stored in a Kubernetes Secret.
+                            properties:
+                              secretRef:
+                                description: SecretRef is a reference to a secret
+                                  containing the Pulumi API token.
+                                properties:
+                                  key:
+                                    description: |-
+                                      A key in the referenced Secret.
+                                      Some instances of this field may be defaulted, in others it may be required.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[-._a-zA-Z0-9]+$
+                                    type: string
+                                  name:
+                                    description: The name of the Secret resource being
+                                      referred to.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      The namespace of the Secret resource being referred to.
+                                      Ignored if referent is not cluster-scoped, otherwise defaults to the namespace of the referent.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                                    type: string
+                                type: object
+                            type: object
+                          oidcConfig:
+                            description: OIDCConfig authenticates using Kubernetes
+                              ServiceAccount tokens via OIDC.
+                            properties:
+                              expirationSeconds:
+                                default: 600
+                                description: |-
+                                  ExpirationSeconds sets the token validity duration for service account and OIDC token.
+                                  Defaults to 10 minutes.
+                                format: int64
+                                minimum: 600
+                                type: integer
+                              organization:
+                                description: Organization is the name of the Pulumi
+                                  organization configured for OIDC authentication.
+                                type: string
+                              serviceAccountRef:
+                                description: ServiceAccountRef specifies the Kubernetes
+                                  ServiceAccount to use for authentication.
+                                properties:
+                                  audiences:
+                                    description: |-
+                                      Audience specifies the `aud` claim for the service account token
+                                      If the service account uses a well-known annotation for e.g. IRSA or GCP Workload Identity
+                                      then this audiences will be appended to the list
+                                    items:
+                                      type: string
+                                    type: array
+                                  name:
+                                    description: The name of the ServiceAccount resource
+                                      being referred to.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      Namespace of the resource being referred to.
+                                      Ignored if referent is not cluster-scoped, otherwise defaults to the namespace of the referent.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                            required:
+                            - organization
+                            - serviceAccountRef
+                            type: object
+                        type: object
+                        x-kubernetes-validations:
+                        - message: Exactly one of 'accessToken' or 'oidcConfig' must
+                            be specified
+                          rule: (has(self.accessToken) && !has(self.oidcConfig)) ||
+                            (!has(self.accessToken) && has(self.oidcConfig))
                       environment:
                         description: |-
                           Environment are YAML documents composed of static key-value pairs, programmatic expressions,
@@ -9760,11 +9905,15 @@ spec:
                           the environment belongs to.
                         type: string
                     required:
-                    - accessToken
                     - environment
                     - organization
                     - project
                     type: object
+                    x-kubernetes-validations:
+                    - message: Exactly one of 'auth' or deprecated 'accessToken' must
+                        be specified
+                      rule: (has(self.auth) && !has(self.accessToken)) || (!has(self.auth)
+                        && has(self.accessToken))
                   scaleway:
                     description: Scaleway configures this store to sync secrets using
                       the Scaleway provider.
@@ -18005,6 +18154,18 @@ spec:
                           credential_source.url in the provided credConfig. This field is merely to double-check the external token source
                           URL is having the expected value.
                         type: string
+                      gcpServiceAccountEmail:
+                        description: |-
+                          GCPServiceAccountEmail is the email of the Google Cloud service account to impersonate
+                          after Workload Identity Federation. Use this to grant access through the service account's
+                          IAM bindings (for example roles/secretmanager.secretAccessor). When set, it overrides
+                          service_account_impersonation_url in the external account JSON from credConfig;
+                          when serviceAccountRef is set, it also overrides the "iam.gke.io/gcp-service-account" annotation
+                          on that ServiceAccount.
+                        example: my-gsa@my-project.iam.gserviceaccount.com
+                        minLength: 1
+                        pattern: ^.*@.*\.iam\.gserviceaccount\.com$
+                        type: string
                       serviceAccountRef:
                         description: |-
                           serviceAccountRef is the reference to the kubernetes ServiceAccount to be used for obtaining the tokens,
@@ -19925,6 +20086,18 @@ spec:
                                 type: object
                             type: object
                         type: object
+                      customSessionTags:
+                        additionalProperties:
+                          type: string
+                        description: |-
+                          CustomSessionTags defines additional STS session tags to include when SessionTagsPolicy is Custom.
+                          These are merged with the automatically injected esoNamespace, esoStoreName, and esoStoreKind tags.
+                        type: object
+                        x-kubernetes-validations:
+                        - message: 'customSessionTags cannot contain automatically
+                            injected reserved keys: esoNamespace, esoStoreName, esoStoreKind'
+                          rule: '!(''esoNamespace'' in self) && !(''esoStoreName''
+                            in self) && !(''esoStoreKind'' in self)'
                       externalID:
                         description: AWS External ID set on assumed IAM roles
                         type: string
@@ -19982,6 +20155,19 @@ spec:
                           - value
                           type: object
                         type: array
+                      sessionTagsPolicy:
+                        default: None
+                        description: |-
+                          SessionTagsPolicy controls whether and how STS session tags are added when assuming roles.
+                          None (default): no tags are added.
+                          Simple: automatically adds esoNamespace (from the ExternalSecret), esoStoreName, and esoStoreKind tags.
+                          Custom: adds esoNamespace, esoStoreName, and esoStoreKind plus any tags defined in CustomSessionTags.
+                          Note: the IAM role must have sts:TagSession permission when using Simple or Custom.
+                        enum:
+                        - None
+                        - Simple
+                        - Custom
+                        type: string
                       transitiveTagKeys:
                         description: AWS STS assume role transitive session tags.
                           Required when multiple rules are used with the provider
@@ -21567,6 +21753,18 @@ spec:
                                   externalTokenEndpoint is the endpoint explicitly set up to provide tokens, which will be matched against the
                                   credential_source.url in the provided credConfig. This field is merely to double-check the external token source
                                   URL is having the expected value.
+                                type: string
+                              gcpServiceAccountEmail:
+                                description: |-
+                                  GCPServiceAccountEmail is the email of the Google Cloud service account to impersonate
+                                  after Workload Identity Federation. Use this to grant access through the service account's
+                                  IAM bindings (for example roles/secretmanager.secretAccessor). When set, it overrides
+                                  service_account_impersonation_url in the external account JSON from credConfig;
+                                  when serviceAccountRef is set, it also overrides the "iam.gke.io/gcp-service-account" annotation
+                                  on that ServiceAccount.
+                                example: my-gsa@my-project.iam.gserviceaccount.com
+                                minLength: 1
+                                pattern: ^.*@.*\.iam\.gserviceaccount\.com$
                                 type: string
                               serviceAccountRef:
                                 description: |-
@@ -23957,8 +24155,10 @@ spec:
                       the Pulumi provider
                     properties:
                       accessToken:
-                        description: AccessToken is the access tokens to sign in to
-                          the Pulumi Cloud Console.
+                        description: |-
+                          AccessToken is the access tokens to sign in to the Pulumi Cloud Console.
+
+                          Deprecated: Use auth.accessToken instead.
                         properties:
                           secretRef:
                             description: SecretRef is a reference to a secret containing
@@ -23993,6 +24193,100 @@ spec:
                         default: https://api.pulumi.com/api/esc
                         description: APIURL is the URL of the Pulumi API.
                         type: string
+                      auth:
+                        description: |-
+                          Auth configures how the Operator authenticates with the Pulumi API.
+                          Either auth or the deprecated accessToken field must be specified.
+                        properties:
+                          accessToken:
+                            description: AccessToken authenticates using a Pulumi
+                              access token stored in a Kubernetes Secret.
+                            properties:
+                              secretRef:
+                                description: SecretRef is a reference to a secret
+                                  containing the Pulumi API token.
+                                properties:
+                                  key:
+                                    description: |-
+                                      A key in the referenced Secret.
+                                      Some instances of this field may be defaulted, in others it may be required.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[-._a-zA-Z0-9]+$
+                                    type: string
+                                  name:
+                                    description: The name of the Secret resource being
+                                      referred to.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      The namespace of the Secret resource being referred to.
+                                      Ignored if referent is not cluster-scoped, otherwise defaults to the namespace of the referent.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                                    type: string
+                                type: object
+                            type: object
+                          oidcConfig:
+                            description: OIDCConfig authenticates using Kubernetes
+                              ServiceAccount tokens via OIDC.
+                            properties:
+                              expirationSeconds:
+                                default: 600
+                                description: |-
+                                  ExpirationSeconds sets the token validity duration for service account and OIDC token.
+                                  Defaults to 10 minutes.
+                                format: int64
+                                minimum: 600
+                                type: integer
+                              organization:
+                                description: Organization is the name of the Pulumi
+                                  organization configured for OIDC authentication.
+                                type: string
+                              serviceAccountRef:
+                                description: ServiceAccountRef specifies the Kubernetes
+                                  ServiceAccount to use for authentication.
+                                properties:
+                                  audiences:
+                                    description: |-
+                                      Audience specifies the `aud` claim for the service account token
+                                      If the service account uses a well-known annotation for e.g. IRSA or GCP Workload Identity
+                                      then this audiences will be appended to the list
+                                    items:
+                                      type: string
+                                    type: array
+                                  name:
+                                    description: The name of the ServiceAccount resource
+                                      being referred to.
+                                    maxLength: 253
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$
+                                    type: string
+                                  namespace:
+                                    description: |-
+                                      Namespace of the resource being referred to.
+                                      Ignored if referent is not cluster-scoped, otherwise defaults to the namespace of the referent.
+                                    maxLength: 63
+                                    minLength: 1
+                                    pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                            required:
+                            - organization
+                            - serviceAccountRef
+                            type: object
+                        type: object
+                        x-kubernetes-validations:
+                        - message: Exactly one of 'accessToken' or 'oidcConfig' must
+                            be specified
+                          rule: (has(self.accessToken) && !has(self.oidcConfig)) ||
+                            (!has(self.accessToken) && has(self.oidcConfig))
                       environment:
                         description: |-
                           Environment are YAML documents composed of static key-value pairs, programmatic expressions,
@@ -24010,11 +24304,15 @@ spec:
                           the environment belongs to.
                         type: string
                     required:
-                    - accessToken
                     - environment
                     - organization
                     - project
                     type: object
+                    x-kubernetes-validations:
+                    - message: Exactly one of 'auth' or deprecated 'accessToken' must
+                        be specified
+                      rule: (has(self.auth) && !has(self.accessToken)) || (!has(self.auth)
+                        && has(self.accessToken))
                   scaleway:
                     description: Scaleway configures this store to sync secrets using
                       the Scaleway provider.
@@ -31978,8 +32276,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets
   namespace: external-secrets
 ---
@@ -31990,8 +32288,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-cert-controller
   namespace: external-secrets
 ---
@@ -32002,8 +32300,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -32014,8 +32312,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-leaderelection
   namespace: external-secrets
 rules:
@@ -32052,8 +32350,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-cert-controller
 rules:
 - apiGroups:
@@ -32134,8 +32432,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-controller
 rules:
 - apiGroups:
@@ -32285,8 +32583,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: external-secrets-edit
@@ -32338,8 +32636,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
     servicebinding.io/controller: "true"
   name: external-secrets-servicebindings
 rules:
@@ -32360,8 +32658,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -32410,8 +32708,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-leaderelection
   namespace: external-secrets
 roleRef:
@@ -32430,8 +32728,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-cert-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -32449,8 +32747,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -32468,9 +32766,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
+    app.kubernetes.io/version: v2.5.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.1
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -32481,9 +32779,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
+    app.kubernetes.io/version: v2.5.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.1
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -32504,8 +32802,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets
   namespace: external-secrets
 spec:
@@ -32521,8 +32819,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets
-        app.kubernetes.io/version: v2.4.1
-        helm.sh/chart: external-secrets-2.4.1
+        app.kubernetes.io/version: v2.5.0
+        helm.sh/chart: external-secrets-2.5.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32531,7 +32829,7 @@ spec:
         - --metrics-addr=:8080
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.4.1
+        image: ghcr.io/external-secrets/external-secrets:v2.5.0
         imagePullPolicy: IfNotPresent
         name: external-secrets
         ports:
@@ -32559,8 +32857,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-cert-controller
   namespace: external-secrets
 spec:
@@ -32576,8 +32874,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-cert-controller
-        app.kubernetes.io/version: v2.4.1
-        helm.sh/chart: external-secrets-2.4.1
+        app.kubernetes.io/version: v2.5.0
+        helm.sh/chart: external-secrets-2.5.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32593,7 +32891,7 @@ spec:
         - --loglevel=info
         - --zap-time-encoding=epoch
         - --enable-partial-cache=true
-        image: ghcr.io/external-secrets/external-secrets:v2.4.1
+        image: ghcr.io/external-secrets/external-secrets:v2.5.0
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
@@ -32632,8 +32930,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
-    helm.sh/chart: external-secrets-2.4.1
+    app.kubernetes.io/version: v2.5.0
+    helm.sh/chart: external-secrets-2.5.0
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -32649,8 +32947,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-webhook
-        app.kubernetes.io/version: v2.4.1
-        helm.sh/chart: external-secrets-2.4.1
+        app.kubernetes.io/version: v2.5.0
+        helm.sh/chart: external-secrets-2.5.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -32664,7 +32962,7 @@ spec:
         - --healthz-addr=:8081
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.4.1
+        image: ghcr.io/external-secrets/external-secrets:v2.5.0
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:
@@ -32733,9 +33031,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
+    app.kubernetes.io/version: v2.5.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.1
+    helm.sh/chart: external-secrets-2.5.0
   name: externalsecret-validate
 webhooks:
 - admissionReviewVersions:
@@ -32770,9 +33068,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.4.1
+    app.kubernetes.io/version: v2.5.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.4.1
+    helm.sh/chart: external-secrets-2.5.0
   name: secretstore-validate
 webhooks:
 - admissionReviewVersions:
