@@ -4,13 +4,29 @@ metadata:
     project: nekropolis
 spec:
     display:
-        name: Nekropolis-Logs
+        name: Nekropolis Logs
+    variables:
+        - kind: ListVariable
+          spec:
+            name: namespace
+            allowAllValue: true
+            allowMultiple: false
+            defaultValue: _all
+            plugin:
+                kind: VictoriaLogsFieldValuesVariable
+                spec:
+                    datasource:
+                        kind: VictoriaLogsDatasource
+                        name: victoria-logs-nekropolis-proxy
+                    field: kubernetes.pod_namespace
+                    query: "*"
     panels:
-        6ef61befa6794b53a98db9f750e00c00:
+        allLogs:
             kind: Panel
             spec:
                 display:
-                    name: Errors
+                    name: All Logs
+                    description: All log entries for the selected namespace
                 plugin:
                     kind: LogsTable
                     spec:
@@ -23,21 +39,122 @@ spec:
                         plugin:
                             kind: VictoriaLogsLogQuery
                             spec:
-                                query: i(ERROR)
+                                query: "kubernetes.pod_namespace:$namespace"
+                                datasource:
+                                    kind: VictoriaLogsDatasource
+                                    name: victoria-logs-nekropolis-proxy
+        errorLogs:
+            kind: Panel
+            spec:
+                display:
+                    name: Errors
+                    description: Log entries matching ERROR level
+                plugin:
+                    kind: LogsTable
+                    spec:
+                        allowWrap: true
+                        enableDetails: true
+                        showTime: true
+                queries:
+                    - kind: LogQuery
+                      spec:
+                        plugin:
+                            kind: VictoriaLogsLogQuery
+                            spec:
+                                query: "kubernetes.pod_namespace:$namespace AND i(ERROR)"
+                                datasource:
+                                    kind: VictoriaLogsDatasource
+                                    name: victoria-logs-nekropolis-proxy
+        warningLogs:
+            kind: Panel
+            spec:
+                display:
+                    name: Warnings
+                    description: Log entries matching WARNING/WARN level
+                plugin:
+                    kind: LogsTable
+                    spec:
+                        allowWrap: true
+                        enableDetails: true
+                        showTime: true
+                queries:
+                    - kind: LogQuery
+                      spec:
+                        plugin:
+                            kind: VictoriaLogsLogQuery
+                            spec:
+                                query: "kubernetes.pod_namespace:$namespace AND (i(WARNING) OR i(WARN))"
+                                datasource:
+                                    kind: VictoriaLogsDatasource
+                                    name: victoria-logs-nekropolis-proxy
+        fatalLogs:
+            kind: Panel
+            spec:
+                display:
+                    name: Fatal / Critical
+                    description: Log entries matching FATAL or CRITICAL level
+                plugin:
+                    kind: LogsTable
+                    spec:
+                        allowWrap: true
+                        enableDetails: true
+                        showTime: true
+                queries:
+                    - kind: LogQuery
+                      spec:
+                        plugin:
+                            kind: VictoriaLogsLogQuery
+                            spec:
+                                query: "kubernetes.pod_namespace:$namespace AND (i(FATAL) OR i(CRITICAL) OR i(PANIC))"
+                                datasource:
+                                    kind: VictoriaLogsDatasource
+                                    name: victoria-logs-nekropolis-proxy
     layouts:
         - kind: Grid
           spec:
             display:
-                title: Panel Group
+                title: Critical & Error Logs
                 collapse:
                     open: true
             items:
                 - x: 0
                   "y": 0
-                  width: 10
+                  width: 12
+                  height: 10
+                  content:
+                    $ref: "#/spec/panels/fatalLogs"
+                - x: 12
+                  "y": 0
+                  width: 12
+                  height: 10
+                  content:
+                    $ref: "#/spec/panels/errorLogs"
+        - kind: Grid
+          spec:
+            display:
+                title: Warning Logs
+                collapse:
+                    open: false
+            items:
+                - x: 0
+                  "y": 0
+                  width: 24
+                  height: 12
+                  content:
+                    $ref: "#/spec/panels/warningLogs"
+        - kind: Grid
+          spec:
+            display:
+                title: All Logs
+                collapse:
+                    open: false
+            items:
+                - x: 0
+                  "y": 0
+                  width: 24
                   height: 18
                   content:
-                    $ref: '#/spec/panels/6ef61befa6794b53a98db9f750e00c00'
+                    $ref: "#/spec/panels/allLogs"
     duration: 1h
-    refreshInterval: 0s
+    refreshInterval: 30s
 
