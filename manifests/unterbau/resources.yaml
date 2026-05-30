@@ -304,8 +304,8 @@ spec:
     targetRevision: master
   syncPolicy:
     automated:
-      enabled: true
-      selfHeal: true
+      enabled: false
+      selfHeal: false
     syncOptions:
     - ServerSideApply=true
 ---
