@@ -1,4 +1,4 @@
-apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
 kind: ProxmoxMachineTemplate
 metadata:
   # the german numeral suffix at the end is used to differentiate machine templates
@@ -16,11 +16,14 @@ spec:
       full: true
       memoryMiB: 8000
       network:
-        default:
-          bridge: vmbr0
-          model: virtio
+        networkDevices:
+          - bridge: vmbr0
+            defaultIPv4: true
+            defaultIPv6: true
+            model: virtio
+            name: net0
       numCores: 2
       numSockets: 2
+      pool: k8s-vms-nekropolis
       sourceNode: pve020
       templateID: 112
-      pool: k8s-vms-nekropolis

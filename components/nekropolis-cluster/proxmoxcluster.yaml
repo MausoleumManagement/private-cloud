@@ -1,12 +1,8 @@
-apiVersion: infrastructure.cluster.x-k8s.io/v1alpha1
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
 kind: ProxmoxCluster
 metadata:
-  annotations:
   name: nekropolis
 spec:
-  credentialsRef:
-    name: "capmox-manager-credentials"
-    namespace: capmox-system
   allowedNodes:
     - pve020
     - pve021
@@ -14,6 +10,9 @@ spec:
   controlPlaneEndpoint:
     host: 192.168.10.11
     port: 6443
+  credentialsRef:
+    name: capmox-manager-credentials
+    namespace: capmox-system
   dnsServers:
     - 192.168.8.2
     - 84.200.69.80
