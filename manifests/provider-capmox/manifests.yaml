@@ -6403,6 +6403,7 @@ spec:
       decodingStrategy: None
       key: kv/nekropolis/capmox/proxmox-credentials
       metadataPolicy: None
+      nullBytePolicy: Ignore
       property: secret
     secretKey: secret
   - remoteRef:
@@ -6410,6 +6411,7 @@ spec:
       decodingStrategy: None
       key: kv/nekropolis/capmox/proxmox-credentials
       metadataPolicy: None
+      nullBytePolicy: Ignore
       property: token
     secretKey: token
   refreshInterval: 1h0m0s
