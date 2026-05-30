@@ -13,46 +13,6 @@ metadata:
     control-plane: controller-manager
   name: capmox-system
 ---
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  labels:
-    app.kubernetes.io/component: certificate
-    app.kubernetes.io/created-by: cluster-api-provider-proxmox
-    app.kubernetes.io/instance: serving-cert
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: certificate
-    app.kubernetes.io/part-of: cluster-api-provider-proxmox
-    cluster.x-k8s.io/provider: infrastructure-proxmox
-    clusterctl.cluster.x-k8s.io: ""
-  name: capmox-selfsigned-issuer
-  namespace: capmox-system
-spec:
-  selfSigned: {}
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  labels:
-    app.kubernetes.io/component: certificate
-    app.kubernetes.io/created-by: cluster-api-provider-proxmox
-    app.kubernetes.io/instance: serving-cert
-    app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: certificate
-    app.kubernetes.io/part-of: cluster-api-provider-proxmox
-    cluster.x-k8s.io/provider: infrastructure-proxmox
-    clusterctl.cluster.x-k8s.io: ""
-  name: capmox-serving-cert
-  namespace: capmox-system
-spec:
-  dnsNames:
-  - capmox-webhook-service.capmox-system.svc
-  - capmox-webhook-service.capmox-system.svc.cluster.local
-  issuerRef:
-    kind: Issuer
-    name: capmox-selfsigned-issuer
-  secretName: webhook-server-cert
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -6245,20 +6205,6 @@ subjects:
   namespace: capmox-system
 ---
 apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: infrastructure-proxmox
-    clusterctl.cluster.x-k8s.io: ""
-    platform.ionos.com/secret-type: proxmox-credentials
-  name: capmox-manager-credentials
-  namespace: capmox-system
-stringData:
-  secret: volabillignorabeliebig
-  token: volabillignorabliebig
-  url: volabillignorabeliebig
----
-apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -6405,6 +6351,79 @@ spec:
           defaultMode: 420
           secretName: webhook-server-cert
 status: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/component: certificate
+    app.kubernetes.io/created-by: cluster-api-provider-proxmox
+    app.kubernetes.io/instance: serving-cert
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: certificate
+    app.kubernetes.io/part-of: cluster-api-provider-proxmox
+    cluster.x-k8s.io/provider: infrastructure-proxmox
+    clusterctl.cluster.x-k8s.io: ""
+  name: capmox-serving-cert
+  namespace: capmox-system
+spec:
+  dnsNames:
+  - capmox-webhook-service.capmox-system.svc
+  - capmox-webhook-service.capmox-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: capmox-selfsigned-issuer
+  secretName: webhook-server-cert
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    app.kubernetes.io/component: certificate
+    app.kubernetes.io/created-by: cluster-api-provider-proxmox
+    app.kubernetes.io/instance: serving-cert
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: certificate
+    app.kubernetes.io/part-of: cluster-api-provider-proxmox
+    cluster.x-k8s.io/provider: infrastructure-proxmox
+    clusterctl.cluster.x-k8s.io: ""
+  name: capmox-selfsigned-issuer
+  namespace: capmox-system
+spec:
+  selfSigned: {}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: proxmox-credentials
+spec:
+  data:
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/capmox/proxmox-credentials
+      metadataPolicy: None
+      property: secret
+    secretKey: secret
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: kv/nekropolis/capmox/proxmox-credentials
+      metadataPolicy: None
+      property: token
+    secretKey: token
+  refreshInterval: 1h0m0s
+  refreshPolicy: Periodic
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: openbao-backend
+  target:
+    name: capmox-manager-credentials
+    template:
+      data:
+        secret: '{{ .secret }}'
+        token: '{{ .token }}'
+        url: https://pve-roundrobin.irminsul:8006
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
