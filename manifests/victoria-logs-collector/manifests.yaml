@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-collector-0.3.3
+    helm.sh/chart: victoria-logs-collector-0.3.4
   name: victoria-logs-collector
   namespace: victoria-logs-collector
 ---
@@ -24,7 +24,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-collector-0.3.3
+    helm.sh/chart: victoria-logs-collector-0.3.4
   name: victoria-logs-collector
 rules:
 - apiGroups:
@@ -46,7 +46,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-collector-0.3.3
+    helm.sh/chart: victoria-logs-collector-0.3.4
   name: victoria-logs-collector
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -65,7 +65,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-collector
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-collector-0.3.3
+    helm.sh/chart: victoria-logs-collector-0.3.4
   name: victoria-logs-collector
   namespace: victoria-logs-collector
 spec:
