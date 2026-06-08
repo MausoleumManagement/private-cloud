@@ -19,6 +19,7 @@ resources:
   - application-metrics-server.yaml
   - application-openbao.yaml
   - application-perses.yaml
+  - application-rbac.yaml
   - application-victoria-logs.yaml
   - application-victoria-metrics.yaml
   - application-victoria-logs-collector.yaml
