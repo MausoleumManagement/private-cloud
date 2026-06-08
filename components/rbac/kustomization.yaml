@@ -1,0 +1,6 @@
+# each rolebinding will have a different namespace
+#namespace: ---
+
+resources:
+  - namespace.yaml
+  - rolebinding.yaml

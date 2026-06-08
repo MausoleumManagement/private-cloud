@@ -1,0 +1,18 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: anubispaulista-admin
+  namespace: vic-wiki
+subjects:
+- kind: User
+  name: anubispaulista@nekropolis.irminsul
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  # TODO: we will want to aggregate some extra permissions into this default role
+  # for all of our custom resources
+  # until then, this should work however
+  # https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles 
+  # k get clusterrole admin -o yaml
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
