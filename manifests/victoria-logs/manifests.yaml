@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlinsert
   namespace: victoria-logs
 spec:
@@ -37,7 +37,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlselect
   namespace: victoria-logs
 spec:
@@ -62,7 +62,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlstorage
   namespace: victoria-logs
 spec:
@@ -87,7 +87,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.143.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
@@ -111,7 +111,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlinsert
   namespace: victoria-logs
 spec:
@@ -178,7 +178,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlselect
   namespace: victoria-logs
 spec:
@@ -245,7 +245,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.143.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
@@ -318,7 +318,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.50.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vlstorage
   namespace: victoria-logs
 spec:
@@ -418,7 +418,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: victoria-logs-cluster
     app.kubernetes.io/version: v1.143.0
-    helm.sh/chart: victoria-logs-cluster-0.1.5
+    helm.sh/chart: victoria-logs-cluster-0.2.5
   name: victoria-logs-vmauth
   namespace: victoria-logs
 spec:
