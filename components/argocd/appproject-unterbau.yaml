@@ -77,8 +77,16 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: victoria-metrics
     server: https://kubernetes.default.svc
+  - namespace: rbac-admin
+    server: https://kubernetes.default.svc
+  ### BEGIN USER PROJECT STUFF
+  # TODO: i am fairly sure we want to separate these things out of the basic infra project
+  # have to come up with a clear separation between user projects and RBAC though...
   - namespace: vic-wiki
     server: https://kubernetes.default.svc
+  - namespace: vic-sandbox
+    server: https://kubernetes.default.svc
+  ### END USER PROJECT STUFF
   clusterResourceWhitelist:
   - group: ''
     kind: Namespace

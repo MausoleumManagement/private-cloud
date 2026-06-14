@@ -33582,7 +33582,11 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: victoria-metrics
     server: https://kubernetes.default.svc
+  - namespace: rbac-admin
+    server: https://kubernetes.default.svc
   - namespace: vic-wiki
+    server: https://kubernetes.default.svc
+  - namespace: vic-sandbox
     server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
   - group: ""
