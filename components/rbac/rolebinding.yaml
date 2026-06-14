@@ -1,12 +1,17 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: anubispaulista-admin
+  name: anubispaulista-admin-vic-wiki
   namespace: vic-wiki
 subjects:
-- kind: User
-  name: anubispaulista@nekropolis.irminsul
-  apiGroup: rbac.authorization.k8s.io
+# this references our stop-gap SA via its unique name/namespace combo
+- kind: ServiceAccount
+  name: anubispaulista
+  namespace: rbac-admin 
+# this is for later when we actually have some kind of authentication infra
+#- kind: User
+#  name: anubispaulista@nekropolis.irminsul
+#  apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
   # TODO: we will want to aggregate some extra permissions into this default role
@@ -14,5 +19,19 @@ roleRef:
   # until then, this should work however
   # https://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles 
   # k get clusterrole admin -o yaml
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: anubispaulista-admin-vic-sandbox
+  namespace: vic-sandbox
+subjects:
+- kind: ServiceAccount
+  name: anubispaulista
+  namespace: rbac-admin 
+roleRef:
+  kind: ClusterRole
   name: admin
   apiGroup: rbac.authorization.k8s.io

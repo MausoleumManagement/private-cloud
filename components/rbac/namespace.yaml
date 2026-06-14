@@ -1,3 +1,11 @@
+# we use this namespace for putting rbac related things that need a namespace
+# e.g. the temporary service accounts we use until we have a proper OIDC setup
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rbac-admin
+---
+### BEGIN USER NAMESPACES
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -7,3 +15,4 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: vic-sandbox
+### END USER NAMESPACES
