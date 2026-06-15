@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.1
+    helm.sh/chart: perses-0.21.2
   name: perses
   namespace: perses
 ---
@@ -50,7 +50,7 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.1
+    helm.sh/chart: perses-0.21.2
   name: perses
   namespace: perses
 ---
@@ -332,7 +332,7 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.1
+    helm.sh/chart: perses-0.21.2
   name: perses
   namespace: perses
 spec:
@@ -356,7 +356,7 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.1
+    helm.sh/chart: perses-0.21.2
   name: perses
   namespace: perses
 spec:
@@ -369,7 +369,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 6f60ba8a02054c0b2f6788a86c58aa883bcdd6d3221b64a7f00a3e52157c2351
+        checksum/config: 6eb6d613aec448506c59311aeb1d47cb7a3d4f85f7a5e0a2ddbf00df20b6811a
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses
