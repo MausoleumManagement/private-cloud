@@ -10,8 +10,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: metrics-server
   namespace: metrics-server
 ---
@@ -22,8 +22,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: system:metrics-server
 rules:
 - apiGroups:
@@ -51,8 +51,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -75,10 +75,10 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: metrics-server-auth-reader
-  namespace: kube-system
+  namespace: metrics-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -95,8 +95,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: metrics-server:system:auth-delegator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -114,8 +114,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: system:metrics-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -133,8 +133,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: metrics-server
   namespace: metrics-server
 spec:
@@ -156,8 +156,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: metrics-server
   namespace: metrics-server
 spec:
@@ -179,7 +179,7 @@ spec:
         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
-        image: registry.k8s.io/metrics-server/metrics-server:v0.8.0
+        image: registry.k8s.io/metrics-server/metrics-server:v0.8.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -232,8 +232,8 @@ metadata:
     app.kubernetes.io/instance: metrics-server
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: metrics-server
-    app.kubernetes.io/version: 0.8.0
-    helm.sh/chart: metrics-server-3.13.0
+    app.kubernetes.io/version: 0.8.1
+    helm.sh/chart: metrics-server-3.13.1
   name: v1beta1.metrics.k8s.io
 spec:
   group: metrics.k8s.io
