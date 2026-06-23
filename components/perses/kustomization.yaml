@@ -11,7 +11,7 @@ helmCharts:
   - name: perses
     namespace: perses
     repo: https://perses.github.io/helm-charts
-    version: 0.21.2
+    version: 0.22.0
     releaseName: perses
     valuesFile: values.yaml
 
