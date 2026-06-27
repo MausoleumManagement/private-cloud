@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# set this namespace on all resources
+namespace: mariadb-operator
+
+helmcharts:
+  # https://github.com/mariadb-operator/mariadb-operator/tree/main/deploy/charts/mariadb-operator
+  # https://artifacthub.io/packages/helm/mariadb-operator/mariadb-operator
+  - name: mariadb-operator
+    repo: oci://ghcr.io/mariadb-operator/charts
+    version: 26.6.0
+    releaseName: mariadb-operator
+    valuesFile: values-mariadb-operator.yaml
+  # https://github.com/mariadb-operator/mariadb-operator/tree/main/deploy/charts/mariadb-operator-crds
+  # https://artifacthub.io/packages/helm/mariadb-operator/mariadb-operator-crds
+  - name: mariadb-operator-crds
+    repo: oci://ghcr.io/mariadb-operator/charts
+    #version: 26.6.0
+    releaseName: mariadb-operator-crds
+    valuesFile: values-mariadb-operator-crds.yaml
+
+resources:
+  - namespace.yaml
