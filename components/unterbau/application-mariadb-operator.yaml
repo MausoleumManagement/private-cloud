@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-operator
+  # this finaliser causes cascading deletion (delete children)
+  # deleting the CRDs will cause deletion of all mariadb clusters
+  # i'd rather not risk an accidental deletion
+  # see https://github.com/mariadb-operator/mariadb-operator/blob/main/docs/helm.md#uninstalling
+  #finalizers:
+  #- resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+  destination:
+    namespace: mariadb-operator
+    server: "https://kubernetes.default.svc"
+  project: unterbau
+  source:
+    path: manifests/mariadb-operator
+    repoURL: "https://github.com/MausoleumManagement/private-cloud.git"
+    targetRevision: master

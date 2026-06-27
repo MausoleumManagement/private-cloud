@@ -16,6 +16,7 @@ resources:
   - application-harbor.yaml
   - application-hardcoredns.yaml
   #- application-kube-vip-cloud-controller.yaml
+  - application-mariadb-operator.yaml
   - application-metrics-server.yaml
   - application-openbao.yaml
   - application-perses.yaml
