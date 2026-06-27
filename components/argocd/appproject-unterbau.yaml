@@ -51,6 +51,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: cnpg-system
     server: https://kubernetes.default.svc
+  - namespace: mariadb-operator
+    server: https://kubernetes.default.svc
   - namespace: csi-nfs
     server: https://kubernetes.default.svc
   - namespace: csi-cephfs
