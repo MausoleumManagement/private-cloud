@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevip
+data:
+  range-global: 192.168.14.205-192.168.14.245
+  # currently not using a  cidr
+  # skip-end-ips-in-cidr: "true"
