@@ -33588,6 +33588,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: vic-wiki
     server: https://kubernetes.default.svc
+  - namespace: vicki-wiki
+    server: https://kubernetes.default.svc
   - namespace: vic-sandbox
     server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
