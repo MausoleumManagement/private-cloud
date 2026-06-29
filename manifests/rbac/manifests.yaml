@@ -14,6 +14,11 @@ metadata:
   name: vic-wiki
 ---
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: vicki-wiki
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: anubispaulista
@@ -38,6 +43,20 @@ kind: RoleBinding
 metadata:
   name: anubispaulista-admin-vic-wiki
   namespace: vic-wiki
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: anubispaulista
+  namespace: rbac-admin
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: anubispaulista-admin-vicki-wiki
+  namespace: vicki-wiki
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
