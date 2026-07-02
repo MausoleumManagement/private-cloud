@@ -184,6 +184,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -207,6 +208,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -303,6 +305,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -372,6 +375,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -545,6 +549,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -568,6 +573,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
@@ -591,6 +597,7 @@ spec:
   syncPolicy:
     automated:
       enabled: true
+      prune: true
       selfHeal: true
     syncOptions:
     - ServerSideApply=true
