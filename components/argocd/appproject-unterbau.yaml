@@ -84,6 +84,8 @@ spec:
   ### BEGIN USER PROJECT STUFF
   # TODO: i am fairly sure we want to separate these things out of the basic infra project
   # have to come up with a clear separation between user projects and RBAC though...
+  - namespace: minecraft
+    server: https://kubernetes.default.svc
   - namespace: vic-wiki
     server: https://kubernetes.default.svc
   - namespace: vicki-wiki

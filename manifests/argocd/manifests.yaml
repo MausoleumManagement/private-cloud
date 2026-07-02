@@ -33586,6 +33586,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: rbac-admin
     server: https://kubernetes.default.svc
+  - namespace: minecraft
+    server: https://kubernetes.default.svc
   - namespace: vic-wiki
     server: https://kubernetes.default.svc
   - namespace: vicki-wiki
