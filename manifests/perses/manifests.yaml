@@ -13,46 +13,8 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.2
+    helm.sh/chart: perses-0.22.0
   name: perses
-  namespace: perses
----
-apiVersion: v1
-data:
-  config.yaml: |2-
-
-    api_prefix: ""
-    database:
-      file:
-        extension: json
-        folder: /perses
-    frontend:
-      explorer:
-        enable: true
-      important_dashboards: []
-      information: ""
-    provisioning:
-      folders:
-      - /etc/perses/provisioning
-      interval: 10m
-    security:
-      cookie:
-        same_site: lax
-        secure: true
-      enable_auth: false
-      readonly: false
-kind: ConfigMap
-metadata:
-  labels:
-    app.kubernetes.io/component: configuration
-    app.kubernetes.io/instance: perses
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: perses
-    app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.2
-  name: perses
-  namespace: perses
 ---
 apiVersion: v1
 data:
@@ -323,6 +285,42 @@ metadata:
   namespace: perses
 ---
 apiVersion: v1
+data:
+  config.yaml: |2-
+
+    api_prefix: ""
+    database:
+      file:
+        extension: json
+        folder: /perses
+    frontend:
+      explorer:
+        enable: true
+      important_dashboards: []
+      information: ""
+    provisioning:
+      folders:
+      - /etc/perses/provisioning
+      interval: 10m
+    security:
+      cookie:
+        same_site: lax
+        secure: true
+      enable_auth: false
+      readonly: false
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: configuration
+    app.kubernetes.io/instance: perses
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: perses
+    app.kubernetes.io/part-of: perses
+    app.kubernetes.io/version: v0.53.1
+    helm.sh/chart: perses-0.22.0
+  name: perses
+---
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -332,9 +330,8 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.2
+    helm.sh/chart: perses-0.22.0
   name: perses
-  namespace: perses
 spec:
   ports:
   - name: http
@@ -356,9 +353,8 @@ metadata:
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
     app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.21.2
+    helm.sh/chart: perses-0.22.0
   name: perses
-  namespace: perses
 spec:
   replicas: 1
   selector:
@@ -369,7 +365,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 6eb6d613aec448506c59311aeb1d47cb7a3d4f85f7a5e0a2ddbf00df20b6811a
+        checksum/config: ac981c24c2edd277378d55de4f8318a96944679eb21239de27603452366827b3
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses
@@ -414,6 +410,15 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
         volumeMounts:
         - mountPath: /etc/perses/provisioning
           name: perses-provisioning
@@ -426,7 +431,7 @@ spec:
       serviceAccountName: perses
       volumes:
       - configMap:
-          name: perses-provisioning-984259thg6
+          name: perses-provisioning
         name: perses-provisioning
       - emptyDir: {}
         name: data
