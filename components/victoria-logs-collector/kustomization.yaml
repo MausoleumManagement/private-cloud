@@ -11,7 +11,7 @@ helmCharts:
   - name: victoria-logs-collector
     namespace: victoria-logs-collector
     repo: https://victoriametrics.github.io/helm-charts/
-    version: 0.3.6
+    version: 0.3.7
     releaseName: victoria-logs-collector
     valuesFile: values.yaml
 
