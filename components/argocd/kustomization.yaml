@@ -18,7 +18,7 @@ helmCharts:
   # https://github.com/CloudPirates-io/helm-charts/tree/main/charts/valkey
   - name: valkey
     repo: oci://registry-1.docker.io/cloudpirates
-    version: 0.23.0
+    version: 0.24.4
     releaseName: valkey
     valuesFile: values-valkey.yaml
   # other candidates
