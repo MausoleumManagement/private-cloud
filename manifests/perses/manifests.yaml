@@ -281,7 +281,7 @@ data:
 
 kind: ConfigMap
 metadata:
-  name: perses-provisioning-984259thg6
+  name: perses-provisioning
   namespace: perses
 ---
 apiVersion: v1

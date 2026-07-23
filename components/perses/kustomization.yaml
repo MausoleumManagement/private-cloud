@@ -20,6 +20,11 @@ resources:
   - externalsecrets.yaml
   - ingress.yaml
 
+generatorOptions:
+  # we are running a single replica, no point using suffixes
+  # to differentiate rollouts
+  disableNameSuffixHash: true 
+
 configMapGenerator:
 - name: perses-provisioning
   files:
