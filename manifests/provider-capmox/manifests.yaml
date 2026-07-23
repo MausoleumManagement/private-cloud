@@ -18,7 +18,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capmox-system/capmox-serving-cert
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.19.0
   labels:
     cluster.x-k8s.io/provider: infrastructure-proxmox
     cluster.x-k8s.io/v1beta1: v1alpha2
@@ -766,9 +766,6 @@ spec:
                     description: port is the port on which the API server is serving.
                     format: int32
                     type: integer
-                required:
-                - host
-                - port
                 type: object
                 x-kubernetes-validations:
                 - message: port must be within 1-65535
@@ -1620,7 +1617,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capmox-system/capmox-serving-cert
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.19.0
   labels:
     cluster.x-k8s.io/provider: infrastructure-proxmox
     cluster.x-k8s.io/v1beta1: v1alpha2
@@ -2411,9 +2408,6 @@ spec:
                               is serving.
                             format: int32
                             type: integer
-                        required:
-                        - host
-                        - port
                         type: object
                         x-kubernetes-validations:
                         - message: port must be within 1-65535
@@ -2884,7 +2878,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capmox-system/capmox-serving-cert
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.19.0
   labels:
     cluster.x-k8s.io/provider: infrastructure-proxmox
     cluster.x-k8s.io/v1beta1: v1alpha2
@@ -4010,12 +4004,26 @@ spec:
                           minLength: 4
                           pattern: ^net[0-9]+$
                           type: string
+                        queues:
+                          description: |-
+                            queues is the number of queues assigned to the device.
+                            This value is passed to the Multiqueue field in PROXMOX.
+                          format: int32
+                          maximum: 65535
+                          minimum: 1
+                          type: integer
                         routes:
                           description: routes are the routes associated with this
                             interface.
                           items:
                             description: RouteSpec describes an IPv4/IPv6 Route.
                             properties:
+                              is6:
+                                description: |-
+                                  is6 defines if a RouteSpec is IPv6.
+                                  It is only required to disambiguate a 'default'|'all' placeholder 'to'
+                                  when 'via' is unset, otherwise the family is derived from 'via'.
+                                type: boolean
                               metric:
                                 description: metric is the priority of the route in
                                   the routing table.
@@ -4046,6 +4054,12 @@ spec:
                               from:
                                 description: from is the subnet of the source.
                                 type: string
+                              is6:
+                                description: |-
+                                  is6 defines if a RoutingPolicySpec is IPv6.
+                                  It is only required to disambiguate a 'default'|'all' placeholder when
+                                  neither 'to' nor 'from' carries a concrete address to derive the family.
+                                type: boolean
                               priority:
                                 description: priority is the position in the ip rule
                                   FIB table.
@@ -4106,6 +4120,12 @@ spec:
                           items:
                             description: RouteSpec describes an IPv4/IPv6 Route.
                             properties:
+                              is6:
+                                description: |-
+                                  is6 defines if a RouteSpec is IPv6.
+                                  It is only required to disambiguate a 'default'|'all' placeholder 'to'
+                                  when 'via' is unset, otherwise the family is derived from 'via'.
+                                type: boolean
                               metric:
                                 description: metric is the priority of the route in
                                   the routing table.
@@ -4136,6 +4156,12 @@ spec:
                               from:
                                 description: from is the subnet of the source.
                                 type: string
+                              is6:
+                                description: |-
+                                  is6 defines if a RoutingPolicySpec is IPv6.
+                                  It is only required to disambiguate a 'default'|'all' placeholder when
+                                  neither 'to' nor 'from' carries a concrete address to derive the family.
+                                type: boolean
                               priority:
                                 description: priority is the position in the ip rule
                                   FIB table.
@@ -4537,7 +4563,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: capmox-system/capmox-serving-cert
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.19.0
   labels:
     cluster.x-k8s.io/provider: infrastructure-proxmox
     cluster.x-k8s.io/v1beta1: v1alpha2
@@ -5529,6 +5555,14 @@ spec:
                                   minLength: 4
                                   pattern: ^net[0-9]+$
                                   type: string
+                                queues:
+                                  description: |-
+                                    queues is the number of queues assigned to the device.
+                                    This value is passed to the Multiqueue field in PROXMOX.
+                                  format: int32
+                                  maximum: 65535
+                                  minimum: 1
+                                  type: integer
                                 routes:
                                   description: routes are the routes associated with
                                     this interface.
@@ -5536,6 +5570,12 @@ spec:
                                     description: RouteSpec describes an IPv4/IPv6
                                       Route.
                                     properties:
+                                      is6:
+                                        description: |-
+                                          is6 defines if a RouteSpec is IPv6.
+                                          It is only required to disambiguate a 'default'|'all' placeholder 'to'
+                                          when 'via' is unset, otherwise the family is derived from 'via'.
+                                        type: boolean
                                       metric:
                                         description: metric is the priority of the
                                           route in the routing table.
@@ -5568,6 +5608,12 @@ spec:
                                       from:
                                         description: from is the subnet of the source.
                                         type: string
+                                      is6:
+                                        description: |-
+                                          is6 defines if a RoutingPolicySpec is IPv6.
+                                          It is only required to disambiguate a 'default'|'all' placeholder when
+                                          neither 'to' nor 'from' carries a concrete address to derive the family.
+                                        type: boolean
                                       priority:
                                         description: priority is the position in the
                                           ip rule FIB table.
@@ -5631,6 +5677,12 @@ spec:
                                     description: RouteSpec describes an IPv4/IPv6
                                       Route.
                                     properties:
+                                      is6:
+                                        description: |-
+                                          is6 defines if a RouteSpec is IPv6.
+                                          It is only required to disambiguate a 'default'|'all' placeholder 'to'
+                                          when 'via' is unset, otherwise the family is derived from 'via'.
+                                        type: boolean
                                       metric:
                                         description: metric is the priority of the
                                           route in the routing table.
@@ -5663,6 +5715,12 @@ spec:
                                       from:
                                         description: from is the subnet of the source.
                                         type: string
+                                      is6:
+                                        description: |-
+                                          is6 defines if a RoutingPolicySpec is IPv6.
+                                          It is only required to disambiguate a 'default'|'all' placeholder when
+                                          neither 'to' nor 'from' carries a concrete address to derive the family.
+                                        type: boolean
                                       priority:
                                         description: priority is the position in the
                                           ip rule FIB table.
@@ -6305,7 +6363,7 @@ spec:
             secretKeyRef:
               key: secret
               name: capmox-manager-credentials
-        image: ghcr.io/ionos-cloud/cluster-api-provider-proxmox:v0.8.1
+        image: ghcr.io/ionos-cloud/cluster-api-provider-proxmox:v0.9.0
         livenessProbe:
           httpGet:
             path: /healthz
