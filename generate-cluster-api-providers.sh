@@ -14,6 +14,8 @@ IPAM_INCLUSTER_VERSION="1.1.0" # github-releases/kubernetes-sigs/cluster-api-ipa
 # https://github.com/ionos-cloud/cluster-api-provider-proxmox/releases/
 CAPMOX_VERSION="0.9.0" # github-releases/ionos-cloud/cluster-api-provider-proxmox&versioning=semver
 
+CAPO_VERSION="0.14.6"
+
 # the documentation expects you to run `clusterctl init`, which has no option to output
 # manifests to stdout or anywhere other than straight onto the cluster
 # we use `clusterctl generate`, which works similarly, but acutally outputs the resources
@@ -36,3 +38,8 @@ clusterctl generate provider --ipam in-cluster:v${IPAM_INCLUSTER_VERSION} >  ./c
 
 clusterctl generate provider --infrastructure proxmox:v${CAPMOX_VERSION} --config clusterctl-config.yaml --describe
 clusterctl generate provider --infrastructure proxmox:v${CAPMOX_VERSION} --config clusterctl-config.yaml > ./components/provider-capmox/resources.yaml
+
+# capo does not seem to require credentials here
+clusterctl generate provider --infrastructure openstack:v${CAPO_VERSION} --describe
+clusterctl generate provider --infrastructure openstack:v${CAPO_VERSION} > components/provider-openstack/resources.yaml
+
