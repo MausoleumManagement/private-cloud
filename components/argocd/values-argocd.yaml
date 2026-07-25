@@ -19,6 +19,11 @@ configs:
     # other actors added
     # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#server-side-apply
     controller.diff.server-side: true
+    # git submodules to which argocd has no access can cause trouble when pulling repos
+    # aside from that, submodules are not needed right now, and i would rather not pull
+    # all kinds of extra stuff
+    # https://github.com/argoproj/argo-cd/issues/3799
+    reposerver.enable.git.submodule: false
   gpg:
     keys:
       FD9D433219DA6540: |
