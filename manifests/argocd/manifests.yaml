@@ -33436,6 +33436,10 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: wikis
     server: https://kubernetes.default.svc
+  - namespace: wiki-denkarium
+    server: https://kubernetes.default.svc
+  - namespace: wiki-mechanicum
+    server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
   - group: argoproj.io
     kind: Application
