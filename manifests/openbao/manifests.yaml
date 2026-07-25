@@ -480,7 +480,8 @@ spec:
     name: postgresql-standard-trixie
   instances: 3
   plugins:
-  - isWALArchiver: true
+  - enabled: true
+    isWALArchiver: true
     name: barman-cloud.cloudnative-pg.io
     parameters:
       barmanObjectName: cnpg-openbao-backups
