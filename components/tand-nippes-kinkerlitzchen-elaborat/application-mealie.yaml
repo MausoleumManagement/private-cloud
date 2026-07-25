@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mealie
+  #this finaliser causes cascading deletion (delete children)
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    automated:
+      enabled: true
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - ServerSideApply=true
+  destination:
+    namespace: mealie
+    server: "https://kubernetes.default.svc"
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/mealie
+    repoURL: "https://github.com/MausoleumManagement/mealie.git"
+    targetRevision: master

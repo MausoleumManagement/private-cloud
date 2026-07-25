@@ -27,6 +27,30 @@ kind: Application
 metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  name: mealie
+  namespace: argocd
+spec:
+  destination:
+    namespace: mealie
+    server: https://kubernetes.default.svc
+  project: tand-nippes-kinkerlitzchen-elaborat
+  source:
+    path: manifests/mealie
+    repoURL: https://github.com/MausoleumManagement/mealie.git
+    targetRevision: master
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
   name: minecraft
   namespace: argocd
 spec:
