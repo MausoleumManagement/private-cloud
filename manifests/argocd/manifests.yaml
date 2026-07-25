@@ -33498,6 +33498,7 @@ spec:
   sourceRepos:
   - https://github.com/MausoleumManagement/demo_k8s_application.git
   - https://github.com/MausoleumManagement/private-cloud.git
+  - https://github.com/MausoleumManagement/mealie.git
   - https://github.com/MausoleumManagement/minecraft.git
   - https://github.com/MausoleumManagement/wikis.git
 ---
