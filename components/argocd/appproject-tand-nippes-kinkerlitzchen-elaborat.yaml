@@ -27,6 +27,7 @@ spec:
   sourceRepos:
   - 'https://github.com/MausoleumManagement/demo_k8s_application.git'
   - 'https://github.com/MausoleumManagement/private-cloud.git'
+  - 'https://github.com/MausoleumManagement/glance.git'
   - 'https://github.com/MausoleumManagement/mealie.git'
   - 'https://github.com/MausoleumManagement/minecraft.git'
   - 'https://github.com/MausoleumManagement/wikis.git'
@@ -36,6 +37,8 @@ spec:
   # the permission to create stuff in the argocd ns is due to the necessity to create child applications
   # TODO: would be neat to get rid of that
   - namespace: argocd
+    server: https://kubernetes.default.svc
+  - namespace: glance
     server: https://kubernetes.default.svc
   - namespace: hello-world
     server: https://kubernetes.default.svc

@@ -5,6 +5,7 @@ namespace: argocd
 resources:
   # disable, while we develop locally
   #- application-bibliophage.yaml
+  - application-glance.yaml
   - application-hello-world.yaml
   - application-minecraft.yaml
   - application-mealie.yaml
