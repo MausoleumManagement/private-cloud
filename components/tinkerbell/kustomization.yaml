@@ -7,6 +7,6 @@ helmCharts:
     releaseName: tinkerbellrelease
     repo: oci://ghcr.io/tinkerbell/charts
     valuesFile: values.yaml
-    version: v0.24.0
+    version: v0.25.0
 resources:
   - namespace.yaml
