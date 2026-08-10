@@ -7,37 +7,6 @@ metadata:
     control-plane: controller-manager
   name: capi-kubeadm-control-plane-system
 ---
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: control-plane-kubeadm
-    clusterctl.cluster.x-k8s.io: ""
-  name: capi-kubeadm-control-plane-selfsigned-issuer
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  selfSigned: {}
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: control-plane-kubeadm
-    clusterctl.cluster.x-k8s.io: ""
-  name: capi-kubeadm-control-plane-serving-cert
-  namespace: capi-kubeadm-control-plane-system
-spec:
-  dnsNames:
-  - capi-kubeadm-control-plane-webhook-service.capi-kubeadm-control-plane-system.svc
-  - capi-kubeadm-control-plane-webhook-service.capi-kubeadm-control-plane-system.svc.cluster.local
-  issuerRef:
-    kind: Issuer
-    name: capi-kubeadm-control-plane-selfsigned-issuer
-  secretName: capi-kubeadm-control-plane-webhook-service-cert
-  subject:
-    organizations:
-    - k8s-sig-cluster-lifecycle
----
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -11614,6 +11583,37 @@ spec:
         secret:
           secretName: capi-kubeadm-control-plane-webhook-service-cert
 status: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    clusterctl.cluster.x-k8s.io: ""
+  name: capi-kubeadm-control-plane-serving-cert
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  dnsNames:
+  - capi-kubeadm-control-plane-webhook-service.capi-kubeadm-control-plane-system.svc
+  - capi-kubeadm-control-plane-webhook-service.capi-kubeadm-control-plane-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: capi-kubeadm-control-plane-selfsigned-issuer
+  secretName: capi-kubeadm-control-plane-webhook-service-cert
+  subject:
+    organizations:
+    - k8s-sig-cluster-lifecycle
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: control-plane-kubeadm
+    clusterctl.cluster.x-k8s.io: ""
+  name: capi-kubeadm-control-plane-selfsigned-issuer
+  namespace: capi-kubeadm-control-plane-system
+spec:
+  selfSigned: {}
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
