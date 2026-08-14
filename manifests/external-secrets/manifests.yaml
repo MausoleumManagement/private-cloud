@@ -632,15 +632,15 @@ spec:
                             which secret (version/property/..) to fetch.
                           properties:
                             conversionStrategy:
-                              default: Default
-                              description: Used to define a conversion Strategy
+                              description: Used to define a conversion Strategy. Defaults
+                                to Default when omitted.
                               enum:
                               - Default
                               - Unicode
                               type: string
                             decodingStrategy:
-                              default: None
-                              description: Used to define a decoding Strategy
+                              description: Used to define a decoding Strategy. Defaults
+                                to None when omitted.
                               enum:
                               - Auto
                               - Base64
@@ -651,7 +651,6 @@ spec:
                               description: Key is the key used in the Provider, mandatory
                               type: string
                             metadataPolicy:
-                              default: None
                               description: Policy for fetching tags/labels from provider
                                 secrets, possible options are Fetch, None. Defaults
                                 to None
@@ -775,15 +774,15 @@ spec:
                             Note: Extract does not support sourceRef.Generator or sourceRef.GeneratorRef.
                           properties:
                             conversionStrategy:
-                              default: Default
-                              description: Used to define a conversion Strategy
+                              description: Used to define a conversion Strategy. Defaults
+                                to Default when omitted.
                               enum:
                               - Default
                               - Unicode
                               type: string
                             decodingStrategy:
-                              default: None
-                              description: Used to define a decoding Strategy
+                              description: Used to define a decoding Strategy. Defaults
+                                to None when omitted.
                               enum:
                               - Auto
                               - Base64
@@ -794,7 +793,6 @@ spec:
                               description: Key is the key used in the Provider, mandatory
                               type: string
                             metadataPolicy:
-                              default: None
                               description: Policy for fetching tags/labels from provider
                                 secrets, possible options are Fetch, None. Defaults
                                 to None
@@ -826,15 +824,15 @@ spec:
                             Note: Find does not support sourceRef.Generator or sourceRef.GeneratorRef.
                           properties:
                             conversionStrategy:
-                              default: Default
-                              description: Used to define a conversion Strategy
+                              description: Used to define a conversion Strategy. Defaults
+                                to Default when omitted.
                               enum:
                               - Default
                               - Unicode
                               type: string
                             decodingStrategy:
-                              default: None
-                              description: Used to define a decoding Strategy
+                              description: Used to define a decoding Strategy. Defaults
+                                to None when omitted.
                               enum:
                               - Auto
                               - Base64
@@ -1311,14 +1309,15 @@ spec:
                                   default: Data
                                   description: |-
                                     Target specifies where to place the template result.
-                                    For Secret resources, common values are: "Data", "Annotations", "Labels".
+                                    For Secret resources the accepted values are empty, "Data", "Annotations" and "Labels";
+                                    any other value is rejected because it would allow writes to privileged Secret fields.
                                     For custom resources (when spec.target.manifest is set), this supports
                                     nested paths like "spec.database.config" or "data".
                                   type: string
                                 valuesDecodingStrategy:
-                                  default: None
-                                  description: Used to define a decoding Strategy
-                                    for the rendered template values.
+                                  description: |-
+                                    Used to define a decoding Strategy for the rendered template values.
+                                    Defaults to None when omitted.
                                   enum:
                                   - Auto
                                   - Base64
@@ -5644,14 +5643,15 @@ spec:
                               default: Data
                               description: |-
                                 Target specifies where to place the template result.
-                                For Secret resources, common values are: "Data", "Annotations", "Labels".
+                                For Secret resources the accepted values are empty, "Data", "Annotations" and "Labels";
+                                any other value is rejected because it would allow writes to privileged Secret fields.
                                 For custom resources (when spec.target.manifest is set), this supports
                                 nested paths like "spec.database.config" or "data".
                               type: string
                             valuesDecodingStrategy:
-                              default: None
-                              description: Used to define a decoding Strategy for
-                                the rendered template values.
+                              description: |-
+                                Used to define a decoding Strategy for the rendered template values.
+                                Defaults to None when omitted.
                               enum:
                               - Auto
                               - Base64
@@ -10318,6 +10318,12 @@ spec:
                               Format: duration string (e.g., "5m", "1h", "30s")
                             type: string
                         type: object
+                      environment:
+                        description: |-
+                          Environment defines the 1Password Environment ID to read variables from.
+                          Environments are read-only: PushSecret, DeleteSecret, and SecretExists return an error when set.
+                          Mutually exclusive with Vault.
+                        type: string
                       integrationInfo:
                         description: |-
                           IntegrationInfo specifies the name and version of the integration built using the 1Password Go SDK.
@@ -10333,13 +10339,18 @@ spec:
                             type: string
                         type: object
                       vault:
-                        description: Vault defines the vault's name or uuid to access.
-                          Do NOT add op:// prefix. This will be done automatically.
+                        description: |-
+                          Vault defines the vault's name or uuid to access. Do NOT add op:// prefix. This will be done automatically.
+                          Mutually exclusive with Environment.
                         type: string
                     required:
                     - auth
-                    - vault
                     type: object
+                    x-kubernetes-validations:
+                    - message: at most one of the fields in [vault environment] may
+                        be set
+                      rule: '[has(self.vault),has(self.environment)].filter(x,x==true).size()
+                        <= 1'
                   openBao:
                     description: OpenBao configures this store to sync secrets using
                       the OpenBao provider.
@@ -17990,15 +18001,15 @@ spec:
                         which secret (version/property/..) to fetch.
                       properties:
                         conversionStrategy:
-                          default: Default
-                          description: Used to define a conversion Strategy
+                          description: Used to define a conversion Strategy. Defaults
+                            to Default when omitted.
                           enum:
                           - Default
                           - Unicode
                           type: string
                         decodingStrategy:
-                          default: None
-                          description: Used to define a decoding Strategy
+                          description: Used to define a decoding Strategy. Defaults
+                            to None when omitted.
                           enum:
                           - Auto
                           - Base64
@@ -18009,7 +18020,6 @@ spec:
                           description: Key is the key used in the Provider, mandatory
                           type: string
                         metadataPolicy:
-                          default: None
                           description: Policy for fetching tags/labels from provider
                             secrets, possible options are Fetch, None. Defaults to
                             None
@@ -18132,15 +18142,15 @@ spec:
                         Note: Extract does not support sourceRef.Generator or sourceRef.GeneratorRef.
                       properties:
                         conversionStrategy:
-                          default: Default
-                          description: Used to define a conversion Strategy
+                          description: Used to define a conversion Strategy. Defaults
+                            to Default when omitted.
                           enum:
                           - Default
                           - Unicode
                           type: string
                         decodingStrategy:
-                          default: None
-                          description: Used to define a decoding Strategy
+                          description: Used to define a decoding Strategy. Defaults
+                            to None when omitted.
                           enum:
                           - Auto
                           - Base64
@@ -18151,7 +18161,6 @@ spec:
                           description: Key is the key used in the Provider, mandatory
                           type: string
                         metadataPolicy:
-                          default: None
                           description: Policy for fetching tags/labels from provider
                             secrets, possible options are Fetch, None. Defaults to
                             None
@@ -18183,15 +18192,15 @@ spec:
                         Note: Find does not support sourceRef.Generator or sourceRef.GeneratorRef.
                       properties:
                         conversionStrategy:
-                          default: Default
-                          description: Used to define a conversion Strategy
+                          description: Used to define a conversion Strategy. Defaults
+                            to Default when omitted.
                           enum:
                           - Default
                           - Unicode
                           type: string
                         decodingStrategy:
-                          default: None
-                          description: Used to define a decoding Strategy
+                          description: Used to define a decoding Strategy. Defaults
+                            to None when omitted.
                           enum:
                           - Auto
                           - Base64
@@ -18662,14 +18671,15 @@ spec:
                               default: Data
                               description: |-
                                 Target specifies where to place the template result.
-                                For Secret resources, common values are: "Data", "Annotations", "Labels".
+                                For Secret resources the accepted values are empty, "Data", "Annotations" and "Labels";
+                                any other value is rejected because it would allow writes to privileged Secret fields.
                                 For custom resources (when spec.target.manifest is set), this supports
                                 nested paths like "spec.database.config" or "data".
                               type: string
                             valuesDecodingStrategy:
-                              default: None
-                              description: Used to define a decoding Strategy for
-                                the rendered template values.
+                              description: |-
+                                Used to define a decoding Strategy for the rendered template values.
+                                Defaults to None when omitted.
                               enum:
                               - Auto
                               - Base64
@@ -21060,14 +21070,15 @@ spec:
                           default: Data
                           description: |-
                             Target specifies where to place the template result.
-                            For Secret resources, common values are: "Data", "Annotations", "Labels".
+                            For Secret resources the accepted values are empty, "Data", "Annotations" and "Labels";
+                            any other value is rejected because it would allow writes to privileged Secret fields.
                             For custom resources (when spec.target.manifest is set), this supports
                             nested paths like "spec.database.config" or "data".
                           type: string
                         valuesDecodingStrategy:
-                          default: None
-                          description: Used to define a decoding Strategy for the
-                            rendered template values.
+                          description: |-
+                            Used to define a decoding Strategy for the rendered template values.
+                            Defaults to None when omitted.
                           enum:
                           - Auto
                           - Base64
@@ -25852,6 +25863,12 @@ spec:
                               Format: duration string (e.g., "5m", "1h", "30s")
                             type: string
                         type: object
+                      environment:
+                        description: |-
+                          Environment defines the 1Password Environment ID to read variables from.
+                          Environments are read-only: PushSecret, DeleteSecret, and SecretExists return an error when set.
+                          Mutually exclusive with Vault.
+                        type: string
                       integrationInfo:
                         description: |-
                           IntegrationInfo specifies the name and version of the integration built using the 1Password Go SDK.
@@ -25867,13 +25884,18 @@ spec:
                             type: string
                         type: object
                       vault:
-                        description: Vault defines the vault's name or uuid to access.
-                          Do NOT add op:// prefix. This will be done automatically.
+                        description: |-
+                          Vault defines the vault's name or uuid to access. Do NOT add op:// prefix. This will be done automatically.
+                          Mutually exclusive with Environment.
                         type: string
                     required:
                     - auth
-                    - vault
                     type: object
+                    x-kubernetes-validations:
+                    - message: at most one of the fields in [vault environment] may
+                        be set
+                      rule: '[has(self.vault),has(self.environment)].filter(x,x==true).size()
+                        <= 1'
                   openBao:
                     description: OpenBao configures this store to sync secrets using
                       the OpenBao provider.
@@ -34883,8 +34905,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets
   namespace: external-secrets
 ---
@@ -34895,8 +34917,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-cert-controller
   namespace: external-secrets
 ---
@@ -34907,8 +34929,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -34919,8 +34941,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-leaderelection
   namespace: external-secrets
 rules:
@@ -34957,8 +34979,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-cert-controller
 rules:
 - apiGroups:
@@ -35055,8 +35077,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-controller
 rules:
 - apiGroups:
@@ -35208,8 +35230,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: external-secrets-edit
@@ -35263,8 +35285,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
     servicebinding.io/controller: "true"
   name: external-secrets-servicebindings
 rules:
@@ -35285,8 +35307,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
     rbac.authorization.k8s.io/aggregate-to-view: "true"
@@ -35337,8 +35359,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-leaderelection
   namespace: external-secrets
 roleRef:
@@ -35357,8 +35379,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-cert-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -35376,8 +35398,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -35395,9 +35417,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
+    app.kubernetes.io/version: v2.9.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.8.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-webhook
   namespace: external-secrets
 ---
@@ -35408,9 +35430,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
+    app.kubernetes.io/version: v2.9.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.8.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -35431,8 +35453,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets
   namespace: external-secrets
 spec:
@@ -35448,8 +35470,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets
-        app.kubernetes.io/version: v2.8.0
-        helm.sh/chart: external-secrets-2.8.0
+        app.kubernetes.io/version: v2.9.0
+        helm.sh/chart: external-secrets-2.9.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -35458,7 +35480,7 @@ spec:
         - --metrics-addr=:8080
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.8.0
+        image: ghcr.io/external-secrets/external-secrets:v2.9.0
         imagePullPolicy: IfNotPresent
         name: external-secrets
         ports:
@@ -35486,8 +35508,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-cert-controller
   namespace: external-secrets
 spec:
@@ -35503,8 +35525,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-cert-controller
-        app.kubernetes.io/version: v2.8.0
-        helm.sh/chart: external-secrets-2.8.0
+        app.kubernetes.io/version: v2.9.0
+        helm.sh/chart: external-secrets-2.9.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -35520,7 +35542,7 @@ spec:
         - --loglevel=info
         - --zap-time-encoding=epoch
         - --enable-partial-cache=true
-        image: ghcr.io/external-secrets/external-secrets:v2.8.0
+        image: ghcr.io/external-secrets/external-secrets:v2.9.0
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
@@ -35559,8 +35581,8 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
-    helm.sh/chart: external-secrets-2.8.0
+    app.kubernetes.io/version: v2.9.0
+    helm.sh/chart: external-secrets-2.9.0
   name: external-secrets-webhook
   namespace: external-secrets
 spec:
@@ -35576,8 +35598,8 @@ spec:
         app.kubernetes.io/instance: external-secrets
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: external-secrets-webhook
-        app.kubernetes.io/version: v2.8.0
-        helm.sh/chart: external-secrets-2.8.0
+        app.kubernetes.io/version: v2.9.0
+        helm.sh/chart: external-secrets-2.9.0
     spec:
       automountServiceAccountToken: true
       containers:
@@ -35591,7 +35613,7 @@ spec:
         - --healthz-addr=:8081
         - --loglevel=info
         - --zap-time-encoding=epoch
-        image: ghcr.io/external-secrets/external-secrets:v2.8.0
+        image: ghcr.io/external-secrets/external-secrets:v2.9.0
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:
@@ -35660,9 +35682,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
+    app.kubernetes.io/version: v2.9.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.8.0
+    helm.sh/chart: external-secrets-2.9.0
   name: externalsecret-validate
 webhooks:
 - admissionReviewVersions:
@@ -35697,9 +35719,9 @@ metadata:
     app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: external-secrets-webhook
-    app.kubernetes.io/version: v2.8.0
+    app.kubernetes.io/version: v2.9.0
     external-secrets.io/component: webhook
-    helm.sh/chart: external-secrets-2.8.0
+    helm.sh/chart: external-secrets-2.9.0
   name: secretstore-validate
 webhooks:
 - admissionReviewVersions:
