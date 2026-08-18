@@ -12,8 +12,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.22.0
+    app.kubernetes.io/version: v0.54.0
+    helm.sh/chart: perses-0.23.2
   name: perses
 ---
 apiVersion: v1
@@ -316,8 +316,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.22.0
+    app.kubernetes.io/version: v0.54.0
+    helm.sh/chart: perses-0.23.2
   name: perses
 ---
 apiVersion: v1
@@ -329,8 +329,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.22.0
+    app.kubernetes.io/version: v0.54.0
+    helm.sh/chart: perses-0.23.2
   name: perses
 spec:
   ports:
@@ -352,8 +352,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.53.1
-    helm.sh/chart: perses-0.22.0
+    app.kubernetes.io/version: v0.54.0
+    helm.sh/chart: perses-0.23.2
   name: perses
 spec:
   replicas: 1
@@ -365,7 +365,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: ac981c24c2edd277378d55de4f8318a96944679eb21239de27603452366827b3
+        checksum/config: 5dca835e4f5e29f7ebf0a57c341e17bbe8d80962ce01671d3fd9d0d74ac0b243
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses
@@ -384,7 +384,7 @@ spec:
             secretKeyRef:
               key: perses-security-encryption-key
               name: perses
-        image: docker.io/persesdev/perses:v0.53.1
+        image: docker.io/persesdev/perses:v0.54.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
@@ -426,6 +426,8 @@ spec:
           name: config
         - mountPath: /perses
           name: data
+        - mountPath: /etc/perses/plugins
+          name: plugins
       securityContext:
         fsGroup: 2000
       serviceAccountName: perses
@@ -439,6 +441,8 @@ spec:
           defaultMode: 420
           name: perses
         name: config
+      - emptyDir: {}
+        name: plugins
 ---
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
