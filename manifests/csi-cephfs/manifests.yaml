@@ -34,7 +34,7 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     heritage: Helm
     release: csi-cephfs
   name: cephfs-2026
@@ -57,7 +57,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -69,7 +69,7 @@ kind: ServiceAccount
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -81,7 +81,7 @@ kind: Role
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -115,7 +115,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -139,7 +139,7 @@ kind: ClusterRole
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -307,7 +307,7 @@ kind: RoleBinding
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -327,7 +327,7 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -346,7 +346,7 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -381,7 +381,7 @@ kind: ConfigMap
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -395,7 +395,7 @@ kind: ConfigMap
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -409,7 +409,7 @@ kind: ConfigMap
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -421,7 +421,7 @@ kind: Service
 metadata:
   labels:
     app: csi-cephfs-ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -443,7 +443,7 @@ kind: Service
 metadata:
   labels:
     app: csi-cephfs-ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -465,7 +465,7 @@ kind: Deployment
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: provisioner
     heritage: Helm
     release: csi-cephfs
@@ -486,7 +486,7 @@ spec:
     metadata:
       labels:
         app: ceph-csi-cephfs
-        chart: ceph-csi-cephfs-3.17.0
+        chart: ceph-csi-cephfs-3.17.1
         component: provisioner
         heritage: Helm
         release: csi-cephfs
@@ -534,7 +534,7 @@ spec:
               fieldPath: spec.nodeName
         - name: CSI_ENDPOINT
           value: unix:///csi/csi-provisioner.sock
-        image: quay.io/cephcsi/cephcsi:v3.17.0
+        image: quay.io/cephcsi/cephcsi:v3.17.1
         imagePullPolicy: IfNotPresent
         name: csi-cephfsplugin
         resources: {}
@@ -638,7 +638,7 @@ spec:
               fieldPath: metadata.namespace
         - name: DRIVER_NAME
           value: cephfs.csi.ceph.com
-        image: quay.io/cephcsi/cephcsi:v3.17.0
+        image: quay.io/cephcsi/cephcsi:v3.17.1
         imagePullPolicy: IfNotPresent
         name: csi-cephfsplugin-controller
         resources: {}
@@ -663,7 +663,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
-        image: quay.io/cephcsi/cephcsi:v3.17.0
+        image: quay.io/cephcsi/cephcsi:v3.17.1
         imagePullPolicy: IfNotPresent
         name: liveness-prometheus
         ports:
@@ -719,7 +719,7 @@ kind: DaemonSet
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     component: nodeplugin
     heritage: Helm
     release: csi-cephfs
@@ -735,7 +735,7 @@ spec:
     metadata:
       labels:
         app: ceph-csi-cephfs
-        chart: ceph-csi-cephfs-3.17.0
+        chart: ceph-csi-cephfs-3.17.1
         component: nodeplugin
         heritage: Helm
         release: csi-cephfs
@@ -771,7 +771,7 @@ spec:
               fieldPath: spec.nodeName
         - name: CSI_ENDPOINT
           value: unix:///csi/csi.sock
-        image: quay.io/cephcsi/cephcsi:v3.17.0
+        image: quay.io/cephcsi/cephcsi:v3.17.1
         imagePullPolicy: IfNotPresent
         name: csi-cephfsplugin
         resources: {}
@@ -846,7 +846,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
-        image: quay.io/cephcsi/cephcsi:v3.17.0
+        image: quay.io/cephcsi/cephcsi:v3.17.1
         imagePullPolicy: IfNotPresent
         name: liveness-prometheus
         ports:
@@ -919,7 +919,7 @@ kind: CSIDriver
 metadata:
   labels:
     app: ceph-csi-cephfs
-    chart: ceph-csi-cephfs-3.17.0
+    chart: ceph-csi-cephfs-3.17.1
     heritage: Helm
     release: csi-cephfs
   name: cephfs.csi.ceph.com
