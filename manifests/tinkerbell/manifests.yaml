@@ -639,6 +639,12 @@ spec:
           value: "512"
         - name: TINKERBELL_TFTP_SINGLE_PORT
           value: "true"
+        - name: TINKERBELL_TFTP_ASSET_DIR
+          value: ""
+        - name: TINKERBELL_PXE_HTTP_ENABLED
+          value: "false"
+        - name: TINKERBELL_PXE_HTTP_PATH_PREFIX
+          value: /tftp/
         - name: TINKERBELL_SECONDSTAR_PORT
           value: "2222"
         - name: TINKERBELL_SECONDSTAR_HOST_KEY
