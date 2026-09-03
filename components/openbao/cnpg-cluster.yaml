@@ -31,4 +31,4 @@ spec:
       secret:
         name: cnpg-openbao-app-user
   storage:
-    size: 10Gi
+    size: 20Gi
