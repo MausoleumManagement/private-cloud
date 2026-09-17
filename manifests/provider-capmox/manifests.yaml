@@ -6363,7 +6363,7 @@ spec:
             secretKeyRef:
               key: secret
               name: capmox-manager-credentials
-        image: ghcr.io/ionos-cloud/cluster-api-provider-proxmox:v0.9.0
+        image: ghcr.io/ionos-cloud/cluster-api-provider-proxmox:v0.9.1
         livenessProbe:
           httpGet:
             path: /healthz
