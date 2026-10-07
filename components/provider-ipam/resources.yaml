@@ -1233,7 +1233,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: registry.k8s.io/capi-ipam-ic/cluster-api-ipam-in-cluster-controller:v1.1.0
+        image: registry.k8s.io/capi-ipam-ic/cluster-api-ipam-in-cluster-controller:v1.1.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -1276,6 +1276,11 @@ spec:
           type: RuntimeDefault
       serviceAccountName: capi-ipam-in-cluster-controller-manager
       terminationGracePeriodSeconds: 10
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/master
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
       volumes:
       - name: cert
         secret:
@@ -1294,7 +1299,6 @@ metadata:
 webhooks:
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1316,7 +1320,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1338,7 +1341,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1360,7 +1362,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1393,7 +1394,6 @@ metadata:
 webhooks:
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1416,7 +1416,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1439,7 +1438,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
@@ -1462,7 +1460,6 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v1beta1
   clientConfig:
     service:
       name: capi-ipam-in-cluster-webhook-service
