@@ -185,7 +185,7 @@ spec:
         # the german numeral suffix at the end is used to differentiate machine templates
         # within the same kubernetes release, since they should not be modified
         # see https://cluster-api.sigs.k8s.io/tasks/updating-machine-templates.html
-        name: nekropolis-control-plane-1.35.9-eins
+        name: nekropolis-control-plane-1.35.9-zwei
   replicas: 3
   rollout:
     strategy:
