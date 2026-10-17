@@ -284,7 +284,7 @@ spec:
       infrastructureRef:
         apiGroup: infrastructure.cluster.x-k8s.io
         kind: ProxmoxMachineTemplate
-        name: nekropolis-control-plane-1.35.9-zwei
+        name: nekropolis-control-plane-1.35.9-drei
   replicas: 3
   rollout:
     strategy:
@@ -323,7 +323,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
 kind: ProxmoxMachineTemplate
 metadata:
-  name: nekropolis-control-plane-1.35.9-zwei
+  name: nekropolis-control-plane-1.35.9-drei
   namespace: cluster-api
 spec:
   template:
@@ -345,7 +345,7 @@ spec:
       numCores: 2
       numSockets: 2
       pool: k8s-vms-nekropolis
-      sourceNode: pve020
+      sourceNode: pve022
       templateID: 104
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha2
