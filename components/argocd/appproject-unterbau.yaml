@@ -13,6 +13,14 @@ spec:
         - repos:
             - url: '*'
           gpg:
+            # we have some unsigned commits at the beginning of the git history
+            # rather than do a huge rebase and rewrite of the history with signed commits, we 
+            # created a seal commit that tells argocd to only check until then
+            # https://argo-cd.readthedocs.io/en/stable/user-guide/source-integrity-git-gpg/#commit-seal-signing-with-strict-mode
+            # anything after that commit will then be gpg validated, anything before it is considered valid
+            # https://argo-cd.readthedocs.io/en/stable/user-guide/source-integrity-git-gpg/#commit-seal-signing-with-strict-mode
+            # created via:
+            # git commit --gpg-sign --trailer="Argocd-gpg-seal: Consider all previously created commits validly signed due to old improperly signed commits in the history"
             mode: strict
             keys: 
               - 22C316A353F6F11ED2693628FD9D433219DA6540
