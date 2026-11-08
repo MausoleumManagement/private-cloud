@@ -33769,6 +33769,15 @@ spec:
   - group: '*'
     kind: '*'
   namespaceResourceWhitelist: []
+  sourceIntegrity:
+    git:
+      policies:
+      - gpg:
+          keys:
+          - 22C316A353F6F11ED2693628FD9D433219DA6540
+          mode: strict
+        repos:
+        - url: '*'
   sourceNamespaces: []
   sourceRepos: []
 ---
@@ -33854,8 +33863,15 @@ spec:
     kind: Gateway
   - group: gateway.networking.k8s.io
     kind: HTTPRoute
-  signatureKeys:
-  - keyID: 22C316A353F6F11ED2693628FD9D433219DA6540
+  sourceIntegrity:
+    git:
+      policies:
+      - gpg:
+          keys:
+          - 22C316A353F6F11ED2693628FD9D433219DA6540
+          mode: strict
+        repos:
+        - url: '*'
   sourceRepos:
   - https://github.com/MausoleumManagement/demo_k8s_application.git
   - https://github.com/MausoleumManagement/private-cloud.git
@@ -34033,8 +34049,15 @@ spec:
     kind: KubeadmControlPlane
   - group: bootstrap.cluster.x-k8s.io
     kind: KubeadmConfigTemplate
-  signatureKeys:
-  - keyID: 22C316A353F6F11ED2693628FD9D433219DA6540
+  sourceIntegrity:
+    git:
+      policies:
+      - gpg:
+          keys:
+          - 22C316A353F6F11ED2693628FD9D433219DA6540
+          mode: strict
+        repos:
+        - url: '*'
   sourceRepos:
   - https://github.com/MausoleumManagement/private-cloud.git
 ---

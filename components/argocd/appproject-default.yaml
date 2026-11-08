@@ -6,6 +6,15 @@ kind: AppProject
 metadata:
   name: default
 spec:
+  sourceIntegrity:
+    git:
+      policies:
+        - repos:
+          - url: '*'
+          gpg:
+            mode: strict
+            keys: 
+              - 22C316A353F6F11ED2693628FD9D433219DA6540
   sourceRepos: []
   sourceNamespaces: []
   destinations: []
