@@ -12,8 +12,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.54.0
-    helm.sh/chart: perses-0.23.2
+    app.kubernetes.io/version: v0.55.0
+    helm.sh/chart: perses-0.24.0
   name: perses
 ---
 apiVersion: v1
@@ -307,6 +307,8 @@ data:
         same_site: lax
         secure: true
       enable_auth: false
+      encryption_key: ""
+      encryption_key_file: ""
       readonly: false
 kind: ConfigMap
 metadata:
@@ -316,8 +318,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.54.0
-    helm.sh/chart: perses-0.23.2
+    app.kubernetes.io/version: v0.55.0
+    helm.sh/chart: perses-0.24.0
   name: perses
 ---
 apiVersion: v1
@@ -329,8 +331,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.54.0
-    helm.sh/chart: perses-0.23.2
+    app.kubernetes.io/version: v0.55.0
+    helm.sh/chart: perses-0.24.0
   name: perses
 spec:
   ports:
@@ -352,8 +354,8 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: perses
     app.kubernetes.io/part-of: perses
-    app.kubernetes.io/version: v0.54.0
-    helm.sh/chart: perses-0.23.2
+    app.kubernetes.io/version: v0.55.0
+    helm.sh/chart: perses-0.24.0
   name: perses
 spec:
   replicas: 1
@@ -365,7 +367,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 5dca835e4f5e29f7ebf0a57c341e17bbe8d80962ce01671d3fd9d0d74ac0b243
+        checksum/config: 48bcfe15cca1fe43eb0f697e90a357c10435d705fbdea1c7564cb8f4d43105a5
       labels:
         app.kubernetes.io/instance: perses
         app.kubernetes.io/name: perses
@@ -384,7 +386,7 @@ spec:
             secretKeyRef:
               key: perses-security-encryption-key
               name: perses
-        image: docker.io/persesdev/perses:v0.54.0
+        image: docker.io/persesdev/perses:v0.55.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
