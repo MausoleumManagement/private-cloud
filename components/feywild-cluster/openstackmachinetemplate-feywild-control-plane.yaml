@@ -1,0 +1,16 @@
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: OpenStackMachineTemplate
+metadata:
+  name: feywild-control-plane
+  namespace: default
+spec:
+  template:
+    spec:
+      flavor:
+        filter:
+          name: SCS-2V-4-20
+      image:
+        filter:
+          name: ubuntu-2604-kube-v1.35.9
+      sshKeyName: leon-ed25519

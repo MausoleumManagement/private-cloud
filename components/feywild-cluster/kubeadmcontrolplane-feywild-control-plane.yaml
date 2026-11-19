@@ -1,0 +1,37 @@
+---
+apiVersion: controlplane.cluster.x-k8s.io/v1beta2
+kind: KubeadmControlPlane
+metadata:
+  name: feywild-control-plane
+  namespace: default
+spec:
+  kubeadmConfigSpec:
+    clusterConfiguration:
+      controllerManager:
+        extraArgs:
+          - name: cloud-provider
+            value: external
+    initConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          - name: cloud-provider
+            value: external
+          - name: provider-id
+            value: openstack:///'{{ instance_id }}'
+        name: '{{ local_hostname }}'
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          - name: cloud-provider
+            value: external
+          - name: provider-id
+            value: openstack:///'{{ instance_id }}'
+        name: '{{ local_hostname }}'
+  machineTemplate:
+    spec:
+      infrastructureRef:
+        apiGroup: infrastructure.cluster.x-k8s.io
+        kind: OpenStackMachineTemplate
+        name: feywild-control-plane
+  replicas: 3
+  version: v1.35.9

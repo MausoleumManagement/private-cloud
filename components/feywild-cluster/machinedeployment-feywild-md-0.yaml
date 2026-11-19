@@ -1,0 +1,25 @@
+---
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: MachineDeployment
+metadata:
+  name: feywild-md-0
+  namespace: default
+spec:
+  clusterName: feywild
+  replicas: 3
+  selector:
+    matchLabels: null
+  template:
+    spec:
+      bootstrap:
+        configRef:
+          apiGroup: bootstrap.cluster.x-k8s.io
+          kind: KubeadmConfigTemplate
+          name: feywild-md-0
+      clusterName: feywild
+      failureDomain: az1
+      infrastructureRef:
+        apiGroup: infrastructure.cluster.x-k8s.io
+        kind: OpenStackMachineTemplate
+        name: feywild-md-0
+      version: v1.35.9
